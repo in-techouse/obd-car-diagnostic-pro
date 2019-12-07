@@ -8,19 +8,18 @@
     tools:context=".Dashboard"
     android:orientation="vertical">
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ListView
+            android:padding="20dp"
+            android:layout_margin="20dp"
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
 
 </LinearLayout>
