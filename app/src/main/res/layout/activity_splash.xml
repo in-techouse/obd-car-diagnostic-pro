@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/application_logo"
-        android:layout_gravity="center"
-        android:src="@drawable/logo1"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
-
+    <RelativeLayout
+        android:layout_marginTop="100dp"
+        android:id="@+id/imageUpper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/application_logo"
+            android:src="@drawable/logo1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"/>
+    </RelativeLayout>
 
     <TextView
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
         android:textStyle="bold"
         android:padding="7dp"
         android:textAlignment="center"
@@ -27,4 +35,4 @@
         android:id="@+id/application_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</LinearLayout>
+</RelativeLayout>

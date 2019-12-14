@@ -1,7 +1,6 @@
 package lcwu.fyp.obdcardiagnosticpro;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -9,13 +8,15 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends Activity {
 
     ImageView application_logo;
     TextView application_name;
     Animation upToDown, downToUp;
+    RelativeLayout imageUpper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +25,14 @@ public class SplashActivity extends AppCompatActivity {
 
         application_logo = findViewById(R.id.application_logo);
         application_name = findViewById(R.id.application_name);
+        imageUpper = findViewById(R.id.imageUpper);
 
         upToDown = AnimationUtils.loadAnimation(this, R.anim.uptodown);
         downToUp = AnimationUtils.loadAnimation(this, R.anim.downtoup);
 
 
-        application_logo.setAnimation(upToDown);
-        application_name.setAnimation(downToUp);
+        imageUpper.setAnimation(downToUp);
+        application_name.setAnimation(upToDown);
 
         RotateAnimation rotate = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(3000);
