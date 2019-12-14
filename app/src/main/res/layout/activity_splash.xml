@@ -10,8 +10,8 @@
     android:background="@color/colorPrimary">
 
     <RelativeLayout
-        android:layout_marginTop="100dp"
         android:id="@+id/imageUpper"
+        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
