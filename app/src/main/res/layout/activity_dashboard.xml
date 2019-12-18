@@ -13,10 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ListView
-            android:padding="20dp"
-            android:layout_margin="20dp"
-            android:id="@+id/listView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="12dp"
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
