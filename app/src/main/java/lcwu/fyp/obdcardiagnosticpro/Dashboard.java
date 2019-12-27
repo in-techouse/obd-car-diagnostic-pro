@@ -7,7 +7,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,8 +18,8 @@ import java.util.Set;
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
-public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
-
+public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+   private Button connect,scan,cancel;
     private RecyclerView list;
     private SwipeRefreshLayout refreshLayout;
     private List<BluetoothObject> data;
@@ -26,6 +29,9 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+       connect=findViewById(R.id.connect);
+       scan=findViewById(R.id.scan);
+       cancel=findViewById(R.id.cancel);
 
         list = findViewById(R.id.list);
         refreshLayout = findViewById(R.id.refreshLayout);
@@ -36,6 +42,9 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         refreshLayout.setOnRefreshListener(this);
         list.setAdapter(adapter);
         getBluetoothDevices();
+        connect.setOnClickListener(this);
+        scan.setOnClickListener(this);
+        cancel.setOnClickListener(this);
     }
 
 
@@ -59,5 +68,39 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         }
 
         adapter.setBluetoothList(data);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        switch(id){
+            case R.id.connect:
+            {
+                ConnectDevice();
+                break;
+            }
+
+            case R.id.scan:
+            {
+                ScanDevice();
+                break;
+            }
+            case R.id.cancel:
+            {
+                CancelDevice();
+                break;
+            }
+
+        }
+    }
+    private void ConnectDevice(){
+
+    }
+    private void ScanDevice(){
+
+    }
+    private void CancelDevice(){
+
     }
 }
