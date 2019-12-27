@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_margin="7dp"
         android:id="@+id/bottomLayout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -22,12 +23,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
+            android:layout_margin="7dp"
             android:textAllCaps="true"
             android:layout_weight="1"
             android:text="@string/scan"
             android:id="@+id/scan"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/scan_bg"
+            android:textColor="#ffffff"/>
         <Button
             android:textAllCaps="true"
             android:layout_weight="1"
