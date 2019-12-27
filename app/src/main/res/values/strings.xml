@@ -2,4 +2,7 @@
     <string name="app_name">Obd Car Diagnostic Pro</string>
     <string name="device_name">Device Name:</string>
     <string name="device_address">Device Address</string>
+    <string name="connect">Connect</string>
+    <string name="scan">Scan</string>
+    <string name="cancel">Cancel</string>
 </resources>
