@@ -104,7 +104,10 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         }
     }
     private void ConnectDevice(){
+     if (isConnected){
+         showNoDeviceConnectedError("ERROR","Already Connected");
 
+     }
     }
     private void ScanDevice(){
 
@@ -116,8 +119,6 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     }
 
     }
-
-
 
     private void showNoDeviceConnectedError(String title,String Message){
         new FancyAlertDialog.Builder(Dashboard.this)
