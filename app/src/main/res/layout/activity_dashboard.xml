@@ -21,7 +21,9 @@
             android:text="@string/connect"
             android:id="@+id/connect"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/connect_bg"
+            android:textColor="#ffff"/>
         <Button
             android:layout_margin="7dp"
             android:textAllCaps="true"
