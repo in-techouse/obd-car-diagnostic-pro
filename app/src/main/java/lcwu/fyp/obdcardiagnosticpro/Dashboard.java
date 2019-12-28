@@ -6,10 +6,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
+import com.shashank.sony.fancydialoglib.Icon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +31,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private SwipeRefreshLayout refreshLayout;
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
+    private boolean isConnected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
        connect=findViewById(R.id.connect);
        scan=findViewById(R.id.scan);
        cancel=findViewById(R.id.cancel);
+       isConnected = false;
 
         list = findViewById(R.id.list);
         refreshLayout = findViewById(R.id.refreshLayout);
@@ -102,5 +111,31 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     }
     private void CancelDevice(){
 
+    }
+    private void showNoDeviceConnectedError(){
+        new FancyAlertDialog.Builder(this)
+                .setTitle("Rate us if you like the app")
+                .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
+                .setMessage("Do you really want to Exit ?")
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
+                .setPositiveBtnText("Rate")
+                .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
+                .setAnimation(Animation.POP)
+                .isCancellable(true)
+                .setIcon(R.drawable.ic_star_border_black_24dp, Icon.Visible)
+                .OnPositiveClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        Toast.makeText(getApplicationContext(),"Rate",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .OnNegativeClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build();
     }
 }
