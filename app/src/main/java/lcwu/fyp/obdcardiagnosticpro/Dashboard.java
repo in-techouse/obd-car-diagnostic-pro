@@ -109,14 +109,19 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
 
      }
     }
-    private void ScanDevice(){
+    private void ScanDevice() {
+        if (!isConnected ) {
+            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
 
+
+
+        }
     }
     private void CancelDevice(){
-          if(!isConnected)
-    {
-        showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-    }
+      if(!isConnected)
+        {
+            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+        }
 
     }
 
