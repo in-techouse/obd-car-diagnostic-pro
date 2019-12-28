@@ -110,16 +110,23 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
 
     }
     private void CancelDevice(){
+          if(!isConnected)
+    {
+        showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+    }
 
     }
-    private void showNoDeviceConnectedError(){
-        new FancyAlertDialog.Builder(this)
-                .setTitle("Rate us if you like the app")
+
+
+
+    private void showNoDeviceConnectedError(String title,String Message){
+        new FancyAlertDialog.Builder(Dashboard.this)
+                .setTitle(title)
                 .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
-                .setMessage("Do you really want to Exit ?")
+                .setMessage(Message)
                 .setNegativeBtnText("Cancel")
                 .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
-                .setPositiveBtnText("Rate")
+                .setPositiveBtnText("Okay")
                 .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
                 .setAnimation(Animation.POP)
                 .isCancellable(true)
@@ -127,13 +134,11 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                 .OnPositiveClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
-                        Toast.makeText(getApplicationContext(),"Rate",Toast.LENGTH_SHORT).show();
                     }
                 })
                 .OnNegativeClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
-                        Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
                     }
                 })
                 .build();
