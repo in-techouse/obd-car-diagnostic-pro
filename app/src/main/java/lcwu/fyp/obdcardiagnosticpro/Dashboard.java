@@ -175,6 +175,8 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                 try {
                     socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
                     socket.connect();
+                    showNoDeviceConnectedError("SUCCESS", "Successfully Connected");
+
                 } catch (IOException e) {
                     showNoDeviceConnectedError("ERROR", "Error Occur while connecting to the device: " + e.getMessage());
                     e.printStackTrace();
