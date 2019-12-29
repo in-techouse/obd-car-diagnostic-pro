@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="lcwu.fyp.obdcardiagnosticpro">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
 
     <application
         android:allowBackup="true"

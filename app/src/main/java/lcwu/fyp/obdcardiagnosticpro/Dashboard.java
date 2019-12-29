@@ -1,11 +1,14 @@
 package lcwu.fyp.obdcardiagnosticpro;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -26,21 +29,25 @@ import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
 public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
-   private Button connect,scan,cancel;
+    private static final int REQUEST_ENABLE_BT = 1; // Unique request code
+    private Button connect,scan,cancel;
     private RecyclerView list;
     private SwipeRefreshLayout refreshLayout;
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
 
+    private ArrayList<String> deviceStrs = new ArrayList();
+    private ArrayList<String> devices = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-       connect=findViewById(R.id.connect);
-       scan=findViewById(R.id.scan);
-       cancel=findViewById(R.id.cancel);
-       isConnected = false;
+        connect=findViewById(R.id.connect);
+        scan=findViewById(R.id.scan);
+        cancel=findViewById(R.id.cancel);
+        isConnected = false;
 
         list = findViewById(R.id.list);
         refreshLayout = findViewById(R.id.refreshLayout);
@@ -68,7 +75,11 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private void getBluetoothDevices(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            return;
+        }
         for(BluetoothDevice bt : pairedDevices) {
             BluetoothObject object = new BluetoothObject();
             object.setAddress(bt.getAddress());
@@ -103,27 +114,77 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
 
         }
     }
-    private void ConnectDevice(){
-     if (isConnected){
-         showNoDeviceConnectedError("ERROR","Already Connected");
 
-     }
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == RESULT_OK) {
+                ConnectDevice();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Bluetooth was not enabled
+                showNoDeviceConnectedError("ERROR", "Bluetooth is not enabled.");
+            }
+        }
     }
+
+    private void ConnectDevice(){
+        if (isConnected){
+            showNoDeviceConnectedError("ERROR","Already Connected");
+            return;
+        }
+        getAllDevices();
+    }
+
+    private void getAllDevices(){
+        devices.clear();
+        deviceStrs.clear();
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
+
+        if (pairedDevices.size() > 0)
+        {
+            for (BluetoothDevice device : pairedDevices)
+            {
+                deviceStrs.add(device.getName() + "\n" + device.getAddress());
+                devices.add(device.getAddress());
+            }
+        }
+
+        // show list
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Dashboard.this);
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.select_dialog_singlechoice, deviceStrs.toArray(new String[deviceStrs.size()]));
+
+        alertDialog.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                String deviceAddress = devices.get(position);
+                // TODO save deviceAddress
+            }
+        });
+
+        alertDialog.setTitle("Choose Bluetooth device");
+        alertDialog.show();
+    }
+
     private void ScanDevice() {
         if (!isConnected ) {
             showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-
-
-
+            return;
         }
     }
     private void CancelDevice(){
-      if(!isConnected)
-        {
+        if(!isConnected){
             showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+            return;
         }
-
     }
+
 
     private void showNoDeviceConnectedError(String title,String Message){
         new FancyAlertDialog.Builder(Dashboard.this)
