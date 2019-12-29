@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,9 +22,11 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 import com.shashank.sony.fancydialoglib.Icon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
@@ -162,9 +165,21 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
             public void onClick(DialogInterface dialog, int which)
             {
                 dialog.dismiss();
-                int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                String deviceAddress = devices.get(position);
+
+                String deviceAddress = devices.get(which);
                 // TODO save deviceAddress
+                BluetoothAdapter btAdapter=BluetoothAdapter.getDefaultAdapter();
+                BluetoothDevice device=btAdapter.getRemoteDevice(deviceAddress);
+                UUID uuid = UUID . fromString("00001101-0000-1000-8000-00805F9B34FB");
+                BluetoothSocket socket = null;
+                try {
+                    socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
+                    socket.connect();
+                } catch (IOException e) {
+                    showNoDeviceConnectedError("ERROR", "Error Occur while connecting to the device: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
             }
         });
 
