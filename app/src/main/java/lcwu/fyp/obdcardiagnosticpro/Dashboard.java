@@ -12,11 +12,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.pires.obd.commands.SpeedCommand;
+import com.github.pires.obd.commands.engine.RPMCommand;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
@@ -213,16 +217,23 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private void readCarData(){
         if(isConnected && socket.isConnected()){
             try {
-
                 new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
                 new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
-
                 new TimeoutCommand(1).run(socket.getInputStream(), socket.getOutputStream());
 
                 new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
-
+                RPMCommand rpmCommand = new RPMCommand();
+                SpeedCommand speedCommand = new SpeedCommand();
+                String str = "";
+                while (!Thread.currentThread().isInterrupted()) {
+                    rpmCommand.run(socket.getInputStream(),socket.getOutputStream());
+                    speedCommand.run(socket.getInputStream(),socket.getOutputStream());
+                    str = str + "\nRPM: " + rpmCommand.getFormattedResult();
+                    str = str + "\nSpeed: " + speedCommand.getFormattedResult();
+                    Log.e("OBD","RPM:" + rpmCommand.getFormattedResult());
+                    Log.e("OBD","Speed:" + speedCommand.getFormattedResult());
+                }
             } catch (Exception e) {
-
                 showNoDeviceConnectedError("ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
             }
         }
@@ -230,8 +241,6 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
             showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
         }
     }
-
-
 
     private void showNoDeviceConnectedError(String title,String Message){
         new FancyAlertDialog.Builder(Dashboard.this)
