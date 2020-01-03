@@ -39,6 +39,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
+    BluetoothSocket socket = null;
 
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
@@ -168,13 +169,15 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
 
                 String deviceAddress = devices.get(which);
                 // TODO save deviceAddress
-                BluetoothAdapter btAdapter=BluetoothAdapter.getDefaultAdapter();
-                BluetoothDevice device=btAdapter.getRemoteDevice(deviceAddress);
-                UUID uuid = UUID . fromString("00001101-0000-1000-8000-00805F9B34FB");
-                BluetoothSocket socket = null;
+                BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+                BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
+                UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
                 try {
                     socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
                     socket.connect();
+                    if(socket.isConnected()){
+                        isConnected = true;
+                    }
                     showNoDeviceConnectedError("SUCCESS", "Successfully Connected");
 
                 } catch (IOException e) {
@@ -194,6 +197,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
             showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
+        readCarData();
     }
     private void CancelDevice(){
         if(!isConnected){
@@ -201,6 +205,16 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
             return;
         }
     }
+
+    private void readCarData(){
+        if(isConnected && socket.isConnected()){
+
+        }
+        else{
+            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+        }
+    }
+
 
 
     private void showNoDeviceConnectedError(String title,String Message){
