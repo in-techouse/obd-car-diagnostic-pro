@@ -232,6 +232,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                     str = str + "\nSpeed: " + speedCommand.getFormattedResult();
                     Log.e("OBD","RPM:" + rpmCommand.getFormattedResult());
                     Log.e("OBD","Speed:" + speedCommand.getFormattedResult());
+                    showNoDeviceConnectedError("Success", str);
                 }
             } catch (Exception e) {
                 showNoDeviceConnectedError("ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
