@@ -17,6 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.pires.obd.commands.protocol.EchoOffCommand;
+import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
+import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
+import com.github.pires.obd.commands.protocol.TimeoutCommand;
+import com.github.pires.obd.enums.ObdProtocols;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
@@ -39,7 +44,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
-    BluetoothSocket socket = null;
+    private BluetoothSocket socket = null;
 
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
@@ -177,14 +182,13 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                     socket.connect();
                     if(socket.isConnected()){
                         isConnected = true;
+                        showNoDeviceConnectedError("SUCCESS", "Successfully Connected");
                     }
-                    showNoDeviceConnectedError("SUCCESS", "Successfully Connected");
 
                 } catch (IOException e) {
                     showNoDeviceConnectedError("ERROR", "Error Occur while connecting to the device: " + e.getMessage());
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -208,7 +212,19 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
 
     private void readCarData(){
         if(isConnected && socket.isConnected()){
+            try {
 
+                new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
+                new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
+
+                new TimeoutCommand(1).run(socket.getInputStream(), socket.getOutputStream());
+
+                new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
+
+            } catch (Exception e) {
+
+                showNoDeviceConnectedError("ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+            }
         }
         else{
             showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
