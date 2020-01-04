@@ -38,6 +38,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
+import lcwu.fyp.obdcardiagnosticpro.dialogue_box.InfoDialogue;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
 public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
@@ -201,11 +202,13 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     }
 
     private void ScanDevice() {
-        if (!isConnected ) {
-            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-            return;
-        }
-        readCarData();
+//        if (!isConnected ) {
+//            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+//            return;
+//        }
+//        readCarData();
+        InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
+        dialogue.show();
     }
     private void CancelDevice(){
         if(!isConnected){
@@ -232,7 +235,9 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                     str = str + "\nSpeed: " + speedCommand.getFormattedResult();
                     Log.e("OBD","RPM:" + rpmCommand.getFormattedResult());
                     Log.e("OBD","Speed:" + speedCommand.getFormattedResult());
-                    showNoDeviceConnectedError("Success", str);
+                    //showNoDeviceConnectedError("Success", str);
+                    InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
+                    dialogue.show();
                 }
             } catch (Exception e) {
                 showNoDeviceConnectedError("ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
