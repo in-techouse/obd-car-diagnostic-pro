@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 
 import lcwu.fyp.obdcardiagnosticpro.R;
 
 public class InfoDialogue extends Dialog implements View.OnClickListener {
+    private Button close;
     public InfoDialogue(@NonNull Activity activity) {
         super(activity);
     }
@@ -20,10 +22,18 @@ public class InfoDialogue extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.info_dialoguebox);
+        close = findViewById(R.id.close);
+        close.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.close:
+                dismiss();
+                break;
+        }
+
 
     }
 }
