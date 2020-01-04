@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.pires.obd.commands.SpeedCommand;
@@ -49,6 +50,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
+
     private BluetoothSocket socket = null;
 
     private ArrayList<String> deviceStrs = new ArrayList();

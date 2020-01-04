@@ -9,6 +9,16 @@
     android:paddingStart="13dp"
     android:paddingEnd="13dp"
     android:paddingBottom="3dp">
+    <TextView
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_margin="12dp"
+        android:id="@+id/label"
+        android:textColor="@color/colorPrimary"></TextView>
     <com.github.capur16.digitspeedviewlib.DigitSpeedView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +28,7 @@
         app:speed="3000"
         app:speedTextColor="@android:color/holo_blue_light"
         app:speedTextSize="20dp"
-        app:unit="mph"
+        app:unit="rpm"
         app:unitTextColor="@android:color/holo_blue_light"
         app:unitTextSize="5dp" />
     <Button
@@ -28,4 +38,5 @@
         android:text="close"
         android:layout_marginTop="22dp"
         android:layout_gravity="center"/>
+
 </LinearLayout>
