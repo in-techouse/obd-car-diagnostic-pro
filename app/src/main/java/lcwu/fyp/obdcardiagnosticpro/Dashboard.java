@@ -207,12 +207,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private void readCarData(){
         if(isConnected && socket.isConnected()){
             try {
-                 rpm = helper.getRPMdata(socket);
-                 speed = helper.getSpeeddata(socket);
-                 Session session=new Session(Dashboard.this);
-                 session.setRPM(rpm);
-                 session.setSpeed(speed);
-
+                rpm = helper.getRPMdata(socket);
+                speed = helper.getSpeeddata(socket);
+                Session session=new Session(Dashboard.this);
+                session.setRPM(rpm);
+                session.setSpeed(speed);
+                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
             } catch (Exception e) {
                 helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
             }
