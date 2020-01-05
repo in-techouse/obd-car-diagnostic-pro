@@ -45,18 +45,4 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_above="@id/bottomLayout"
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_margin="12dp"
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </RelativeLayout>

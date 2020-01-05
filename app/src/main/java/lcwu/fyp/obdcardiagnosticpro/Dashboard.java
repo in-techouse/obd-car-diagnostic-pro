@@ -45,8 +45,6 @@ import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private static final int REQUEST_ENABLE_BT = 1; // Unique request code
     private Button connect,scan,cancel;
-    private RecyclerView list;
-    private SwipeRefreshLayout refreshLayout;
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
@@ -65,14 +63,14 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         cancel=findViewById(R.id.cancel);
         isConnected = false;
 
-        list = findViewById(R.id.list);
-        refreshLayout = findViewById(R.id.refreshLayout);
-        list.setHasFixedSize(true);
-        list.setLayoutManager(new LinearLayoutManager(this));
+//           list = findViewById(R.id.list);
+
+//        list.setHasFixedSize(true);
+//        list.setLayoutManager(new LinearLayoutManager(this));
         data = new ArrayList<>();
         adapter = new ODBBluetoothAdapter(Dashboard.this);
-        refreshLayout.setOnRefreshListener(this);
-        list.setAdapter(adapter);
+//        refreshLayout.setOnRefreshListener(this);
+//        list.setAdapter(adapter);
         getBluetoothDevices();
         connect.setOnClickListener(this);
         scan.setOnClickListener(this);
@@ -85,7 +83,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         data.clear();
         adapter.setBluetoothList(data);
         getBluetoothDevices();
-        refreshLayout.setRefreshing(false);
+//        refreshLayout.setRefreshing(false);
     }
 
     private void getBluetoothDevices(){
