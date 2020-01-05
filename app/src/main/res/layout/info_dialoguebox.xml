@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="13dp"
-    android:paddingTop="13dp"
+    android:paddingTop="3dp"
     android:paddingStart="13dp"
     android:paddingEnd="13dp"
     android:paddingBottom="3dp">
@@ -15,10 +15,10 @@
         android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:layout_margin="12dp"
+        android:paddingBottom="12dp"
+        android:layout_marginBottom="12dp"
         android:id="@+id/label"
-        android:textColor="@color/colorPrimary"></TextView>
+        android:textColor="@color/colorPrimary"/>
     <com.github.capur16.digitspeedviewlib.DigitSpeedView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
