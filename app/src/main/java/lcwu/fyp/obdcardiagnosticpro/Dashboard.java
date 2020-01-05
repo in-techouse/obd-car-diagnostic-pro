@@ -34,19 +34,20 @@ import java.util.Set;
 import java.util.UUID;
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.dialogue_box.InfoDialogue;
+import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
-public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class Dashboard extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_ENABLE_BT = 1; // Unique request code
     private Button connect,scan,cancel;
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
-
+    private Helpers helper;
     private BluetoothSocket socket = null;
-
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
+    private String rpm,speed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         scan=findViewById(R.id.scan);
         cancel=findViewById(R.id.cancel);
         isConnected = false;
+        helper = new Helpers();
 
 //           list = findViewById(R.id.list);
 
@@ -69,15 +71,6 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
         connect.setOnClickListener(this);
         scan.setOnClickListener(this);
         cancel.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onRefresh() {
-        data.clear();
-        adapter.setBluetoothList(data);
-        getBluetoothDevices();
-//        refreshLayout.setRefreshing(false);
     }
 
     private void getBluetoothDevices(){
@@ -132,14 +125,14 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                 ConnectDevice();
             } else if (resultCode == RESULT_CANCELED) {
                 // Bluetooth was not enabled
-                showNoDeviceConnectedError("ERROR", "Bluetooth is not enabled.");
+                helper.showError( Dashboard.this,"ERROR", "Bluetooth is not enabled.");
             }
         }
     }
 
     private void ConnectDevice(){
         if (isConnected){
-            showNoDeviceConnectedError("ERROR","Already Connected");
+            helper.showError(Dashboard.this,"ERROR","Already Connected");
             return;
         }
         getAllDevices();
@@ -181,11 +174,11 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
                     socket.connect();
                     if(socket.isConnected()){
                         isConnected = true;
-                        showNoDeviceConnectedError("SUCCESS", "Successfully Connected");
+                       helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
                     }
 
                 } catch (IOException e) {
-                    showNoDeviceConnectedError("ERROR", "Error Occur while connecting to the device: " + e.getMessage());
+                   helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -196,17 +189,17 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     }
 
     private void ScanDevice() {
-//        if (!isConnected ) {
-//            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-//            return;
-//        }
-//        readCarData();
+        if (!isConnected ) {
+            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+            return;
+        }
+        readCarData();
         InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
         dialogue.show();
     }
     private void CancelDevice(){
         if(!isConnected){
-            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
     }
@@ -214,56 +207,19 @@ public class Dashboard extends AppCompatActivity implements SwipeRefreshLayout.O
     private void readCarData(){
         if(isConnected && socket.isConnected()){
             try {
-                new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
-                new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
-                new TimeoutCommand(1).run(socket.getInputStream(), socket.getOutputStream());
+                 rpm = helper.getRPMdata(socket);
+                 speed = helper.getSpeeddata(socket);
+                 Session session=new Session(Dashboard.this);
+                 session.setRPM(rpm);
+                 session.setSpeed(speed);
 
-                new SelectProtocolCommand(ObdProtocols.AUTO).run(socket.getInputStream(), socket.getOutputStream());
-                RPMCommand rpmCommand = new RPMCommand();
-                SpeedCommand speedCommand = new SpeedCommand();
-                String str = "";
-                while (!Thread.currentThread().isInterrupted()) {
-                    rpmCommand.run(socket.getInputStream(),socket.getOutputStream());
-                    speedCommand.run(socket.getInputStream(),socket.getOutputStream());
-                    str = str + "\nRPM: " + rpmCommand.getFormattedResult();
-                    str = str + "\nSpeed: " + speedCommand.getFormattedResult();
-                    Log.e("OBD","RPM:" + rpmCommand.getFormattedResult());
-                    Log.e("OBD","Speed:" + speedCommand.getFormattedResult());
-                    //showNoDeviceConnectedError("Success", str);
-                    InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
-                    dialogue.show();
-                }
             } catch (Exception e) {
-                showNoDeviceConnectedError("ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
             }
         }
         else{
-            showNoDeviceConnectedError("ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
         }
     }
 
-    private void showNoDeviceConnectedError(String title,String Message){
-        new FancyAlertDialog.Builder(Dashboard.this)
-                .setTitle(title)
-                .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
-                .setMessage(Message)
-                .setNegativeBtnText("Cancel")
-                .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
-                .setPositiveBtnText("Okay")
-                .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
-                .setAnimation(Animation.POP)
-                .isCancellable(true)
-                .setIcon(R.drawable.ic_star_border_black_24dp, Icon.Visible)
-                .OnPositiveClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                    }
-                })
-                .OnNegativeClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                    }
-                })
-                .build();
-    }
 }
