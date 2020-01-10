@@ -17,6 +17,6 @@ public class TestActivity extends AppCompatActivity {
         String str = session.getRPM();
         String str1 = session.getSpeed();
 
-        text.setText("RPM: " + str + "\n\nSPEED: " + str1);
+        text.setText("Final RPM: " + str + "\n\nFinal SPEED: " + str1);
     }
 }

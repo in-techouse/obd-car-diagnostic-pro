@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
-import lcwu.fyp.obdcardiagnosticpro.dialogue_box.InfoDialogue;
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
