@@ -19,22 +19,22 @@ public class Session {
     }
 
     public void setRPM(String str){
+        str = "Old Value: " + getRPM() + "\n" + str;
         editor.putString("rpm", str);
         editor.commit();
     }
 
     public String getRPM(){
-        String value = preferences.getString("rpm", "*");
-        return value;
+        return preferences.getString("rpm", "*");
     }
 
     public void setSpeed(String str){
+        str = "Old Value: " + getSpeed() + "\n" + str;
         editor.putString("speed", str);
         editor.commit();
     }
 
     public String getSpeed(){
-        String value = preferences.getString("speed", "*");
-        return value;
+        return preferences.getString("speed", "*");
     }
 }

@@ -72,7 +72,7 @@ public class Helpers
                 })
                 .build();
     }
-    public String getRPMdata(BluetoothSocket socket)  throws Exception
+    public String getRPMData(BluetoothSocket socket)  throws Exception
     {
         new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
         new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
@@ -87,7 +87,7 @@ public class Helpers
         }
         return str;
     }
-    public String getSpeeddata(BluetoothSocket socket)  throws Exception
+    public String getSpeedData(BluetoothSocket socket)  throws Exception
     {
         new EchoOffCommand().run(socket.getInputStream(), socket.getOutputStream());
         new LineFeedOffCommand().run(socket.getInputStream(), socket.getOutputStream());
