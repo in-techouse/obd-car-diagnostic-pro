@@ -104,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:textAlignment="center"
-                            android:text="ENGINE_TEMPERATURE"
+                            android:text="ENGINE TEMPERATURE"
                             android:textStyle="bold"
                             android:paddingBottom="10dp">
                         </TextView>
