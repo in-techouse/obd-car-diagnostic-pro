@@ -13,5 +13,10 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         text=findViewById(R.id.text);
+        Session session = new Session(TestActivity.this);
+        String str = session.getRPM();
+        String str1 = session.getSpeed();
+
+        text.setText("RPM: " + str + "\n\nSPEED: " + str1);
     }
 }

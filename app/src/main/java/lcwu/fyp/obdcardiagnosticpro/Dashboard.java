@@ -58,15 +58,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         cancel=findViewById(R.id.cancel);
         isConnected = false;
         helper = new Helpers();
-
-//           list = findViewById(R.id.list);
-
-//        list.setHasFixedSize(true);
-//        list.setLayoutManager(new LinearLayoutManager(this));
         data = new ArrayList<>();
         adapter = new ODBBluetoothAdapter(Dashboard.this);
-//        refreshLayout.setOnRefreshListener(this);
-//        list.setAdapter(adapter);
         getBluetoothDevices();
         connect.setOnClickListener(this);
         scan.setOnClickListener(this);
@@ -87,7 +80,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             object.setName(bt.getName());
             data.add(object);
         }
-
         adapter.setBluetoothList(data);
     }
 
@@ -98,6 +90,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         switch(id){
             case R.id.connect:
             {
+//                Intent intent = new Intent(Dashboard.this,TestActivity.class);
+//                startActivity(intent);
                 ConnectDevice();
                 break;
             }
@@ -122,7 +116,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == RESULT_OK) {
-                ConnectDevice();
+                getBluetoothDevices();
             } else if (resultCode == RESULT_CANCELED) {
                 // Bluetooth was not enabled
                 helper.showError( Dashboard.this,"ERROR", "Bluetooth is not enabled.");
@@ -135,7 +129,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             helper.showError(Dashboard.this,"ERROR","Already Connected");
             return;
         }
-        getAllDevices();
+        else{
+            getAllDevices();
+        }
     }
 
     private void getAllDevices(){
@@ -194,8 +190,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             return;
         }
         readCarData();
-        InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
-        dialogue.show();
+//        InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
+//        dialogue.show();
     }
     private void CancelDevice(){
         if(!isConnected){
@@ -205,20 +201,29 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     }
 
     private void readCarData(){
+        Session session = new Session(Dashboard.this);
         if(isConnected && socket.isConnected()){
             try {
                 rpm = helper.getRPMdata(socket);
-                speed = helper.getSpeeddata(socket);
-                Session session=new Session(Dashboard.this);
                 session.setRPM(rpm);
+                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
+            } catch (Exception e) {
+                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+                session.setRPM("RPM ERROR: " + e.getMessage());
+            }
+            try {
+                speed = helper.getSpeeddata(socket);
                 session.setSpeed(speed);
                 helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
             } catch (Exception e) {
                 helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+                session.setRPM("SPEED ERROR: " + e.getMessage());
             }
         }
         else{
             helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+//            session.setRPM("SPEED ERROR: " + e.getMessage());
+
         }
     }
 
