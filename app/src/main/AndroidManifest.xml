@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".AllSensors"></activity>
+        <activity android:name=".LiveData" />
+        <activity android:name=".MainDashboard" />
+        <activity android:name=".TestActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">

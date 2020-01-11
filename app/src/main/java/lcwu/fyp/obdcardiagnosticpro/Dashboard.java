@@ -105,6 +105,30 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 CancelDevice();
                 break;
             }
+            case R.id.dashboard:{
+                Intent intent=new Intent(Dashboard.this,MainDashboard.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.all_sensor:{
+                Intent intent=new Intent(Dashboard.this,AllSensors.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.rpm:{
+                break;
+            }
+            case R.id.engine_temperature:{
+                break;
+            }
+            case R.id.speed:{
+                break;
+            }
+            case R.id.live_data:{
+                Intent intent=new Intent(Dashboard.this,LiveData.class);
+                startActivity(intent);
+                break;
+            }
 
         }
     }
