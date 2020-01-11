@@ -2,6 +2,8 @@ package lcwu.fyp.obdcardiagnosticpro;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -32,6 +34,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
     private String rpm,speed;
+    private CardView dashboard,livedata,allsensor,card_rpm,card_speed,enginetemprature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         connect=findViewById(R.id.connect);
         scan=findViewById(R.id.scan);
         cancel=findViewById(R.id.cancel);
+        dashboard=findViewById(R.id.dashboard);
+        livedata=findViewById(R.id.live_data);
+        allsensor=findViewById(R.id.all_sensor);
+        card_rpm=findViewById(R.id.rpm);
+        card_speed= findViewById(R.id.speed);
+        enginetemprature=findViewById(R.id.engine_temperature);
         isConnected = false;
         helper = new Helpers();
         data = new ArrayList<>();
@@ -48,6 +57,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         connect.setOnClickListener(this);
         scan.setOnClickListener(this);
         cancel.setOnClickListener(this);
+        dashboard.setOnClickListener(this);
+        livedata.setOnClickListener(this);
+        allsensor.setOnClickListener(this);
+        card_rpm.setOnClickListener(this);
+        card_speed.setOnClickListener(this);
+        enginetemprature.setOnClickListener(this);
     }
 
     private void getBluetoothDevices(){
