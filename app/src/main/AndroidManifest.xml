@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="lcwu.fyp.obdcardiagnosticpro">
 
@@ -16,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AllSensors"></activity>
-        <activity android:name=".LiveData" />
-        <activity android:name=".MainDashboard" />
-        <activity android:name=".TestActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
@@ -30,6 +27,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Dashboard" />
+        <activity android:name=".AllSensors" android:parentActivityName=".Dashboard"/>
+        <activity android:name=".LiveData" android:parentActivityName=".Dashboard" />
+        <activity android:name=".MainDashboard" android:parentActivityName=".Dashboard" />
+        <activity android:name=".TestActivity" android:parentActivityName=".Dashboard" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package lcwu.fyp.obdcardiagnosticpro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class TestActivity extends AppCompatActivity {
@@ -18,5 +19,21 @@ public class TestActivity extends AppCompatActivity {
         String str1 = session.getSpeed();
 
         text.setText("Final RPM: " + str + "\n\nFinal SPEED: " + str1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                finish();
+                break;
+            }
+        }
+        return true;
     }
 }
