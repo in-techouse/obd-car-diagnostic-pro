@@ -30,6 +30,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:29.0.0'
     implementation 'com.android.support:cardview-v7:29.0.0'
     implementation 'com.github.Shashank02051997:FancyAlertDialog-Android:0.1'
-    implementation 'com.github.pires:obd-java-api:1.0'
+//    implementation 'com.github.pires:obd-java-api:1.0'
     implementation 'com.github.capur16:digitspeedviewlib:1.0.3'
+    implementation 'com.github.pires:obd-java-api:1.0-RC14'
 }

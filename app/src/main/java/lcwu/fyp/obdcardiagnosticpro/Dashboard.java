@@ -152,9 +152,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             helper.showError(Dashboard.this,"ERROR","Already Connected");
             return;
         }
-        else{
-            getAllDevices();
-        }
+        getAllDevices();
     }
 
     private void getAllDevices(){
@@ -227,21 +225,21 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     private void readCarData(){
         Session session = new Session(Dashboard.this);
-        try {
-            socket.connect();
-            if(socket.isConnected()){
-                isConnected = true;
-                helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
-            }
-            else{
-                helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
-            }
-
-        } catch (IOException e) {
-            helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
-            e.printStackTrace();
-        }
-        if(isConnected && socket.isConnected()){
+//        try {
+//            socket.connect();
+//            if(socket.isConnected()){
+//                isConnected = true;
+//                helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
+//            }
+//            else{
+//                helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
+//            }
+//
+//        } catch (IOException e) {
+//            helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+        if(isConnected){
             try {
                 rpm = helper.getRPMData(socket);
                 session.setRPM("readCarData: " + rpm);
