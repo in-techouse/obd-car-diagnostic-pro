@@ -16,19 +16,128 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center" />
-
-         <com.github.capur16.digitspeedviewlib.DigitSpeedView
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:weightSum="2"
+             android:orientation="horizontal">
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_weight="1">
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:textAlignment="gravity"
+                     android:gravity="center"
+                     android:textStyle="bold"
+                     android:text="RPM"/>
+             <com.github.capur16.digitspeedviewlib.DigitSpeedView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
+             android:id="@+id/RpmReading"
+             android:layout_margin="5dp"
              app:backgroundColor="@color/colorPrimary"
              app:disableBackgroundImage="false"
              app:showUnit="true"
-             app:speed="3000"
+             app:speed="300"
              app:speedTextColor="@android:color/holo_blue_light"
              app:speedTextSize="20dp"
              app:unit="rpm"
              app:unitTextColor="@android:color/holo_blue_light"
-             app:unitTextSize="5dp" />
+             app:unitTextSize="10dp" />
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_weight="1">
+                 <TextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:textAlignment="gravity"
+                     android:gravity="center"
+                     android:textStyle="bold"
+                     android:text="Engine Load"/>
+                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/EngineLoad"
+                     android:layout_margin="5dp"
+                     app:backgroundColor="@color/colorPrimary"
+                     app:disableBackgroundImage="false"
+                     app:showUnit="true"
+                     app:speed="300"
+                     app:speedTextColor="@android:color/holo_blue_light"
+                     app:speedTextSize="20dp"
+                     app:unit="%"
+                     app:unitTextColor="@android:color/holo_blue_light"
+                     app:unitTextSize="10dp" />
+             </LinearLayout>
+         </LinearLayout>
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:weightSum="2">
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_weight="1">
+                 <TextView
+                     android:textStyle="bold"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="Air Intake Temperature"
+                     android:padding="5dp"
+                     android:textAlignment="gravity"
+                     android:gravity="center"/>
+                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/IntakeTemp"
+                     android:layout_margin="5dp"
+                     app:backgroundColor="@color/colorPrimary"
+                     app:disableBackgroundImage="false"
+                     app:showUnit="true"
+                     app:speed="70"
+                     app:speedTextColor="@android:color/holo_blue_light"
+                     app:speedTextSize="20dp"
+                     app:unit="°C"
+                     app:unitTextColor="@android:color/holo_blue_light"
+                     app:unitTextSize="10dp" />
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_weight="1">
+                 <TextView
+                     android:textStyle="bold"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="Engine Coolent Temperature"
+                     android:padding="5dp"
+                     android:textAlignment="gravity"
+                     android:gravity="center"/>
+                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/EngineTemp"
+                     android:layout_margin="5dp"
+                     app:backgroundColor="@color/colorPrimary"
+                     app:disableBackgroundImage="false"
+                     app:showUnit="true"
+                     app:speed="70"
+                     app:speedTextColor="@android:color/holo_blue_light"
+                     app:speedTextSize="20dp"
+                     app:unit="°C"
+                     app:unitTextColor="@android:color/holo_blue_light"
+                     app:unitTextSize="10dp" />
+             </LinearLayout>
+         </LinearLayout>
 
      </LinearLayout>
 
