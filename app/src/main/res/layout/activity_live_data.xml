@@ -6,32 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".LiveData"
     android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    >
- <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:orientation="vertical">
-     <com.github.anastr.speedviewlib.SpeedView
-         android:id="@+id/speedView"
-         android:layout_width="wrap_content"
+    android:paddingBottom="20dp">
+     <LinearLayout
+         android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:layout_gravity="center"
-         />
-     <com.github.capur16.digitspeedviewlib.DigitSpeedView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         android:orientation="vertical">
+         <com.github.anastr.speedviewlib.SpeedView
+             android:id="@+id/speedView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center" />
 
-         app:backgroundColor="@color/colorPrimary"
-         app:disableBackgroundImage="false"
-         app:showUnit="true"
-         app:speed="3000"
-         app:speedTextColor="@android:color/holo_blue_light"
-         app:speedTextSize="20dp"
-         app:unit="rpm"
-         app:unitTextColor="@android:color/holo_blue_light"
-         app:unitTextSize="5dp" />
+         <com.github.capur16.digitspeedviewlib.DigitSpeedView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             app:backgroundColor="@color/colorPrimary"
+             app:disableBackgroundImage="false"
+             app:showUnit="true"
+             app:speed="3000"
+             app:speedTextColor="@android:color/holo_blue_light"
+             app:speedTextSize="20dp"
+             app:unit="rpm"
+             app:unitTextColor="@android:color/holo_blue_light"
+             app:unitTextSize="5dp" />
 
- </LinearLayout>
+     </LinearLayout>
 
 </ScrollView>
