@@ -27,7 +27,7 @@ public class Helpers
    public void showError(Activity activity, String title, String Message){
         new FancyAlertDialog.Builder(activity)
                 .setTitle(title)
-                .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
+                .setBackgroundColor(Color.parseColor(" #ec7063"))  //Don't pass R.color.colorvalue
                 .setMessage(Message)
                 .setNegativeBtnText("Cancel")
                 .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
@@ -35,7 +35,7 @@ public class Helpers
                 .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
                 .setAnimation(Animation.POP)
                 .isCancellable(true)
-                .setIcon(R.drawable.ic_star_border_black_24dp, Icon.Visible)
+                .setIcon(R.drawable.error, Icon.Visible)
                 .OnPositiveClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
@@ -51,7 +51,7 @@ public class Helpers
     public void showSuccess(Activity activity, String title, String Message){
         new FancyAlertDialog.Builder(activity)
                 .setTitle(title)
-                .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
+                .setBackgroundColor(Color.parseColor("#58d68d"))  //Don't pass R.color.colorvalue
                 .setMessage(Message)
                 .setNegativeBtnText("Cancel")
                 .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
@@ -59,7 +59,7 @@ public class Helpers
                 .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
                 .setAnimation(Animation.POP)
                 .isCancellable(true)
-                .setIcon(R.drawable.ic_star_border_black_24dp, Icon.Visible)
+                .setIcon(R.drawable.success, Icon.Visible)
                 .OnPositiveClicked(new FancyAlertDialogListener() {
                     @Override
                     public void OnClick() {
