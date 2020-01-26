@@ -90,7 +90,7 @@
                      android:textStyle="bold"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:text="Air Intake Temperature"
+                     android:text="Air Intake"
                      android:padding="5dp"
                      android:textAlignment="gravity"
                      android:gravity="center"/>
@@ -118,7 +118,7 @@
                      android:textStyle="bold"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:text="Engine Coolent Temperature"
+                     android:text="Engine Coolant"
                      android:padding="5dp"
                      android:textAlignment="gravity"
                      android:gravity="center"/>
