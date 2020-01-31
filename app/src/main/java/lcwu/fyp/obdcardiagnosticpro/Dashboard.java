@@ -34,7 +34,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
     private String rpm,speed;
-    private CardView dashboard,livedata,allsensor,card_rpm,card_speed,enginetemprature;
+    private CardView dashboard,livedata,allsensor,card_rpm,card_speed,enginetemprature,AccelerationTests,AirIntakeTemp,DiagnosticTrouble;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         dashboard=findViewById(R.id.dashboard);
         livedata=findViewById(R.id.live_data);
         allsensor=findViewById(R.id.all_sensor);
+        AccelerationTests=findViewById(R.id.AccelerationTests);
+        AirIntakeTemp =findViewById(R.id.AirIntakeTemp);
+        DiagnosticTrouble =findViewById(R.id.DiagnosticTrouble);
         card_rpm=findViewById(R.id.rpm);
         card_speed= findViewById(R.id.speed);
         enginetemprature=findViewById(R.id.engine_temperature);
@@ -63,6 +66,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         card_rpm.setOnClickListener(this);
         card_speed.setOnClickListener(this);
         enginetemprature.setOnClickListener(this);
+        AccelerationTests.setOnClickListener(this);
+        AirIntakeTemp.setOnClickListener(this);
+        DiagnosticTrouble.setOnClickListener(this);
     }
 
     private void getBluetoothDevices(){
@@ -127,6 +133,15 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             case R.id.live_data:{
                 Intent intent=new Intent(Dashboard.this,LiveData.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.AccelerationTests:{
+                break;
+            }
+            case R.id.AirIntakeTemp:{
+                break;
+            }
+            case R.id.DiagnosticTrouble:{
                 break;
             }
 
