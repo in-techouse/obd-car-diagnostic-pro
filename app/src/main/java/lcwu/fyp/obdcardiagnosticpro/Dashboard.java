@@ -95,9 +95,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         switch(id){
             case R.id.connect:
             {
-//                Intent intent = new Intent(Dashboard.this,TestActivity.class);
-//                startActivity(intent);
-                ConnectDevice();
+                Intent intent = new Intent(Dashboard.this,TestActivity.class);
+                startActivity(intent);
+//                ConnectDevice();
                 break;
             }
 
