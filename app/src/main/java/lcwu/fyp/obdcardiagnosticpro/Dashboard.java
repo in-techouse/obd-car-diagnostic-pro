@@ -66,7 +66,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }else {
                 }
                 }else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
-            }
+                }
 
             }
         };
