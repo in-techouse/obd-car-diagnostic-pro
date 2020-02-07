@@ -6,12 +6,23 @@ import androidx.cardview.widget.CardView;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.Toast;
+
+import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
+import com.sohrab.obd.reader.service.ObdReaderService;
+import com.sohrab.obd.reader.trip.TripRecord;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +31,9 @@ import java.util.UUID;
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
+
+import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
+import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
 public class Dashboard extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_ENABLE_BT = 1; // Unique request code
@@ -34,7 +48,28 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private ArrayList<String> devices = new ArrayList();
     private String rpm,speed;
     private CardView dashboard,livedata,allsensor,card_rpm,card_speed,enginetemprature,AccelerationTests,AirIntakeTemp,DiagnosticTrouble;
+    private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e("MY-OBD","Receiver Starts");
+            String action = intent.getAction();
+            Log.e("MY-OBD","Action:" + action);
+            if (action==null){
+                return;
+            }
+            if(action.equals(ACTION_OBD_CONNECTION_STATUS)){
+                String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
+                Toast.makeText(Dashboard.this,connectionStatusMsg, Toast.LENGTH_SHORT).show();
+                if(connectionStatusMsg.equals("OBD Connected")) {
+                }
+                else if (connectionStatusMsg.equals("Connect Lost")){
+                }else {
+                }
+                }else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
+            }
 
+            }
+        };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +129,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         switch(id){
             case R.id.connect:
             {
-                Intent intent = new Intent(Dashboard.this,TestActivity.class);
-                startActivity(intent);
-//                ConnectDevice();
+                //Intent intent = new Intent(Dashboard.this,TestActivity.class);
+               // startActivity(intent);
+                ConnectDevice();
                 break;
             }
 
@@ -199,21 +234,26 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 // TODO save deviceAddress
                 BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
                 BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
-                try {
-                    socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
-                    socket.connect();
-                    if(socket.isConnected()){
-                        isConnected = true;
-                       helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
-                    }
-                    else{
-                        helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
-                    }
-
-                } catch (IOException e) {
-                   helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
-                    e.printStackTrace();
-                }
+                ObdConfiguration.setmObdCommands(Dashboard.this,null);
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
+                intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
+                registerReceiver(mObdReaderReceiver,intentFilter);
+//                try {
+//                    socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
+//                    socket.connect();
+//                    if(socket.isConnected()){
+//                        isConnected = true;
+//                       helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
+//                    }
+//                    else{
+//                        helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
+//                    }
+//
+//                } catch (IOException e) {
+//                   helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
+//                    e.printStackTrace();
+//                }
             }
         });
 
