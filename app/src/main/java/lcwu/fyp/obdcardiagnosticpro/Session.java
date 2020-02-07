@@ -6,14 +6,12 @@ import android.preference.PreferenceManager;
 
 
 public class Session {
-    private Context context;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
 
     public Session(Context c){
-        context = c;
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences = PreferenceManager.getDefaultSharedPreferences(c);
         editor = preferences.edit();
 
     }

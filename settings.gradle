@@ -1,1 +1,1 @@
-include ':app', ':obd-java-api'
+include ':app', ':obd-reader'
