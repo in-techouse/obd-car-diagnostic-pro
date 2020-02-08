@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -105,6 +106,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         AccelerationTests.setOnClickListener(this);
         AirIntakeTemp.setOnClickListener(this);
         DiagnosticTrouble.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard_menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void getBluetoothDevices(){
