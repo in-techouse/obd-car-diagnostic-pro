@@ -7,7 +7,29 @@
     tools:context=".LiveData"
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/progress"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ProgressBar
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textAlignment="center"
+                android:text="Connecting..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
      <LinearLayout
+         android:id="@+id/main"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:orientation="vertical">
@@ -140,5 +162,7 @@
          </LinearLayout>
 
      </LinearLayout>
+    </RelativeLayout>
+
 
 </ScrollView>

@@ -49,6 +49,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private ArrayList<String> devices = new ArrayList();
     private String rpm,speed;
     private CardView dashboard,livedata,allsensor,card_rpm,card_speed,enginetemprature,AccelerationTests,AirIntakeTemp,DiagnosticTrouble;
+    private Menu menu;
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -62,8 +63,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
                 Toast.makeText(Dashboard.this,connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if(connectionStatusMsg.equals("OBD Connected")) {
+                    getMenuInflater().inflate(R.menu.dashboard_connected_menu,menu);
                 }
+
                 else if (connectionStatusMsg.equals("Connect Lost")){
+                    getMenuInflater().inflate(R.menu.dashboard_menu,menu);
                 }else {
                 }
                 }else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
@@ -110,6 +114,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu=menu;
         getMenuInflater().inflate(R.menu.dashboard_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
