@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
+import com.sohrab.obd.reader.application.ObdPreferences;
 import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
@@ -51,7 +52,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             Log.e("MY-OBD","Receiver Starts");
             String action = intent.getAction();
             Log.e("MY-OBD","Action:" + action);
-            if (action==null){
+            if (action == null){
                 return;
             }
             if(action.equals(ACTION_OBD_CONNECTION_STATUS)){
@@ -61,15 +62,19 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     getMenuInflater().inflate(R.menu.dashboard_menu,menu);
                 }
                 else if(connectionStatusMsg.equals(getString(R.string.obd_connected))) {
+                    isConnected = true;
                     getMenuInflater().inflate(R.menu.dashboard_connected_menu,menu);
                 }
 
                 else if (connectionStatusMsg.equals(getString(R.string.connect_lost))){
                     getMenuInflater().inflate(R.menu.dashboard_menu,menu);
-                }else {
+                }
+                else {
+                    Toast.makeText(Dashboard.this,  "Connection Status: " + connectionStatusMsg, Toast.LENGTH_LONG).show();
                 }
             }
             else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
+                isConnected = true;
                 TripRecord tripRecord = TripRecord.getTripRecode(Dashboard.this);
             }
 
@@ -246,11 +251,21 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 // TODO save deviceAddress
                 BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
                 BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
-                ObdConfiguration.setmObdCommands(Dashboard.this,null);
+
+
+                ObdConfiguration.setmObdCommands(Dashboard.this, null);
+                float gasPrice = 7;
+                ObdPreferences.get(Dashboard.this).setGasPrice(gasPrice);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
                 intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
-                registerReceiver(mObdReaderReceiver,intentFilter);
+                registerReceiver(mObdReaderReceiver, intentFilter);
+                startService(new Intent(Dashboard.this, ObdReaderService.class));
+//                ObdConfiguration.setmObdCommands(Dashboard.this,null);
+//                IntentFilter intentFilter = new IntentFilter();
+//                intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
+//                intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
+//                registerReceiver(mObdReaderReceiver,intentFilter);
 //                try {
 //                    socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
 //                    socket.connect();
@@ -278,85 +293,102 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
-        readCarData();
+        Toast.makeText(Dashboard.this, "Scanning...", Toast.LENGTH_LONG).show();
+//        readCarData();
 //        InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
 //        dialogue.show();
     }
+
     private void CancelDevice(){
         if(!isConnected){
             helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
+        unregisterReceiver(mObdReaderReceiver);
+        stopService(new Intent(this, ObdReaderService.class));
+        ObdPreferences.get(this).setServiceRunningStatus(false);
+        isConnected = false;
     }
 
-    private void readCarData(){
-        Session session = new Session(Dashboard.this);
-//        try {
-//            socket.connect();
-//            if(socket.isConnected()){
-//                isConnected = true;
-//                helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
+//    private void readCarData(){
+//        Session session = new Session(Dashboard.this);
+////        try {
+////            socket.connect();
+////            if(socket.isConnected()){
+////                isConnected = true;
+////                helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
+////            }
+////            else{
+////                helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
+////            }
+////
+////        } catch (IOException e) {
+////            helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
+////            e.printStackTrace();
+////        }
+//        if(isConnected){
+//            try {
+//                rpm = helper.getRPMData(socket);
+//                session.setRPM("readCarData: " + rpm);
+//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
+//            } catch (Exception e) {
+//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+//                session.setRPM("readCarData RPM ERROR: " + e.getMessage());
 //            }
-//            else{
-//                helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
+//            try {
+//                speed = helper.getSpeedData(socket);
+//                session.setSpeed("readCarData: " + speed);
+//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
+//            } catch (Exception e) {
+//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+//                session.setSpeed("readCarData SPEED ERROR: " + e.getMessage());
 //            }
-//
-//        } catch (IOException e) {
-//            helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
-//            e.printStackTrace();
 //        }
-        if(isConnected){
-            try {
-                rpm = helper.getRPMData(socket);
-                session.setRPM("readCarData: " + rpm);
-                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-            } catch (Exception e) {
-                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-                session.setRPM("readCarData RPM ERROR: " + e.getMessage());
-            }
-            try {
-                speed = helper.getSpeedData(socket);
-                session.setSpeed("readCarData: " + speed);
-                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-            } catch (Exception e) {
-                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-                session.setSpeed("readCarData SPEED ERROR: " + e.getMessage());
-            }
-        }
-        else{
-            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-            session.setRPM("readCarData RPM ERROR: Device not connected");
-            session.setSpeed("readCarData SPEED ERROR: Device not connected");
-        }
-        readCarData1();
-    }
+//        else{
+//            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+//            session.setRPM("readCarData RPM ERROR: Device not connected");
+//            session.setSpeed("readCarData SPEED ERROR: Device not connected");
+//        }
+//        readCarData1();
+//    }
 
-    private void readCarData1(){
-        Session session = new Session(Dashboard.this);
-        if(isConnected){
-            try {
-                rpm = helper.getRPMData(socket);
-                session.setRPM("readCarData1: " + rpm);
-                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-            } catch (Exception e) {
-                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-                session.setRPM("readCarData1RPM ERROR: " + e.getMessage());
-            }
-            try {
-                speed = helper.getSpeedData(socket);
-                session.setSpeed("readCarData1: " +speed);
-                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-            } catch (Exception e) {
-                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-                session.setSpeed("readCarData1 SPEED ERROR: " + e.getMessage());
-            }
-        }
-        else{
-            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-            session.setRPM("readCarData1 RPM ERROR: Device not connected");
-            session.setSpeed("readCarData1 SPEED ERROR: Device not connected");
+//    private void readCarData1(){
+//        Session session = new Session(Dashboard.this);
+//        if(isConnected){
+//            try {
+//                rpm = helper.getRPMData(socket);
+//                session.setRPM("readCarData1: " + rpm);
+//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
+//            } catch (Exception e) {
+//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+//                session.setRPM("readCarData1RPM ERROR: " + e.getMessage());
+//            }
+//            try {
+//                speed = helper.getSpeedData(socket);
+//                session.setSpeed("readCarData1: " +speed);
+//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
+//            } catch (Exception e) {
+//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
+//                session.setSpeed("readCarData1 SPEED ERROR: " + e.getMessage());
+//            }
+//        }
+//        else{
+//            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+//            session.setRPM("readCarData1 RPM ERROR: Device not connected");
+//            session.setSpeed("readCarData1 SPEED ERROR: Device not connected");
+//
+//        }
+//    }
 
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //unregister receiver
+        unregisterReceiver(mObdReaderReceiver);
+        //stop service
+        stopService(new Intent(this, ObdReaderService.class));
+        // This will stop background thread if any running immediately.
+        ObdPreferences.get(this).setServiceRunningStatus(false);
     }
 
 }

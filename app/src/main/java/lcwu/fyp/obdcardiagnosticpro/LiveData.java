@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.github.anastr.speedviewlib.SpeedView;
 import com.github.capur16.digitspeedviewlib.DigitSpeedView;
+import com.sohrab.obd.reader.application.ObdPreferences;
 import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
@@ -49,12 +50,13 @@ public class LiveData extends AppCompatActivity {
                     main.setVisibility(View.VISIBLE);
                 }
 
-                else if (connectionStatusMsg.equals(getString(R.string.connect_lost))){
-                    getMenuInflater().inflate(R.menu.dashboard_menu,menu);
+                else if (connectionStatusMsg.equals(getString(R.string.connect_lost))) {
+                    getMenuInflater().inflate(R.menu.dashboard_menu, menu);
                     main.setVisibility(View.INVISIBLE);
                     progress.setVisibility(View.VISIBLE);
-                }else {
-
+                }
+                else {
+                        Toast.makeText(LiveData.this,  "Connection Status: " + connectionStatusMsg, Toast.LENGTH_LONG).show();
                 }
             }else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
                 TripRecord tripRecord = TripRecord.getTripRecode(LiveData.this);
@@ -94,12 +96,22 @@ public class LiveData extends AppCompatActivity {
         intakeTemp = findViewById(R.id.intakeTemp);
         session = new Session(LiveData.this);
 
-        ObdConfiguration.setmObdCommands(LiveData.this,null);
+        ObdConfiguration.setmObdCommands(LiveData.this, null);
+        float gasPrice = 7;
+        ObdPreferences.get(LiveData.this).setGasPrice(gasPrice);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
-        registerReceiver(mObdReaderReceiver,intentFilter);
+        registerReceiver(mObdReaderReceiver, intentFilter);
+        startService(new Intent(LiveData.this, ObdReaderService.class));
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mObdReaderReceiver);
+        stopService(new Intent(this, ObdReaderService.class));
+        ObdPreferences.get(this).setServiceRunningStatus(false);
     }
 
     @Override
