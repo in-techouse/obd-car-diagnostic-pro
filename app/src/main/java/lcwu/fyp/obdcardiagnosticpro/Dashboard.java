@@ -17,14 +17,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.Toast;
-
 import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +28,6 @@ import java.util.UUID;
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
-
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
