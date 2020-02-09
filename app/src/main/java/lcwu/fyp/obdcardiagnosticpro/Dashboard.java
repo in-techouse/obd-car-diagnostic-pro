@@ -62,18 +62,21 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             if(action.equals(ACTION_OBD_CONNECTION_STATUS)){
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
                 Toast.makeText(Dashboard.this,connectionStatusMsg, Toast.LENGTH_SHORT).show();
-                if(connectionStatusMsg.equals("OBD Connected")) {
+                if(connectionStatusMsg == null){
+                    getMenuInflater().inflate(R.menu.dashboard_menu,menu);
+                }
+                else if(connectionStatusMsg.equals(getString(R.string.obd_connected))) {
                     getMenuInflater().inflate(R.menu.dashboard_connected_menu,menu);
                 }
 
-                else if (connectionStatusMsg.equals("Connect Lost")){
+                else if (connectionStatusMsg.equals(getString(R.string.connect_lost))){
                     getMenuInflater().inflate(R.menu.dashboard_menu,menu);
                 }else {
                 }
-                }else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
+            }
+            else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
                 TripRecord tripRecord = TripRecord.getTripRecode(Dashboard.this);
-
-                }
+            }
 
             }
         };

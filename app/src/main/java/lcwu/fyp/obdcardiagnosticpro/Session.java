@@ -23,7 +23,7 @@ public class Session {
     }
 
     public String getRPM(){
-        return preferences.getString("rpm", "*");
+        return preferences.getString("rpm", "");
     }
 
     public void setSpeed(String str){

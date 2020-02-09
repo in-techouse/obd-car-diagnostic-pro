@@ -55,20 +55,20 @@
                      android:gravity="center"
                      android:textStyle="bold"
                      android:text="RPM"/>
-             <com.github.capur16.digitspeedviewlib.DigitSpeedView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:id="@+id/RpmReading"
-             android:layout_margin="5dp"
-             app:backgroundColor="@color/colorPrimary"
-             app:disableBackgroundImage="false"
-             app:showUnit="true"
-             app:speed="300"
-             app:speedTextColor="@android:color/holo_blue_light"
-             app:speedTextSize="20dp"
-             app:unit="rpm"
-             app:unitTextColor="@android:color/holo_blue_light"
-             app:unitTextSize="10dp" />
+                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/rpmReading"
+                     android:layout_margin="5dp"
+                     app:backgroundColor="@color/colorPrimary"
+                     app:disableBackgroundImage="false"
+                     app:showUnit="true"
+                     app:speed="300"
+                     app:speedTextColor="@android:color/holo_blue_light"
+                     app:speedTextSize="20dp"
+                     app:unit="rpm"
+                     app:unitTextColor="@android:color/holo_blue_light"
+                     app:unitTextSize="10dp" />
              </LinearLayout>
              <LinearLayout
                  android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                  <com.github.capur16.digitspeedviewlib.DigitSpeedView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:id="@+id/EngineLoad"
+                     android:id="@+id/engineLoad"
                      android:layout_margin="5dp"
                      app:backgroundColor="@color/colorPrimary"
                      app:disableBackgroundImage="false"
@@ -119,7 +119,7 @@
                  <com.github.capur16.digitspeedviewlib.DigitSpeedView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:id="@+id/IntakeTemp"
+                     android:id="@+id/intakeTemp"
                      android:layout_margin="5dp"
                      app:backgroundColor="@color/colorPrimary"
                      app:disableBackgroundImage="false"
@@ -147,7 +147,7 @@
                  <com.github.capur16.digitspeedviewlib.DigitSpeedView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:id="@+id/EngineTemp"
+                     android:id="@+id/engineTemp"
                      android:layout_margin="5dp"
                      app:backgroundColor="@color/colorPrimary"
                      app:disableBackgroundImage="false"
