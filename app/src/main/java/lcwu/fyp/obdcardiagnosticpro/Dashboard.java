@@ -78,8 +78,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 TripRecord tripRecord = TripRecord.getTripRecode(Dashboard.this);
             }
 
-            }
-        };
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
