@@ -1,5 +1,6 @@
 package lcwu.fyp.obdcardiagnosticpro;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,6 +52,10 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private ArrayList<String> devices = new ArrayList();
     private String rpm, speed;
     private MenuItem item;
+    private int count = 0;
+    private ProgressDialog progressDialog;
+
+
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -61,18 +67,39 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             }
             if (action.equals(ACTION_OBD_CONNECTION_STATUS)) {
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
-                Toast.makeText(Dashboard.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Dashboard.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if (connectionStatusMsg == null) {
                     item.setTitle("NOT CONNECTED");
                     isConnected = false;
                 } else if (connectionStatusMsg.equals(getString(R.string.obd_connected))) {
                     isConnected = true;
                     item.setTitle("OBD CONNECTED");
+                    progressDialog.dismiss();
                 } else if (connectionStatusMsg.equals(getString(R.string.connect_lost))) {
                     item.setTitle("NOT CONNECTED");
                     isConnected = false;
                 } else {
-                    Toast.makeText(Dashboard.this, "Connection Status: " + connectionStatusMsg, Toast.LENGTH_LONG).show();
+                    if (count > 5) {
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                                helper.showError(Dashboard.this, "ERROR!", "The device isn't responding.\nPlease verify, the device is connected correctly to the car.");
+                            }
+                        }, 5000);
+
+                        unregisterReceiver(mObdReaderReceiver);
+                        stopService(new Intent(Dashboard.this, ObdReaderService.class));
+                        ObdPreferences.get(Dashboard.this).setServiceRunningStatus(false);
+                        isConnected = false;
+                        item.setTitle("NOT CONNECTED");
+                        count = 0;
+
+                    } else {
+//                        Toast.makeText(Dashboard.this, "Connection Status: " + connectionStatusMsg, Toast.LENGTH_SHORT).show();
+                        count++;
+                    }
                 }
             } else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
                 isConnected = true;
@@ -115,12 +142,13 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         accelerationTests.setOnClickListener(this);
         airIntakeTemp.setOnClickListener(this);
         diagnosticTrouble.setOnClickListener(this);
+        progressDialog = new ProgressDialog(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        item = menu.findItem(R.id.connection);
         getMenuInflater().inflate(R.menu.dashboard_menu, menu);
+        item = menu.findItem(R.id.connection);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -162,36 +190,79 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
             case R.id.dashboard: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
                 Intent intent = new Intent(Dashboard.this, MainDashboard.class);
                 startActivity(intent);
                 break;
             }
             case R.id.all_sensor: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
                 Intent intent = new Intent(Dashboard.this, AllSensors.class);
                 startActivity(intent);
                 break;
             }
             case R.id.rpm: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 break;
             }
             case R.id.engine_temperature: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 break;
             }
             case R.id.speed: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 break;
             }
             case R.id.live_data: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 Intent intent = new Intent(Dashboard.this, LiveData.class);
                 startActivity(intent);
                 break;
             }
             case R.id.AccelerationTests: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 break;
             }
             case R.id.AirIntakeTemp: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 break;
             }
             case R.id.DiagnosticTrouble: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+
                 break;
             }
 
@@ -247,6 +318,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 // TODO save deviceAddress
                 BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
                 BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
+
+                progressDialog.setTitle("CONNECTING!");
+                progressDialog.setMessage("Connecting the OBD device.\nPlease wait...!");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
 
 
                 ObdConfiguration.setmObdCommands(Dashboard.this, null);
@@ -304,6 +380,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         stopService(new Intent(this, ObdReaderService.class));
         ObdPreferences.get(this).setServiceRunningStatus(false);
         isConnected = false;
+        item.setTitle("NOT CONNECTED");
+        count = 0;
     }
 
 //    private void readCarData(){
