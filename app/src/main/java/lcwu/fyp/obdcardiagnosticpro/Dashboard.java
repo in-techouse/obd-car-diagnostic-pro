@@ -1,8 +1,5 @@
 package lcwu.fyp.obdcardiagnosticpro;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -14,28 +11,36 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import com.sohrab.obd.reader.application.ObdPreferences;
 import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
+
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
 public class Dashboard extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_ENABLE_BT = 1; // Unique request code
     private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private Button connect,scan,cancel;
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
@@ -43,59 +48,56 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private BluetoothSocket socket = null;
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
-    private String rpm,speed;
-    private CardView dashboard,livedata,allsensor,card_rpm,card_speed,enginetemprature,AccelerationTests,AirIntakeTemp,DiagnosticTrouble;
-    private Menu menu;
+    private String rpm, speed;
+    private MenuItem item;
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.e("MY-OBD","Receiver Starts");
+            Log.e("MY-OBD", "Receiver Starts");
             String action = intent.getAction();
-            Log.e("MY-OBD","Action:" + action);
-            if (action == null){
+            Log.e("MY-OBD", "Action:" + action);
+            if (action == null) {
                 return;
             }
-            if(action.equals(ACTION_OBD_CONNECTION_STATUS)){
+            if (action.equals(ACTION_OBD_CONNECTION_STATUS)) {
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
-                Toast.makeText(Dashboard.this,connectionStatusMsg, Toast.LENGTH_SHORT).show();
-                if(connectionStatusMsg == null){
-                    getMenuInflater().inflate(R.menu.dashboard_menu,menu);
-                }
-                else if(connectionStatusMsg.equals(getString(R.string.obd_connected))) {
+                Toast.makeText(Dashboard.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
+                if (connectionStatusMsg == null) {
+                    item.setTitle("NOT CONNECTED");
+                    isConnected = false;
+                } else if (connectionStatusMsg.equals(getString(R.string.obd_connected))) {
                     isConnected = true;
-                    getMenuInflater().inflate(R.menu.dashboard_connected_menu,menu);
+                    item.setTitle("OBD CONNECTED");
+                } else if (connectionStatusMsg.equals(getString(R.string.connect_lost))) {
+                    item.setTitle("NOT CONNECTED");
+                    isConnected = false;
+                } else {
+                    Toast.makeText(Dashboard.this, "Connection Status: " + connectionStatusMsg, Toast.LENGTH_LONG).show();
                 }
-
-                else if (connectionStatusMsg.equals(getString(R.string.connect_lost))){
-                    getMenuInflater().inflate(R.menu.dashboard_menu,menu);
-                }
-                else {
-                    Toast.makeText(Dashboard.this,  "Connection Status: " + connectionStatusMsg, Toast.LENGTH_LONG).show();
-                }
-            }
-            else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
+            } else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
                 isConnected = true;
                 TripRecord tripRecord = TripRecord.getTripRecode(Dashboard.this);
             }
 
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        connect=findViewById(R.id.connect);
-        scan=findViewById(R.id.scan);
-        cancel=findViewById(R.id.cancel);
-        dashboard=findViewById(R.id.dashboard);
-        livedata=findViewById(R.id.live_data);
-        allsensor=findViewById(R.id.all_sensor);
-        AccelerationTests=findViewById(R.id.AccelerationTests);
-        AirIntakeTemp =findViewById(R.id.AirIntakeTemp);
-        DiagnosticTrouble =findViewById(R.id.DiagnosticTrouble);
-        card_rpm=findViewById(R.id.rpm);
-        card_speed= findViewById(R.id.speed);
-        enginetemprature=findViewById(R.id.engine_temperature);
+        Button connect = findViewById(R.id.connect);
+        Button scan = findViewById(R.id.scan);
+        Button cancel = findViewById(R.id.cancel);
+        CardView dashboard = findViewById(R.id.dashboard);
+        CardView livedata = findViewById(R.id.live_data);
+        CardView allsensor = findViewById(R.id.all_sensor);
+        CardView accelerationTests = findViewById(R.id.AccelerationTests);
+        CardView airIntakeTemp = findViewById(R.id.AirIntakeTemp);
+        CardView diagnosticTrouble = findViewById(R.id.DiagnosticTrouble);
+        CardView card_rpm = findViewById(R.id.rpm);
+        CardView card_speed = findViewById(R.id.speed);
+        CardView enginetemprature = findViewById(R.id.engine_temperature);
         isConnected = false;
         helper = new Helpers();
         data = new ArrayList<>();
@@ -110,19 +112,19 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         card_rpm.setOnClickListener(this);
         card_speed.setOnClickListener(this);
         enginetemprature.setOnClickListener(this);
-        AccelerationTests.setOnClickListener(this);
-        AirIntakeTemp.setOnClickListener(this);
-        DiagnosticTrouble.setOnClickListener(this);
+        accelerationTests.setOnClickListener(this);
+        airIntakeTemp.setOnClickListener(this);
+        diagnosticTrouble.setOnClickListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu=menu;
-        getMenuInflater().inflate(R.menu.dashboard_menu,menu);
+        item = menu.findItem(R.id.connection);
+        getMenuInflater().inflate(R.menu.dashboard_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void getBluetoothDevices(){
+    private void getBluetoothDevices() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (!mBluetoothAdapter.isEnabled()) {
@@ -130,7 +132,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             return;
         }
-        for(BluetoothDevice bt : pairedDevices) {
+        for (BluetoothDevice bt : pairedDevices) {
             BluetoothObject object = new BluetoothObject();
             object.setAddress(bt.getAddress());
             object.setName(bt.getName());
@@ -142,57 +144,54 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        int id=v.getId();
-        switch(id){
-            case R.id.connect:
-            {
+        int id = v.getId();
+        switch (id) {
+            case R.id.connect: {
                 //Intent intent = new Intent(Dashboard.this,TestActivity.class);
-               // startActivity(intent);
+                // startActivity(intent);
                 ConnectDevice();
                 break;
             }
 
-            case R.id.scan:
-            {
+            case R.id.scan: {
                 ScanDevice();
                 break;
             }
-            case R.id.cancel:
-            {
+            case R.id.cancel: {
                 CancelDevice();
                 break;
             }
-            case R.id.dashboard:{
-                Intent intent=new Intent(Dashboard.this,MainDashboard.class);
+            case R.id.dashboard: {
+                Intent intent = new Intent(Dashboard.this, MainDashboard.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.all_sensor:{
-                Intent intent=new Intent(Dashboard.this,AllSensors.class);
+            case R.id.all_sensor: {
+                Intent intent = new Intent(Dashboard.this, AllSensors.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.rpm:{
+            case R.id.rpm: {
                 break;
             }
-            case R.id.engine_temperature:{
+            case R.id.engine_temperature: {
                 break;
             }
-            case R.id.speed:{
+            case R.id.speed: {
                 break;
             }
-            case R.id.live_data:{
-                Intent intent=new Intent(Dashboard.this,LiveData.class);
+            case R.id.live_data: {
+                Intent intent = new Intent(Dashboard.this, LiveData.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.AccelerationTests:{
+            case R.id.AccelerationTests: {
                 break;
             }
-            case R.id.AirIntakeTemp:{
+            case R.id.AirIntakeTemp: {
                 break;
             }
-            case R.id.DiagnosticTrouble:{
+            case R.id.DiagnosticTrouble: {
                 break;
             }
 
@@ -208,29 +207,27 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 getBluetoothDevices();
             } else if (resultCode == RESULT_CANCELED) {
                 // Bluetooth was not enabled
-                helper.showError( Dashboard.this,"ERROR", "Bluetooth is not enabled.");
+                helper.showError(Dashboard.this, "ERROR", "Bluetooth is not enabled.");
             }
         }
     }
 
-    private void ConnectDevice(){
-        if (isConnected){
-            helper.showError(Dashboard.this,"ERROR","Already Connected");
+    private void ConnectDevice() {
+        if (isConnected) {
+            helper.showError(Dashboard.this, "ERROR", "Already Connected");
             return;
         }
         getAllDevices();
     }
 
-    private void getAllDevices(){
+    private void getAllDevices() {
         devices.clear();
         deviceStrs.clear();
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 
-        if (pairedDevices.size() > 0)
-        {
-            for (BluetoothDevice device : pairedDevices)
-            {
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
                 deviceStrs.add(device.getName() + "\n" + device.getAddress());
                 devices.add(device.getAddress());
             }
@@ -243,8 +240,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
         alertDialog.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
 
                 String deviceAddress = devices.get(which);
@@ -290,7 +286,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
     private void ScanDevice() {
         if (!isConnected) {
-            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+            helper.showError(Dashboard.this, "ERROR", "YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
         Toast.makeText(Dashboard.this, "Scanning...", Toast.LENGTH_LONG).show();
@@ -299,9 +295,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 //        dialogue.show();
     }
 
-    private void CancelDevice(){
-        if(!isConnected){
-            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
+    private void CancelDevice() {
+        if (!isConnected) {
+            helper.showError(Dashboard.this, "ERROR", "YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
         unregisterReceiver(mObdReaderReceiver);
