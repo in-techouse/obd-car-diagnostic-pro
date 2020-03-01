@@ -1,9 +1,9 @@
 package lcwu.fyp.obdcardiagnosticpro;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AllSensors extends AppCompatActivity {
 
@@ -12,6 +12,7 @@ public class AllSensors extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_sensors);
     }
+
     @Override
     public void onBackPressed() {
         finish();

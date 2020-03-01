@@ -17,6 +17,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".DiagnosticTroubleCodes"
+            android:label="Trouble Codes"
+            android:parentActivityName=".Dashboard"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>

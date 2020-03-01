@@ -4,164 +4,183 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LiveData"
     android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+    android:paddingBottom="20dp"
+    tools:context=".LiveData">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Connecting..."
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <ProgressBar
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_marginTop="15dp"
-                android:textAlignment="center"
-                android:text="Connecting..."
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-     <LinearLayout
-         android:id="@+id/main"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="vertical">
-         <com.github.anastr.speedviewlib.SpeedView
-             android:id="@+id/speedView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center" />
-         <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:weightSum="2"
-             android:orientation="horizontal">
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_weight="1">
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:textAlignment="gravity"
-                     android:gravity="center"
-                     android:textStyle="bold"
-                     android:text="RPM"/>
-                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/rpmReading"
-                     android:layout_margin="5dp"
-                     app:backgroundColor="@color/colorPrimary"
-                     app:disableBackgroundImage="false"
-                     app:showUnit="true"
-                     app:speed="300"
-                     app:speedTextColor="@android:color/holo_blue_light"
-                     app:speedTextSize="20dp"
-                     app:unit="rpm"
-                     app:unitTextColor="@android:color/holo_blue_light"
-                     app:unitTextSize="10dp" />
-             </LinearLayout>
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_weight="1">
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:textAlignment="gravity"
-                     android:gravity="center"
-                     android:textStyle="bold"
-                     android:text="Engine Load"/>
-                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/engineLoad"
-                     android:layout_margin="5dp"
-                     app:backgroundColor="@color/colorPrimary"
-                     app:disableBackgroundImage="false"
-                     app:showUnit="true"
-                     app:speed="300"
-                     app:speedTextColor="@android:color/holo_blue_light"
-                     app:speedTextSize="20dp"
-                     app:unit="%"
-                     app:unitTextColor="@android:color/holo_blue_light"
-                     app:unitTextSize="10dp" />
-             </LinearLayout>
-         </LinearLayout>
-         <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="horizontal"
-             android:weightSum="2">
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_weight="1">
-                 <TextView
-                     android:textStyle="bold"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:text="Air Intake"
-                     android:padding="5dp"
-                     android:textAlignment="gravity"
-                     android:gravity="center"/>
-                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/intakeTemp"
-                     android:layout_margin="5dp"
-                     app:backgroundColor="@color/colorPrimary"
-                     app:disableBackgroundImage="false"
-                     app:showUnit="true"
-                     app:speed="70"
-                     app:speedTextColor="@android:color/holo_blue_light"
-                     app:speedTextSize="20dp"
-                     app:unit="°C"
-                     app:unitTextColor="@android:color/holo_blue_light"
-                     app:unitTextSize="10dp" />
-             </LinearLayout>
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_weight="1">
-                 <TextView
-                     android:textStyle="bold"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:text="Engine Coolant"
-                     android:padding="5dp"
-                     android:textAlignment="gravity"
-                     android:gravity="center"/>
-                 <com.github.capur16.digitspeedviewlib.DigitSpeedView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/engineTemp"
-                     android:layout_margin="5dp"
-                     app:backgroundColor="@color/colorPrimary"
-                     app:disableBackgroundImage="false"
-                     app:showUnit="true"
-                     app:speed="70"
-                     app:speedTextColor="@android:color/holo_blue_light"
-                     app:speedTextSize="20dp"
-                     app:unit="°C"
-                     app:unitTextColor="@android:color/holo_blue_light"
-                     app:unitTextSize="10dp" />
-             </LinearLayout>
-         </LinearLayout>
 
-     </LinearLayout>
+            <com.github.anastr.speedviewlib.SpeedView
+                android:id="@+id/speedView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="RPM"
+                        android:textAlignment="gravity"
+                        android:textStyle="bold" />
+
+                    <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                        android:id="@+id/rpmReading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        app:backgroundColor="@color/colorPrimary"
+                        app:disableBackgroundImage="false"
+                        app:showUnit="true"
+                        app:speed="300"
+                        app:speedTextColor="@android:color/holo_blue_light"
+                        app:speedTextSize="20dp"
+                        app:unit="rpm"
+                        app:unitTextColor="@android:color/holo_blue_light"
+                        app:unitTextSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Engine Load"
+                        android:textAlignment="gravity"
+                        android:textStyle="bold" />
+
+                    <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                        android:id="@+id/engineLoad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        app:backgroundColor="@color/colorPrimary"
+                        app:disableBackgroundImage="false"
+                        app:showUnit="true"
+                        app:speed="300"
+                        app:speedTextColor="@android:color/holo_blue_light"
+                        app:speedTextSize="20dp"
+                        app:unit="%"
+                        app:unitTextColor="@android:color/holo_blue_light"
+                        app:unitTextSize="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Air Intake"
+                        android:textAlignment="gravity"
+                        android:textStyle="bold" />
+
+                    <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                        android:id="@+id/intakeTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        app:backgroundColor="@color/colorPrimary"
+                        app:disableBackgroundImage="false"
+                        app:showUnit="true"
+                        app:speed="70"
+                        app:speedTextColor="@android:color/holo_blue_light"
+                        app:speedTextSize="20dp"
+                        app:unit="°C"
+                        app:unitTextColor="@android:color/holo_blue_light"
+                        app:unitTextSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Engine Coolant"
+                        android:textAlignment="gravity"
+                        android:textStyle="bold" />
+
+                    <com.github.capur16.digitspeedviewlib.DigitSpeedView
+                        android:id="@+id/engineTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        app:backgroundColor="@color/colorPrimary"
+                        app:disableBackgroundImage="false"
+                        app:showUnit="true"
+                        app:speed="70"
+                        app:speedTextColor="@android:color/holo_blue_light"
+                        app:speedTextSize="20dp"
+                        app:unit="°C"
+                        app:unitTextColor="@android:color/holo_blue_light"
+                        app:unitTextSize="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
     </RelativeLayout>
 
 

@@ -10,29 +10,29 @@ public class Session {
     private SharedPreferences.Editor editor;
 
 
-    public Session(Context c){
+    public Session(Context c) {
         preferences = PreferenceManager.getDefaultSharedPreferences(c);
         editor = preferences.edit();
 
     }
 
-    public void setRPM(String str){
+    public void setRPM(String str) {
         str = "Old Value: " + getRPM() + "\n" + str;
         editor.putString("rpm", str);
         editor.commit();
     }
 
-    public String getRPM(){
+    public String getRPM() {
         return preferences.getString("rpm", "");
     }
 
-    public void setSpeed(String str){
+    public void setSpeed(String str) {
         str = "Old Value: " + getSpeed() + "\n" + str;
         editor.putString("speed", str);
         editor.commit();
     }
 
-    public String getSpeed(){
+    public String getSpeed() {
         return preferences.getString("speed", "*");
     }
 }

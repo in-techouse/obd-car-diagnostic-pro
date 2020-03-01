@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="12dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="12dp"
-    android:layout_margin="12dp">
+    app:cardElevation="12dp">
+
     <LinearLayout
-        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="12dp">
+
         <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:text="@string/device_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/device_name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/bluetoothName"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp" />
+
         <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:text="@string/device_address"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/device_address"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/bluetoothAddress"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="22sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

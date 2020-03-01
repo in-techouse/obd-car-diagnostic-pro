@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dashboard"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Dashboard">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/bottomLayout">
+        android:layout_above="@id/bottomLayout"
+        android:layout_alignParentTop="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,44 +25,14 @@
                 android:weightSum="3">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/dashboard"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/dashboard">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="10dp">
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:layout_width="@dimen/img_wh"
-                            android:layout_height="@dimen/img_wh"
-                            android:src="@drawable/dashboard1"
-                            android:layout_gravity="center">
-                        </ImageView>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:textAlignment="center"
-                            android:text="DASHBOARD"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1"
-                    android:id="@+id/live_data">
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -70,250 +40,299 @@
                         android:paddingTop="10dp">
 
                         <ImageView
-                            android:scaleType="fitXY"
                             android:layout_width="@dimen/img_wh"
                             android:layout_height="@dimen/img_wh"
                             android:layout_gravity="center"
-                            android:src="@drawable/live"/>
+                            android:scaleType="fitXY"
+                            android:src="@drawable/dashboard1"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="DASHBOARD"
                             android:textAlignment="center"
-                            android:text="LIVE DATA"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/live_data"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/all_sensor">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/allsensors"
-                            android:scaleType="fitXY"
                             android:layout_width="@dimen/img_wh"
                             android:layout_height="@dimen/img_wh"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/live" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="LIVE DATA"
                             android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/all_sensor"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/card_height"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="@dimen/img_wh"
+                            android:layout_height="@dimen/img_wh"
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/allsensors"></ImageView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="10dp"
                             android:text="ALL SENSORS"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3">
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/rpm"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/rpm">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/rpm2"
-                            android:scaleType="fitXY"
                             android:layout_width="@dimen/img_wh"
                             android:layout_height="@dimen/img_wh"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/rpm2"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
                             android:text="RPM"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/speed"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/speed">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/speed"
-                            android:scaleType="fitXY"
                             android:layout_width="80dp"
                             android:layout_height="43dp"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/speed"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
                             android:text="SPEED"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/engine_temperature"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/engine_temperature">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/enginetemperature"
-                            android:scaleType="fitXY"
                             android:layout_width="@dimen/img_wh"
                             android:layout_height="@dimen/img_wh"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/enginetemperature"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
                             android:text="ENGINE TEMPERATURE "
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3">
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/AccelerationTests"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/AccelerationTests">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/acceleration"
-                            android:scaleType="fitXY"
                             android:layout_width="@dimen/img_wh"
                             android:layout_height="@dimen/img_wh"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/acceleration"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
                             android:text="ACCELERATION TESTS "
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/AirIntakeTemp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/AirIntakeTemp">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/airintake"
-                            android:scaleType="fitXY"
                             android:layout_width="52dp"
                             android:layout_height="47dp"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/airintake"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
                             android:text="Air Intake Temp"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/DiagnosticTrouble"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/card_height"
-                    app:cardElevation="12dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="7dp"
                     android:layout_weight="1"
-                    android:id="@+id/DiagnosticTrouble">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="12dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingTop="10dp">
+
                         <ImageView
-                            android:src="@drawable/checks"
-                            android:scaleType="fitXY"
                             android:layout_width="@dimen/img_wh"
                             android:layout_height="@dimen/img_wh"
-                            android:layout_gravity="center">
-                        </ImageView>
+                            android:layout_gravity="center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/checks"></ImageView>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
                             android:text="DIAGNOSTIC TROUBLE CODE"
-                            android:textStyle="bold"
-                            android:paddingBottom="10dp">
-                        </TextView>
+                            android:textAlignment="center"
+                            android:textStyle="bold"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -323,40 +342,43 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_margin="7dp"
         android:id="@+id/bottomLayout"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="7dp"
         android:weightSum="3">
+
         <Button
-            android:textAllCaps="true"
-            android:layout_weight="1"
-            android:text="@string/connect"
             android:id="@+id/connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/connect_bg"
-            android:textColor="#ffff"/>
-        <Button
-            android:layout_margin="7dp"
-            android:textAllCaps="true"
             android:layout_weight="1"
-            android:text="@string/scan"
+            android:background="@drawable/connect_bg"
+            android:text="@string/connect"
+            android:textAllCaps="true"
+            android:textColor="#ffff" />
+
+        <Button
             android:id="@+id/scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/scan_bg"
-            android:textColor="#ffffff"/>
-        <Button
-            android:textColor="#ffffff"
-            android:background="@drawable/cancel_bg"
-            android:textAllCaps="true"
+            android:layout_margin="7dp"
             android:layout_weight="1"
-            android:text="@string/cancel"
+            android:background="@drawable/scan_bg"
+            android:text="@string/scan"
+            android:textAllCaps="true"
+            android:textColor="#ffffff" />
+
+        <Button
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/cancel_bg"
+            android:text="@string/cancel"
+            android:textAllCaps="true"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </RelativeLayout>

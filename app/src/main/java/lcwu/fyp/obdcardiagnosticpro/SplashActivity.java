@@ -34,19 +34,18 @@ public class SplashActivity extends Activity {
         imageUpper.setAnimation(downToUp);
         application_name.setAnimation(upToDown);
 
-        RotateAnimation rotate = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF,0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation rotate = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(3000);
         rotate.setInterpolator(new LinearInterpolator());
         application_logo.startAnimation(rotate);
 
 
-
-        Thread myThread = new Thread(){
+        Thread myThread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     sleep(4000);
-                    Intent intent = new Intent(getApplicationContext(),Dashboard.class);
+                    Intent intent = new Intent(getApplicationContext(), Dashboard.class);
                     startActivity(intent);
                     finish();
                 } catch (InterruptedException e) {

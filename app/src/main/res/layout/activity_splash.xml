@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    tools:context=".SplashActivity">
 
     <RelativeLayout
         android:id="@+id/imageUpper"
-        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+
         <ImageView
-            android:layout_centerHorizontal="true"
             android:id="@+id/application_logo"
-            android:src="@drawable/logo1"
             android:layout_width="200dp"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo1" />
     </RelativeLayout>
 
     <TextView
-        android:layout_marginBottom="100dp"
+        android:id="@+id/application_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="100dp"
         android:padding="7dp"
+        android:text="OBD Car Diagnostic Pro"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="25sp"
-        android:layout_marginTop="40dp"
-        android:text="OBD Car Diagnostic Pro"
-        android:id="@+id/application_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textStyle="bold" />
 </RelativeLayout>

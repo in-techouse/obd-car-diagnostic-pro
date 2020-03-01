@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +53,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private MenuItem item;
     private int count = 0;
     private ProgressDialog progressDialog;
-
+    private TripRecord tripRecord;
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
@@ -67,7 +66,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             }
             if (action.equals(ACTION_OBD_CONNECTION_STATUS)) {
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
-//                Toast.makeText(Dashboard.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if (connectionStatusMsg == null) {
                     item.setTitle("NOT CONNECTED");
                     isConnected = false;
@@ -97,13 +95,20 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                         count = 0;
 
                     } else {
-//                        Toast.makeText(Dashboard.this, "Connection Status: " + connectionStatusMsg, Toast.LENGTH_SHORT).show();
                         count++;
                     }
                 }
             } else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
                 isConnected = true;
-                TripRecord tripRecord = TripRecord.getTripRecode(Dashboard.this);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (progressDialog != null && progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+                }, 5000);
+                tripRecord = TripRecord.getTripRecode(Dashboard.this);
             }
 
         }
@@ -175,8 +180,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         int id = v.getId();
         switch (id) {
             case R.id.connect: {
-                //Intent intent = new Intent(Dashboard.this,TestActivity.class);
-                // startActivity(intent);
                 ConnectDevice();
                 break;
             }
@@ -207,30 +210,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             }
-            case R.id.rpm: {
-                if (!isConnected) {
-                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
-                    return;
-                }
-
-                break;
-            }
-            case R.id.engine_temperature: {
-                if (!isConnected) {
-                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
-                    return;
-                }
-
-                break;
-            }
-            case R.id.speed: {
-                if (!isConnected) {
-                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
-                    return;
-                }
-
-                break;
-            }
             case R.id.live_data: {
                 if (!isConnected) {
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
@@ -241,12 +220,44 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             }
+            case R.id.rpm: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+                if (tripRecord != null) {
+                    // Show RPM
+                }
+                break;
+            }
+            case R.id.speed: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+                if (tripRecord != null) {
+                    // Show SPEED
+                }
+                break;
+            }
+            case R.id.engine_temperature: {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+                if (tripRecord != null) {
+                    // Show Engine Temperature
+                }
+                break;
+            }
             case R.id.AccelerationTests: {
                 if (!isConnected) {
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
                     return;
                 }
-
+                if (tripRecord != null) {
+                    // Show RPM
+                }
                 break;
             }
             case R.id.AirIntakeTemp: {
@@ -254,7 +265,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
                     return;
                 }
-
+                if (tripRecord != null) {
+                    // Show RPM
+                }
                 break;
             }
             case R.id.DiagnosticTrouble: {
@@ -262,7 +275,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
                     return;
                 }
-
+                Intent it = new Intent(Dashboard.this, DiagnosticTroubleCodes.class);
+                startActivity(it);
                 break;
             }
 
@@ -322,6 +336,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 progressDialog.setTitle("CONNECTING!");
                 progressDialog.setMessage("Connecting the OBD device.\nPlease wait...!");
                 progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setCancelable(false);
                 progressDialog.show();
 
 
@@ -365,10 +380,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
             helper.showError(Dashboard.this, "ERROR", "YOU ARE NOT CONNECTED TO DEVICE");
             return;
         }
-        Toast.makeText(Dashboard.this, "Scanning...", Toast.LENGTH_LONG).show();
-//        readCarData();
-//        InfoDialogue dialogue = new InfoDialogue(Dashboard.this);
-//        dialogue.show();
+        progressDialog.setTitle("SCANNING CAR");
+        progressDialog.setMessage("Accessing the ECU.\nPlease wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     private void CancelDevice() {
