@@ -629,7 +629,7 @@ public class TripRecord implements DefineObdReader {
         return mIgnitionMonitor;
     }
 
-   private ArrayList<ObdCommand> mObdCommandArrayList;
+    private ArrayList<ObdCommand> mObdCommandArrayList;
 
     public ArrayList<ObdCommand> getmObdCommandArrayList() {
 

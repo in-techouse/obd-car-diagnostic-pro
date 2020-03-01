@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
+import lcwu.fyp.obdcardiagnosticpro.dialogue_box.InfoDialogue;
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
@@ -227,6 +228,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     // Show RPM
+                    InfoDialogue rpmDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE RPM", Integer.parseInt(tripRecord.getEngineRpm()));
+                    rpmDialogue.show();
                 }
                 break;
             }
@@ -247,6 +250,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     // Show Engine Temperature
+                    InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", Integer.parseInt(tripRecord.getmEngineCoolantTemp()));
+                    engineTempDialogue.show();
                 }
                 break;
             }
@@ -256,7 +261,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     return;
                 }
                 if (tripRecord != null) {
-                    // Show RPM
+                    // Show Acceleration Test
                 }
                 break;
             }
@@ -266,7 +271,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     return;
                 }
                 if (tripRecord != null) {
-                    // Show RPM
+                    // Show Air in take Temperature
+                    InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", Integer.parseInt(tripRecord.getmAmbientAirTemp()));
+                    airInTakeTempDialouge.show();
                 }
                 break;
             }

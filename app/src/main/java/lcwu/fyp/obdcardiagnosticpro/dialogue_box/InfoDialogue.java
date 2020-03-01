@@ -10,14 +10,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.github.capur16.digitspeedviewlib.DigitSpeedView;
+
 import lcwu.fyp.obdcardiagnosticpro.R;
 
 public class InfoDialogue extends Dialog implements View.OnClickListener {
-    private Button close;
-    private TextView label;
+    private String heading;
+    private int speed;
 
-    public InfoDialogue(@NonNull Activity activity) {
+    public InfoDialogue(@NonNull Activity activity, String h, int s) {
         super(activity);
+        heading = h;
+        speed = s;
     }
 
     @Override
@@ -25,10 +29,13 @@ public class InfoDialogue extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.info_dialoguebox);
-        close = findViewById(R.id.close);
+        Button close = findViewById(R.id.close);
         close.setOnClickListener(this);
-        label = findViewById(R.id.label);
-        label.setText("Engine RPM");
+        TextView label = findViewById(R.id.label);
+        label.setText(heading);
+        DigitSpeedView speedView = findViewById(R.id.speedView);
+        speedView.hideUnit();
+        speedView.updateSpeed(speed);
     }
 
     @Override
