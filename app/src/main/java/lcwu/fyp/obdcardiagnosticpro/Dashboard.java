@@ -55,6 +55,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private int count = 0;
     private ProgressDialog progressDialog;
     private TripRecord tripRecord;
+    private Session session;
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
@@ -149,6 +150,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         airIntakeTemp.setOnClickListener(this);
         diagnosticTrouble.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
+
+        session = new Session(getApplicationContext());
     }
 
     @Override
@@ -228,8 +231,14 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     // Show RPM
-                    InfoDialogue rpmDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE RPM", Integer.parseInt(tripRecord.getEngineRpm()));
-                    rpmDialogue.show();
+                    try {
+                        session.setSpeed("Engine RPM: " + tripRecord.getEngineRpm() + "\n");
+                        InfoDialogue rpmDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE RPM", Integer.parseInt(tripRecord.getEngineRpm()));
+                        rpmDialogue.show();
+                    } catch (Exception e) {
+                        session.setSpeed("Engine RPM Exception: " + e.getMessage() + "\n");
+                        helper.showError(Dashboard.this, "ERROR", e.getMessage());
+                    }
                 }
                 break;
             }
@@ -249,9 +258,15 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     return;
                 }
                 if (tripRecord != null) {
-                    // Show Engine Temperature
-                    InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", Integer.parseInt(tripRecord.getmEngineCoolantTemp()));
-                    engineTempDialogue.show();
+                    try {
+                        session.setSpeed("Engine Temperature: " + tripRecord.getmEngineCoolantTemp() + "\n");
+                        // Show Engine Temperature
+                        InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", Integer.parseInt(tripRecord.getmEngineCoolantTemp()));
+                        engineTempDialogue.show();
+                    } catch (Exception e) {
+                        session.setSpeed("Engine Temperature Exception: " + e.getMessage() + "\n");
+                        helper.showError(Dashboard.this, "ERROR", e.getMessage());
+                    }
                 }
                 break;
             }
@@ -271,9 +286,15 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     return;
                 }
                 if (tripRecord != null) {
-                    // Show Air in take Temperature
-                    InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", Integer.parseInt(tripRecord.getmAmbientAirTemp()));
-                    airInTakeTempDialouge.show();
+                    try {
+                        session.setSpeed("Air Intake Temperature: " + tripRecord.getmAmbientAirTemp() + "\n");
+                        // Show Air in take Temperature
+                        InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", Integer.parseInt(tripRecord.getmAmbientAirTemp()));
+                        airInTakeTempDialouge.show();
+                    } catch (Exception e) {
+                        session.setSpeed("Air Intake Temperature Exception: " + e.getMessage() + "\n");
+                        helper.showError(Dashboard.this, "ERROR", e.getMessage());
+                    }
                 }
                 break;
             }
