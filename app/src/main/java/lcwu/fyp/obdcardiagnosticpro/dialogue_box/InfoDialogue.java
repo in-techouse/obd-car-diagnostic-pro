@@ -22,6 +22,8 @@ public class InfoDialogue extends Dialog implements View.OnClickListener {
         super(activity);
         heading = h;
         speed = s;
+        setCanceledOnTouchOutside(false);
+        setCancelable(false);
     }
 
     @Override

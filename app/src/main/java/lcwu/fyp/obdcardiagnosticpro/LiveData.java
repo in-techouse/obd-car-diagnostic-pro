@@ -44,17 +44,14 @@ public class LiveData extends AppCompatActivity {
                 Toast.makeText(LiveData.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if (connectionStatusMsg == null) {
                     item.setTitle("NOT CONNECTED");
-//                    getMenuInflater().inflate(R.menu.dashboard_menu,menu);
                     progress.setVisibility(View.INVISIBLE);
                     main.setVisibility(View.VISIBLE);
                 } else if (connectionStatusMsg.equals(getString(R.string.obd_connected))) {
                     item.setTitle("OBD CONNECTED");
-//                    getMenuInflater().inflate(R.menu.dashboard_connected_menu,menu);
                     progress.setVisibility(View.INVISIBLE);
                     main.setVisibility(View.VISIBLE);
                 } else if (connectionStatusMsg.equals(getString(R.string.connect_lost))) {
                     item.setTitle("NOT CONNECTED");
-//                    getMenuInflater().inflate(R.menu.dashboard_menu, menu);
                     main.setVisibility(View.INVISIBLE);
                     progress.setVisibility(View.VISIBLE);
                 } else {

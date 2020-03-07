@@ -34,6 +34,7 @@ import java.util.UUID;
 
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.dialogue_box.InfoDialogue;
+import lcwu.fyp.obdcardiagnosticpro.dialogue_box.MeterDialogue;
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 import lcwu.fyp.obdcardiagnosticpro.model.BluetoothObject;
 
@@ -249,6 +250,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     // Show SPEED
+                    MeterDialogue dialogue = new MeterDialogue(Dashboard.this, "CAR SPEED", tripRecord.getSpeed());
+                    dialogue.show();
                 }
                 break;
             }
