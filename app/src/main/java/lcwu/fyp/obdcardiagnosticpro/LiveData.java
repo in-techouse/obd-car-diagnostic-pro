@@ -21,6 +21,8 @@ import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
+import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
+
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
@@ -30,6 +32,9 @@ public class LiveData extends AppCompatActivity {
     private LinearLayout progress, main;
     private Session session;
     private MenuItem item;
+    private Helpers helpers;
+
+
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -44,21 +49,26 @@ public class LiveData extends AppCompatActivity {
                 Toast.makeText(LiveData.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if (connectionStatusMsg == null) {
                     item.setTitle("NOT CONNECTED");
-                    progress.setVisibility(View.INVISIBLE);
-                    main.setVisibility(View.VISIBLE);
+                    progress.setVisibility(View.VISIBLE);
+                    main.setVisibility(View.GONE);
                 } else if (connectionStatusMsg.equals(getString(R.string.obd_connected))) {
                     item.setTitle("OBD CONNECTED");
-                    progress.setVisibility(View.INVISIBLE);
+                    progress.setVisibility(View.GONE);
                     main.setVisibility(View.VISIBLE);
                 } else if (connectionStatusMsg.equals(getString(R.string.connect_lost))) {
                     item.setTitle("NOT CONNECTED");
-                    main.setVisibility(View.INVISIBLE);
+                    main.setVisibility(View.GONE);
                     progress.setVisibility(View.VISIBLE);
-                } else {
-                    Toast.makeText(LiveData.this, "Connection Status: " + connectionStatusMsg, Toast.LENGTH_LONG).show();
                 }
             } else if (action.equals(ACTION_READ_OBD_REAL_TIME_DATA)) {
+                item.setTitle("OBD CONNECTED");
+                progress.setVisibility(View.GONE);
+                main.setVisibility(View.VISIBLE);
                 TripRecord tripRecord = TripRecord.getTripRecode(LiveData.this);
+                if (tripRecord == null) {
+                    helpers.showError(LiveData.this, "ERROR!", "Something went wrong.\nPlease try again later.");
+                    return;
+                }
                 int speed = tripRecord.getSpeed();
                 String strRPM = tripRecord.getEngineRpm();
                 String strEngineLoad = tripRecord.getmEngineLoad();
@@ -78,7 +88,6 @@ public class LiveData extends AppCompatActivity {
         }
 
         ;
-
     };
 
     @Override
@@ -95,6 +104,8 @@ public class LiveData extends AppCompatActivity {
         engineTemp = findViewById(R.id.engineTemp);
         intakeTemp = findViewById(R.id.intakeTemp);
         session = new Session(LiveData.this);
+
+        helpers = new Helpers();
 
         ObdConfiguration.setmObdCommands(LiveData.this, null);
         float gasPrice = 7;
