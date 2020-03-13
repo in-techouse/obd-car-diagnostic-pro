@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <com.github.anastr.speedviewlib.SpeedView
                 android:id="@+id/speedView"
                 android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
                         app:backgroundColor="@color/colorPrimary"
                         app:disableBackgroundImage="false"
                         app:showUnit="true"
-                        app:speed="300"
+                        app:speed="0"
                         app:speedTextColor="@android:color/holo_blue_light"
                         app:speedTextSize="20dp"
                         app:unit="rpm"
@@ -102,7 +103,7 @@
                         app:backgroundColor="@color/colorPrimary"
                         app:disableBackgroundImage="false"
                         app:showUnit="true"
-                        app:speed="300"
+                        app:speed="0"
                         app:speedTextColor="@android:color/holo_blue_light"
                         app:speedTextSize="20dp"
                         app:unit="%"
@@ -140,7 +141,7 @@
                         app:backgroundColor="@color/colorPrimary"
                         app:disableBackgroundImage="false"
                         app:showUnit="true"
-                        app:speed="70"
+                        app:speed="0"
                         app:speedTextColor="@android:color/holo_blue_light"
                         app:speedTextSize="20dp"
                         app:unit="°C"
@@ -171,7 +172,7 @@
                         app:backgroundColor="@color/colorPrimary"
                         app:disableBackgroundImage="false"
                         app:showUnit="true"
-                        app:speed="70"
+                        app:speed="0"
                         app:speedTextColor="@android:color/holo_blue_light"
                         app:speedTextSize="20dp"
                         app:unit="°C"
@@ -182,6 +183,5 @@
 
         </LinearLayout>
     </RelativeLayout>
-
 
 </ScrollView>

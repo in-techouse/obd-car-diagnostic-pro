@@ -198,10 +198,10 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
             case R.id.dashboard: {
-                if (!isConnected) {
-                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
-                    return;
-                }
+//                if (!isConnected) {
+//                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+//                    return;
+//                }
                 Intent intent = new Intent(Dashboard.this, MainDashboard.class);
                 startActivity(intent);
                 break;
