@@ -72,7 +72,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Driving Duration"
                             android:textColor="@color/colorPrimary" />
 
                     </RelativeLayout>
@@ -96,7 +95,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Driving Distance"
                             android:textColor="@color/colorPrimary" />
 
                     </RelativeLayout>
@@ -120,7 +118,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Driving Idle Distance"
                             android:textColor="@color/colorPrimary" />
 
                     </RelativeLayout>
@@ -144,7 +141,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:text="Driving Fuel Consumption"
                             android:textColor="@color/colorPrimary" />
 
                     </RelativeLayout>
