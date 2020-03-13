@@ -101,8 +101,8 @@ public class MainDashboard extends AppCompatActivity {
 
         progress = findViewById(R.id.progress);
         main = findViewById(R.id.main);
-//        main.setVisibility(View.INVISIBLE);
-        progress.setVisibility(View.GONE);
+        main.setVisibility(View.INVISIBLE);
+        progress.setVisibility(View.VISIBLE);
         speedView = findViewById(R.id.speedView);
         rpmReading = findViewById(R.id.rpmReading);
         engineLoad = findViewById(R.id.engineLoad);
