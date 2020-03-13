@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +34,7 @@ public class MainDashboard extends AppCompatActivity {
     private Session session;
     private MenuItem item;
     private Helpers helpers;
+    private TextView drivingDuration, drivingDistance, drivingIdleDuration, drivingFuelConsumption;
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
@@ -79,10 +81,10 @@ public class MainDashboard extends AppCompatActivity {
                     engineLoad.updateSpeed(Integer.parseInt(strEngineLoad));
                     intakeTemp.updateSpeed(Integer.parseInt(strInTakeTemp));
                     engineTemp.updateSpeed(Integer.parseInt(strEngineCoolantTemp));
-//                tripRecord.getDrivingDuration();
-//                tripRecord.getIdlingDuration();
-//                tripRecord.getmDistanceTravel();
-//                tripRecord.getmDrivingFuelConsumption();
+                    drivingDuration.setText(tripRecord.getDrivingDuration() + " minutes");
+                    drivingDistance.setText(tripRecord.getmDistanceTravel() + "");
+                    drivingIdleDuration.setText(tripRecord.getIdlingDuration() + "");
+                    drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
                 } catch (Exception e) {
                     Log.e("MainDashboard", "String to int parsing error");
                 }
@@ -106,6 +108,11 @@ public class MainDashboard extends AppCompatActivity {
         engineLoad = findViewById(R.id.engineLoad);
         engineTemp = findViewById(R.id.engineTemp);
         intakeTemp = findViewById(R.id.intakeTemp);
+        drivingDuration = findViewById(R.id.drivingDuration);
+        drivingDistance = findViewById(R.id.drivingDistance);
+        drivingIdleDuration = findViewById(R.id.drivingIdleDuration);
+        drivingFuelConsumption = findViewById(R.id.drivingFuelConsumption);
+
         session = new Session(MainDashboard.this);
 
         helpers = new Helpers();
