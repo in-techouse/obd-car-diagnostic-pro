@@ -26,6 +26,7 @@ import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECT
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
 public class LiveData extends AppCompatActivity {
+    // Only RPM and Speed reading
     private SpeedView speedView;
     private DigitSpeedView rpmReading, engineLoad, intakeTemp, engineTemp;
     private LinearLayout progress, main;

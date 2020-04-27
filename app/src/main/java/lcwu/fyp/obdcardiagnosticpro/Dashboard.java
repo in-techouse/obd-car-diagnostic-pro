@@ -81,7 +81,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     isConnected = false;
                 } else {
                     if (count > 5) {
-
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -89,14 +88,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                                 helper.showError(Dashboard.this, "ERROR!", "The device isn't responding.\nPlease verify, the device is connected correctly to the car.");
                             }
                         }, 5000);
-
                         unregisterReceiver(mObdReaderReceiver);
                         stopService(new Intent(Dashboard.this, ObdReaderService.class));
                         ObdPreferences.get(Dashboard.this).setServiceRunningStatus(false);
                         isConnected = false;
                         item.setTitle("NOT CONNECTED");
                         count = 0;
-
                     } else {
                         count++;
                     }
@@ -133,6 +130,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         CardView card_rpm = findViewById(R.id.rpm);
         CardView card_speed = findViewById(R.id.speed);
         CardView enginetemprature = findViewById(R.id.engine_temperature);
+        Button testActivity = findViewById(R.id.testActivity);
+
         isConnected = false;
         helper = new Helpers();
         data = new ArrayList<>();
@@ -150,6 +149,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         accelerationTests.setOnClickListener(this);
         airIntakeTemp.setOnClickListener(this);
         diagnosticTrouble.setOnClickListener(this);
+        testActivity.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
 
         session = new Session(getApplicationContext());
@@ -220,7 +220,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
                     return;
                 }
-
                 Intent intent = new Intent(Dashboard.this, LiveData.class);
                 startActivity(intent);
                 break;
@@ -256,6 +255,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
             case R.id.engine_temperature: {
+                // Reading is not correct.
                 if (!isConnected) {
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
                     return;
@@ -284,6 +284,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
             case R.id.AirIntakeTemp: {
+                // Reading is not correct
                 if (!isConnected) {
                     helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
                     return;
@@ -311,6 +312,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
 
+            case R.id.testActivity:{
+                Intent it = new Intent(Dashboard.this, TestActivity.class);
+                startActivity(it);
+                break;
+            }
         }
     }
 

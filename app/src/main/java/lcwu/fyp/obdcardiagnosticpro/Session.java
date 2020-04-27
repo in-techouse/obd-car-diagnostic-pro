@@ -17,7 +17,7 @@ public class Session {
     }
 
     public void setRPM(String str) {
-        str = "Old Value: " + getRPM() + "\n" + str;
+        str = "Old Value: " + getRPM() + "\nNew Value: " + str;
         editor.putString("rpm", str);
         editor.commit();
     }
@@ -27,7 +27,7 @@ public class Session {
     }
 
     public void setSpeed(String str) {
-        str = "Old Value: " + getSpeed() + "\n" + str;
+        str = "Old Value: " + getSpeed() + "\nNew Value: " + str;
         editor.putString("speed", str);
         editor.commit();
     }

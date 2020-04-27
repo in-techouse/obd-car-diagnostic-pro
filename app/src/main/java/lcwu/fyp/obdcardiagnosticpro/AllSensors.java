@@ -26,6 +26,7 @@ import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECT
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
 public class AllSensors extends AppCompatActivity {
+    // OBD is disconnecting,
     private TextView airTemperature, engineCoolantTemperature, engineRpm, engineRpmMax, drivingDuration, engineRuntime;
     private LinearLayout main, connecting;
     private MenuItem item;

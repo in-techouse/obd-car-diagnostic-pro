@@ -21,13 +21,15 @@ import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
+import java.util.Date;
+
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
 public class MainDashboard extends AppCompatActivity {
-
+    // No reading, except speed.
     private SpeedView speedView;
     private DigitSpeedView rpmReading, engineLoad, intakeTemp, engineTemp;
     private LinearLayout progress, main;
@@ -74,9 +76,12 @@ public class MainDashboard extends AppCompatActivity {
                 String strEngineLoad = tripRecord.getmEngineLoad();
                 String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                 String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                session.setRPM("Speed: " + speed + "\n RPM: " + strRPM + "\n Engine Load: " + strEngineLoad + "\n Intake Temp: " + strEngineLoad + "\n Coolant Temp: " + strEngineCoolantTemp);
                 speedView.speedTo(speed, 3000);
+                Date d = new Date();
                 try {
+                    String result = "Main Dashboard" + d.toString() + "";
+                    result = result + " Speed: " + speed + "\n RPM: " + strRPM + "\n Engine Load: " + strEngineLoad + "\n Intake Temp: " + strEngineLoad + "\n Coolant Temp: " + strEngineCoolantTemp;
+                    session.setRPM(result);
                     rpmReading.updateSpeed(Integer.parseInt(strRPM));
                     engineLoad.updateSpeed(Integer.parseInt(strEngineLoad));
                     intakeTemp.updateSpeed(Integer.parseInt(strInTakeTemp));
@@ -86,6 +91,9 @@ public class MainDashboard extends AppCompatActivity {
                     drivingIdleDuration.setText(tripRecord.getIdlingDuration() + "");
                     drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
                 } catch (Exception e) {
+                    String result = "Main Dashboard" + d.toString() + "";
+                    result = result + " Exception: " + e.getMessage();
+                    session.setRPM(result);
                     Log.e("MainDashboard", "String to int parsing error");
                 }
             }
