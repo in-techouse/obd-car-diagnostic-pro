@@ -119,6 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark" />
+
+        <!-- Second block, for 0-80 KM/H -->
     </LinearLayout>
 
 </ScrollView>
