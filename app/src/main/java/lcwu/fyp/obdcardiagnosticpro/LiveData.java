@@ -20,6 +20,8 @@ import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
+import java.util.Date;
+
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
@@ -68,21 +70,26 @@ public class LiveData extends AppCompatActivity {
                     helpers.showError(LiveData.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                     return;
                 }
-                int speed = tripRecord.getSpeed();
-                String strRPM = tripRecord.getEngineRpm();
-                String strEngineLoad = tripRecord.getmEngineLoad();
-                String strInTakeTemp = tripRecord.getmAmbientAirTemp();
-                String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                session.setRPM("Speed: " + speed + "\n RPM: " + strRPM + "\n Engine Load: " + strEngineLoad + "\n Intake Temp: " + strEngineLoad + "\n Coolant Temp: " + strEngineCoolantTemp);
-                speedView.speedTo(speed, 3000);
+                Date d = new Date();
+                String result = "Live Data" + d.toString() + "";
                 try {
+                    int speed = tripRecord.getSpeed();
+                    String strRPM = tripRecord.getEngineRpm();
+                    String strEngineLoad = tripRecord.getmEngineLoad();
+                    String strInTakeTemp = tripRecord.getmAmbientAirTemp();
+                    String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
+                    result = result + "Speed: " + speed + "\n RPM: " + strRPM + "\n Engine Load: " + strEngineLoad + "\n Intake Temp: " + strEngineLoad + "\n Coolant Temp: " + strEngineCoolantTemp;
+                    speedView.speedTo(speed, 3000);
+
                     rpmReading.updateSpeed(Integer.parseInt(strRPM));
                     engineLoad.updateSpeed(Integer.parseInt(strEngineLoad));
                     intakeTemp.updateSpeed(Integer.parseInt(strInTakeTemp));
                     engineTemp.updateSpeed(Integer.parseInt(strEngineCoolantTemp));
                 } catch (Exception e) {
                     Log.e("LiveData", "String to int parsing error");
+                    result = result + " Exception: " + e.getMessage();
                 }
+                session.setRPM(result);
             }
         }
 

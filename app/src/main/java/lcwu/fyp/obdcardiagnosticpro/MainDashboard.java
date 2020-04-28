@@ -80,7 +80,7 @@ public class MainDashboard extends AppCompatActivity {
                 Date d = new Date();
                 try {
                     String result = "Main Dashboard" + d.toString() + "";
-                    result = result + " Speed: " + speed + "\n RPM: " + strRPM + "\n Engine Load: " + strEngineLoad + "\n Intake Temp: " + strEngineLoad + "\n Coolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nSpeed: " + speed + "\nRPM: " + strRPM + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
                     session.setRPM(result);
                     rpmReading.updateSpeed(Integer.parseInt(strRPM));
                     engineLoad.updateSpeed(Integer.parseInt(strEngineLoad));

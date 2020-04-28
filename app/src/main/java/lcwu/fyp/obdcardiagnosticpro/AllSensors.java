@@ -20,6 +20,8 @@ import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
+import java.util.Date;
+
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECTION_STATUS;
@@ -31,6 +33,7 @@ public class AllSensors extends AppCompatActivity {
     private LinearLayout main, connecting;
     private MenuItem item;
     private Helpers helpers;
+    private Session session;
 
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
@@ -64,18 +67,21 @@ public class AllSensors extends AppCompatActivity {
                 connecting.setVisibility(View.GONE);
                 main.setVisibility(View.VISIBLE);
 
+                Date d = new Date();
+                String result = "All Sensors" + d.toString() + "";
                 if (tripRecord == null) {
                     helpers.showError(AllSensors.this, "ERROR!", "Something went wrong.\nPlease try again later.");
-                    return;
+                    result = result + " Trip record is null";
+                } else {
+                    result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp() + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp() + "\nEngine RPM: " + tripRecord.getEngineRpm() + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax() + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
+                    drivingDuration.setText(tripRecord.getDrivingDuration() + "");
+                    airTemperature.setText(tripRecord.getmAmbientAirTemp());
+                    engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
+                    engineRpm.setText(tripRecord.getEngineRpm());
+                    engineRpmMax.setText(tripRecord.getEngineRpmMax());
+                    engineRuntime.setText(tripRecord.getEngineRuntime());
                 }
-
-                drivingDuration.setText(tripRecord.getDrivingDuration() + "");
-                airTemperature.setText(tripRecord.getmAmbientAirTemp());
-                engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
-                engineRpm.setText(tripRecord.getEngineRpm());
-                engineRpmMax.setText(tripRecord.getEngineRpmMax());
-                engineRuntime.setText(tripRecord.getEngineRuntime());
-
+                session.setRPM(result);
             }
         }
 
@@ -100,6 +106,7 @@ public class AllSensors extends AppCompatActivity {
         engineRuntime = findViewById(R.id.engineRuntime);
 
         helpers = new Helpers();
+        session = new Session(AllSensors.this);
 
         ObdConfiguration.setmObdCommands(AllSensors.this, null);
         float gasPrice = 7;
