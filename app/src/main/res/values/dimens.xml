@@ -2,4 +2,11 @@
 <resources>
     <dimen name="card_height">120dp</dimen>
     <dimen name="img_wh">40dp</dimen>
+    <dimen name="mp_10">10dp</dimen>
+    <dimen name="mp_15">15dp</dimen>
+    <dimen name="mp_20">20dp</dimen>
+
+    <dimen name="textSize17">17sp</dimen>
+    <dimen name="textSize19">19sp</dimen>
+    <dimen name="textSize21">21sp</dimen>
 </resources>
