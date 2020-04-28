@@ -280,6 +280,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     // Show Acceleration Test
+                    Intent it = new Intent(Dashboard.this, AccelerationTest.class);
                 }
                 break;
             }
