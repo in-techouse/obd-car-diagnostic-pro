@@ -36,7 +36,6 @@ public class LiveData extends AppCompatActivity {
     private MenuItem item;
     private Helpers helpers;
 
-
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -71,20 +70,37 @@ public class LiveData extends AppCompatActivity {
                     return;
                 }
                 Date d = new Date();
-                String result = "Live Data" + d.toString() + "";
+                String result = "Live Data " + d.toString() + "";
                 try {
                     int speed = tripRecord.getSpeed();
                     String strRPM = tripRecord.getEngineRpm();
                     String strEngineLoad = tripRecord.getmEngineLoad();
                     String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                     String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                    result = result + "Speed: " + speed + "\n RPM: " + strRPM + "\n Engine Load: " + strEngineLoad + "\n Intake Temp: " + strEngineLoad + "\n Coolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nSpeed: " + speed + "\nRPM: " + strRPM + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
                     speedView.speedTo(speed, 3000);
 
-                    rpmReading.updateSpeed(Integer.parseInt(strRPM));
-                    engineLoad.updateSpeed(Integer.parseInt(strEngineLoad));
-                    intakeTemp.updateSpeed(Integer.parseInt(strInTakeTemp));
-                    engineTemp.updateSpeed(Integer.parseInt(strEngineCoolantTemp));
+                    if (strRPM != null && !strRPM.equals("null")) {
+                        rpmReading.updateSpeed(Integer.parseInt(strRPM));
+                    }
+                    if (strEngineLoad != null && !strEngineLoad.equals("null")) {
+                        String[] temp = strEngineLoad.split("%");
+                        if (temp.length > 0) {
+                            engineLoad.updateSpeed(Integer.parseInt(temp[0]));
+                        }
+                    }
+                    if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
+                        String[] temp = strInTakeTemp.split("%");
+                        if (temp.length > 0) {
+                            intakeTemp.updateSpeed(Integer.parseInt(temp[0]));
+                        }
+                    }
+                    if (strEngineCoolantTemp != null && strEngineCoolantTemp.equals("null")) {
+                        String[] temp = strEngineCoolantTemp.split("C");
+                        if (temp.length > 0) {
+                            engineTemp.updateSpeed(Integer.parseInt(temp[0]));
+                        }
+                    }
                 } catch (Exception e) {
                     Log.e("LiveData", "String to int parsing error");
                     result = result + " Exception: " + e.getMessage();
@@ -110,6 +126,11 @@ public class LiveData extends AppCompatActivity {
         engineTemp = findViewById(R.id.engineTemp);
         intakeTemp = findViewById(R.id.intakeTemp);
         session = new Session(LiveData.this);
+
+        rpmReading.updateSpeed(0);
+        engineLoad.updateSpeed(0);
+        engineTemp.updateSpeed(0);
+        intakeTemp.updateSpeed(0);
 
         helpers = new Helpers();
 

@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,7 +34,6 @@ public class AllSensors extends AppCompatActivity {
     private Helpers helpers;
     private Session session;
 
-
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -47,7 +45,6 @@ public class AllSensors extends AppCompatActivity {
             }
             if (action.equals(ACTION_OBD_CONNECTION_STATUS)) {
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
-                Toast.makeText(AllSensors.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if (connectionStatusMsg == null) {
                     item.setTitle("NOT CONNECTED");
                     connecting.setVisibility(View.VISIBLE);
@@ -68,20 +65,26 @@ public class AllSensors extends AppCompatActivity {
                 main.setVisibility(View.VISIBLE);
 
                 Date d = new Date();
-                String result = "All Sensors" + d.toString() + "";
-                if (tripRecord == null) {
-                    helpers.showError(AllSensors.this, "ERROR!", "Something went wrong.\nPlease try again later.");
-                    result = result + " Trip record is null";
-                } else {
-                    result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp() + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp() + "\nEngine RPM: " + tripRecord.getEngineRpm() + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax() + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
-                    drivingDuration.setText(tripRecord.getDrivingDuration() + "");
-                    airTemperature.setText(tripRecord.getmAmbientAirTemp());
-                    engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
-                    engineRpm.setText(tripRecord.getEngineRpm());
-                    engineRpmMax.setText(tripRecord.getEngineRpmMax());
-                    engineRuntime.setText(tripRecord.getEngineRuntime());
+                String result = "\nAll Sensors" + d.toString() + "";
+                try {
+                    if (tripRecord == null) {
+                        helpers.showError(AllSensors.this, "ERROR!", "Something went wrong.\nPlease try again later.");
+                        result = result + " Trip record is null";
+                        session.setRPM(result);
+                    } else {
+                        result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp() + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp() + "\nEngine RPM: " + tripRecord.getEngineRpm() + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax() + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
+                        drivingDuration.setText(tripRecord.getDrivingDuration() + "");
+                        airTemperature.setText(tripRecord.getmAmbientAirTemp());
+                        engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
+                        engineRpm.setText(tripRecord.getEngineRpm());
+                        engineRpmMax.setText(tripRecord.getEngineRpmMax());
+                        engineRuntime.setText(tripRecord.getEngineRuntime());
+                        session.setRPM(result);
+                    }
+                } catch (Exception e) {
+                    result = result + "\nException Occur: " + e.getMessage();
+                    session.setRPM(result);
                 }
-                session.setRPM(result);
             }
         }
 

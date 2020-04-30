@@ -76,23 +76,42 @@ public class MainDashboard extends AppCompatActivity {
                 String strEngineLoad = tripRecord.getmEngineLoad();
                 String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                 String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                speedView.speedTo(speed, 3000);
                 Date d = new Date();
                 try {
-                    String result = "Main Dashboard" + d.toString() + "";
-                    result = result + "\nSpeed: " + speed + "\nRPM: " + strRPM + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    String result = "\nMain Dashboard " + d.toString() + "";
+                    result = result + "\nSpeed: " + speed + "\nRPM: " + strRPM + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nDistance Travel: " + tripRecord.getmDistanceTravel() + "\nIdle Duration: " + tripRecord.getIdlingDuration() + "\nFuel Consumption: " + tripRecord.getmDrivingFuelConsumption();
                     session.setRPM(result);
-                    rpmReading.updateSpeed(Integer.parseInt(strRPM));
-                    engineLoad.updateSpeed(Integer.parseInt(strEngineLoad));
-                    intakeTemp.updateSpeed(Integer.parseInt(strInTakeTemp));
-                    engineTemp.updateSpeed(Integer.parseInt(strEngineCoolantTemp));
+
+                    // Setting values to views
+                    speedView.speedTo(speed, 3000);
+                    if (strRPM != null && !strRPM.equals("null")) {
+                        rpmReading.updateSpeed(Integer.parseInt(strRPM));
+                    }
+                    if (strEngineLoad != null && !strEngineLoad.equals("null")) {
+                        String[] temp = strEngineLoad.split("%");
+                        if (temp.length > 0) {
+                            engineLoad.updateSpeed(Integer.parseInt(temp[0]));
+                        }
+                    }
+                    if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
+                        String[] temp = strInTakeTemp.split("%");
+                        if (temp.length > 0) {
+                            intakeTemp.updateSpeed(Integer.parseInt(temp[0]));
+                        }
+                    }
+                    if (strEngineCoolantTemp != null && !strEngineCoolantTemp.equals("null")) {
+                        String[] temp = strEngineCoolantTemp.split("C");
+                        if (temp.length > 0) {
+                            engineTemp.updateSpeed(Integer.parseInt(temp[0]));
+                        }
+                    }
                     drivingDuration.setText(tripRecord.getDrivingDuration() + " minutes");
                     drivingDistance.setText(tripRecord.getmDistanceTravel() + "");
                     drivingIdleDuration.setText(tripRecord.getIdlingDuration() + "");
                     drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
                 } catch (Exception e) {
-                    String result = "Main Dashboard" + d.toString() + "";
-                    result = result + " Exception: " + e.getMessage();
+                    String result = "Main Dashboard " + d.toString();
+                    result = result + "\nException: " + e.getMessage();
                     session.setRPM(result);
                     Log.e("MainDashboard", "String to int parsing error");
                 }
@@ -125,6 +144,11 @@ public class MainDashboard extends AppCompatActivity {
 
         helpers = new Helpers();
 
+        rpmReading.updateSpeed(0);
+        engineLoad.updateSpeed(0);
+        intakeTemp.updateSpeed(0);
+        engineTemp.updateSpeed(0);
+
         ObdConfiguration.setmObdCommands(MainDashboard.this, null);
         float gasPrice = 7;
         ObdPreferences.get(MainDashboard.this).setGasPrice(gasPrice);
@@ -149,7 +173,6 @@ public class MainDashboard extends AppCompatActivity {
         item = menu.findItem(R.id.connection);
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public void onBackPressed() {

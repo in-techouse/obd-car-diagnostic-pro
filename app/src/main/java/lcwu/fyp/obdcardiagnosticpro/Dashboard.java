@@ -232,11 +232,13 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 if (tripRecord != null) {
                     // Show RPM
                     try {
-                        session.setSpeed("Engine RPM: " + tripRecord.getEngineRpm() + "\n");
-                        InfoDialogue rpmDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE RPM", Integer.parseInt(tripRecord.getEngineRpm()));
-                        rpmDialogue.show();
+                        String str = tripRecord.getEngineRpm();
+                        if (str != null && !str.equals("null")) {
+                            InfoDialogue rpmDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE RPM", Integer.parseInt(tripRecord.getEngineRpm()));
+                            rpmDialogue.show();
+                        }
                     } catch (Exception e) {
-                        session.setSpeed("Engine RPM Exception: " + e.getMessage() + "\n");
+                        session.setSpeed("\nEngine RPM Exception: " + e.getMessage() + "\n");
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
                 }
@@ -262,12 +264,17 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     try {
-                        session.setSpeed("Engine Temperature: " + tripRecord.getmEngineCoolantTemp() + "\n");
-                        // Show Engine Temperature
-                        InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", Integer.parseInt(tripRecord.getmEngineCoolantTemp()));
-                        engineTempDialogue.show();
+                        String str = tripRecord.getmEngineCoolantTemp();
+                        if (str != null && !str.equals("null")) {
+                            String[] temp = str.split("C");
+                            if (temp.length > 0) {
+                                // Show Engine Temperature
+                                InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", Integer.parseInt(temp[0]));
+                                engineTempDialogue.show();
+                            }
+                        }
                     } catch (Exception e) {
-                        session.setSpeed("Engine Temperature Exception: " + e.getMessage() + "\n");
+                        session.setSpeed("\nEngine Temperature Exception: " + e.getMessage() + "\n");
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
                 }
@@ -293,12 +300,17 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     try {
-                        session.setSpeed("Air Intake Temperature: " + tripRecord.getmAmbientAirTemp() + "\n");
-                        // Show Air in take Temperature
-                        InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", Integer.parseInt(tripRecord.getmAmbientAirTemp()));
-                        airInTakeTempDialouge.show();
+                        String str = tripRecord.getmAmbientAirTemp();
+                        if (str != null && !str.equals("null")) {
+                            String[] temp = str.split("%");
+                            if (temp.length > 0) {
+                                // Show Air in take Temperature
+                                InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", Integer.parseInt(temp[0]));
+                                airInTakeTempDialouge.show();
+                            }
+                        }
                     } catch (Exception e) {
-                        session.setSpeed("Air Intake Temperature Exception: " + e.getMessage() + "\n");
+                        session.setSpeed("\nAir Intake Temperature Exception: " + e.getMessage() + "\n");
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
                 }
