@@ -304,8 +304,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                         if (str != null && !str.equals("null")) {
                             String[] temp = str.split("%");
                             if (temp.length > 0) {
+                                double value = Double.parseDouble(temp[0]);
                                 // Show Air in take Temperature
-                                InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", Integer.parseInt(temp[0]));
+                                InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", (int) value);
                                 airInTakeTempDialouge.show();
                             }
                         }

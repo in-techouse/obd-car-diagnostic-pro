@@ -91,9 +91,10 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
         permanentCodes = findViewById(R.id.permamentCodes);
 
         helpers = new Helpers();
-        ObdConfiguration.setmObdCommands(DiagnosticTroubleCodes.this, null);
-        float gasPrice = 7;
-        ObdPreferences.get(DiagnosticTroubleCodes.this).setGasPrice(gasPrice);
+
+//        ObdConfiguration.setmObdCommands(DiagnosticTroubleCodes.this, null);
+//        float gasPrice = 7;
+//        ObdPreferences.get(DiagnosticTroubleCodes.this).setGasPrice(gasPrice);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);

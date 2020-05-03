@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.anastr.speedviewlib.SpeedView;
 import com.github.capur16.digitspeedviewlib.DigitSpeedView;
 import com.sohrab.obd.reader.application.ObdPreferences;
-import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
@@ -90,13 +89,15 @@ public class MainDashboard extends AppCompatActivity {
                     if (strEngineLoad != null && !strEngineLoad.equals("null")) {
                         String[] temp = strEngineLoad.split("%");
                         if (temp.length > 0) {
-                            engineLoad.updateSpeed(Integer.parseInt(temp[0]));
+                            double value = Double.parseDouble(temp[0]);
+                            engineLoad.updateSpeed((int) value);
                         }
                     }
                     if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
                         String[] temp = strInTakeTemp.split("%");
                         if (temp.length > 0) {
-                            intakeTemp.updateSpeed(Integer.parseInt(temp[0]));
+                            double value = Double.parseDouble(temp[0]);
+                            intakeTemp.updateSpeed((int) value);
                         }
                     }
                     if (strEngineCoolantTemp != null && !strEngineCoolantTemp.equals("null")) {
@@ -105,9 +106,9 @@ public class MainDashboard extends AppCompatActivity {
                             engineTemp.updateSpeed(Integer.parseInt(temp[0]));
                         }
                     }
-                    drivingDuration.setText(tripRecord.getDrivingDuration() + " minutes");
-                    drivingDistance.setText(tripRecord.getmDistanceTravel() + "");
-                    drivingIdleDuration.setText(tripRecord.getIdlingDuration() + "");
+                    drivingDuration.setText(tripRecord.getDrivingDuration() + " Minutes");
+                    drivingDistance.setText(tripRecord.getmDistanceTravel() + " KM");
+                    drivingIdleDuration.setText(tripRecord.getIdlingDuration() + " Minutes");
                     drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
                 } catch (Exception e) {
                     String result = "Main Dashboard " + d.toString();
@@ -149,9 +150,10 @@ public class MainDashboard extends AppCompatActivity {
         intakeTemp.updateSpeed(0);
         engineTemp.updateSpeed(0);
 
-        ObdConfiguration.setmObdCommands(MainDashboard.this, null);
-        float gasPrice = 7;
-        ObdPreferences.get(MainDashboard.this).setGasPrice(gasPrice);
+//        ObdConfiguration.setmObdCommands(MainDashboard.this, null);
+//        float gasPrice = 7;
+//        ObdPreferences.get(MainDashboard.this).setGasPrice(gasPrice);
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);

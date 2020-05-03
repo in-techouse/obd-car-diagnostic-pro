@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sohrab.obd.reader.application.ObdPreferences;
-import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
@@ -73,11 +72,11 @@ public class AllSensors extends AppCompatActivity {
                         session.setRPM(result);
                     } else {
                         result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp() + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp() + "\nEngine RPM: " + tripRecord.getEngineRpm() + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax() + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
-                        drivingDuration.setText(tripRecord.getDrivingDuration() + "");
+                        drivingDuration.setText(tripRecord.getDrivingDuration() + " minutes");
                         airTemperature.setText(tripRecord.getmAmbientAirTemp());
                         engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
                         engineRpm.setText(tripRecord.getEngineRpm());
-                        engineRpmMax.setText(tripRecord.getEngineRpmMax());
+                        engineRpmMax.setText(tripRecord.getEngineRpmMax() + "");
                         engineRuntime.setText(tripRecord.getEngineRuntime());
                         session.setRPM(result);
                     }
@@ -111,9 +110,9 @@ public class AllSensors extends AppCompatActivity {
         helpers = new Helpers();
         session = new Session(AllSensors.this);
 
-        ObdConfiguration.setmObdCommands(AllSensors.this, null);
-        float gasPrice = 7;
-        ObdPreferences.get(AllSensors.this).setGasPrice(gasPrice);
+//        ObdConfiguration.setmObdCommands(AllSensors.this, null);
+//        float gasPrice = 7;
+//        ObdPreferences.get(AllSensors.this).setGasPrice(gasPrice);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
