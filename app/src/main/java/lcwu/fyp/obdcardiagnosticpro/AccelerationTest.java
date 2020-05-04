@@ -124,32 +124,28 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                     test060.setMinute(min);
                                     test060.setHour(hour);
                                     time060.setText(hour + ":" + min + ":" + sec);
-
-
                                 }
                                 // Acceleration Test 0-80KM/hr
                                 if (speed >= 0 && speed <= 80) {
-
-                                        int sec = test080.getSecond();
-                                        int min = test080.getMinute();
-                                        int hour = test080.getHour();
-                                        if (sec == 59) {
-                                            sec = 0;
-                                            min++;
-                                        } else {
-                                            sec++;
-                                        }
-                                        if (min == 59) {
-                                            min = 0;
-                                            hour++;
-                                        } else {
-                                            min++;
-                                        }
-                                        test080.setSecond(sec);
-                                        test080.setMinute(min);
-                                        test080.setHour(hour);
-                                        time080.setText(hour + ":" + min + ":" + sec);
-
+                                    int sec = test080.getSecond();
+                                    int min = test080.getMinute();
+                                    int hour = test080.getHour();
+                                    if (sec == 59) {
+                                        sec = 0;
+                                        min++;
+                                    } else {
+                                        sec++;
+                                    }
+                                    if (min == 59) {
+                                        min = 0;
+                                        hour++;
+                                    } else {
+                                        min++;
+                                    }
+                                    test080.setSecond(sec);
+                                    test080.setMinute(min);
+                                    test080.setHour(hour);
+                                    time080.setText(hour + ":" + min + ":" + sec);
                                 }
                                 // Acceleration Test 0-100KM/hr
                                 if (speed >= 0 && speed <= 100) {
@@ -174,8 +170,26 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                     time0100.setText(hour + ":" + min + ":" + sec);
                                 }
                                 // Acceleration Test 0-120KM/hr
-                                if (speed >= 0 && speed <= 100) {
-
+                                if (speed >= 0 && speed <= 120) {
+                                    int sec = test0120.getSecond();
+                                    int min = test0120.getMinute();
+                                    int hour = test0120.getHour();
+                                    if (sec == 59) {
+                                        sec = 0;
+                                        min++;
+                                    } else {
+                                        sec++;
+                                    }
+                                    if (min == 59) {
+                                        min = 0;
+                                        hour++;
+                                    } else {
+                                        min++;
+                                    }
+                                    test0120.setSecond(sec);
+                                    test0120.setMinute(min);
+                                    test0120.setHour(hour);
+                                    time0120.setText(hour + ":" + min + ":" + sec);
                                 }
                             }
                         }, 1000);
