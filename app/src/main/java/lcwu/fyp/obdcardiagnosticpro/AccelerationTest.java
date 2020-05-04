@@ -153,7 +153,25 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                 }
                                 // Acceleration Test 0-100KM/hr
                                 if (speed >= 0 && speed <= 100) {
-
+                                    int sec = test0100.getSecond();
+                                    int min = test0100.getMinute();
+                                    int hour = test0100.getHour();
+                                    if (sec == 59) {
+                                        sec = 0;
+                                        min++;
+                                    } else {
+                                        sec++;
+                                    }
+                                    if (min == 59) {
+                                        min = 0;
+                                        hour++;
+                                    } else {
+                                        min++;
+                                    }
+                                    test0100.setSecond(sec);
+                                    test0100.setMinute(min);
+                                    test0100.setHour(hour);
+                                    time0100.setText(hour + ":" + min + ":" + sec);
                                 }
                                 // Acceleration Test 0-120KM/hr
                                 if (speed >= 0 && speed <= 100) {
