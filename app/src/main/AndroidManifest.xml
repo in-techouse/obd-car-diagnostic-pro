@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AccelerationTest"></activity>
+        <activity
+            android:name=".AccelerationTest"
+            android:parentActivityName=".Dashboard" />
         <activity
             android:name=".DiagnosticTroubleCodes"
             android:label="Trouble Codes"

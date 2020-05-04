@@ -5,277 +5,304 @@
     android:layout_height="match_parent"
     tools:context=".AccelerationTest">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark" />
-
-        <!-- First block, for 0-40 KM/H -->
-        <RelativeLayout
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:id="@+id/connecting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/mp_10">
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/speed040"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Acceleration Time:"
-                    android:textSize="@dimen/textSize19" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0-40KM/H" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/reset040"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/reset" />
+            <ProgressBar
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center" />
 
             <TextView
-                android:id="@+id/time040"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reset040"
-                android:layout_toEndOf="@id/speed040"
-                android:padding="7dp"
-                android:text="000.000.000"
-                android:textSize="@dimen/textSize17" />
+                android:text="Connecting...\nPlease wait"
+                android:textAlignment="center" />
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark" />
-
-        <!-- Second block, for 0-60 KM/H -->
-
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/main"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/mp_10">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/speed060"
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <!-- First block, for 0-40 KM/H -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
+                android:padding="@dimen/mp_10">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/speed040"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Acceleration Time:"
-                    android:textSize="@dimen/textSize19" />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Acceleration Time:"
+                        android:textSize="@dimen/textSize19" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0-40KM/H" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/reset040"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/reset" />
 
                 <TextView
+                    android:id="@+id/time040"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0-60KM/H" />
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/reset040"
+                    android:layout_toEndOf="@id/speed040"
+                    android:padding="7dp"
+                    android:text="000.000.000"
+                    android:textSize="@dimen/textSize17" />
 
-            <ImageView
-                android:id="@+id/reset060"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/reset" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/time060"
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <!-- Second block, for 0-60 KM/H -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reset060"
-                android:layout_toEndOf="@id/speed060"
-                android:padding="7dp"
-                android:text="000.000.000"
-                android:textSize="@dimen/textSize17" />
+                android:padding="@dimen/mp_10">
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/speed060"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Acceleration Time:"
+                        android:textSize="@dimen/textSize19" />
 
-        <!-- Third block, for 0-80 KM/H -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/mp_10">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0-60KM/H" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/speed080"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/reset060"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/reset" />
 
                 <TextView
+                    android:id="@+id/time060"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Acceleration Time:"
-                    android:textSize="@dimen/textSize19" />
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/reset060"
+                    android:layout_toEndOf="@id/speed060"
+                    android:padding="7dp"
+                    android:text="000.000.000"
+                    android:textSize="@dimen/textSize17" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <!-- Third block, for 0-80 KM/H -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/mp_10">
+
+                <LinearLayout
+                    android:id="@+id/speed080"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Acceleration Time:"
+                        android:textSize="@dimen/textSize19" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0-80KM/H" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/reset080"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/reset" />
 
                 <TextView
+                    android:id="@+id/time080"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0-80KM/H" />
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/reset080"
+                    android:layout_toEndOf="@id/speed080"
+                    android:padding="7dp"
+                    android:text="000.000.000"
+                    android:textSize="@dimen/textSize17" />
 
-            <ImageView
-                android:id="@+id/reset080"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/reset" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/time080"
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <!-- Forth block, for 0-80 KM/H -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reset080"
-                android:layout_toEndOf="@id/speed080"
-                android:padding="7dp"
-                android:text="000.000.000"
-                android:textSize="@dimen/textSize17" />
+                android:padding="@dimen/mp_10">
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/speed0100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Acceleration Time:"
+                        android:textSize="@dimen/textSize19" />
 
-        <!-- Forth block, for 0-80 KM/H -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/mp_10">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0-100KM/H" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/speed0100"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/reset0100"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/reset" />
 
                 <TextView
+                    android:id="@+id/time0100"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Acceleration Time:"
-                    android:textSize="@dimen/textSize19" />
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/reset0100"
+                    android:layout_toEndOf="@id/speed0100"
+                    android:padding="7dp"
+                    android:text="000.000.000"
+                    android:textSize="@dimen/textSize17" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
+            <!-- Forth block, for 0-80 KM/H -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/mp_10">
+
+                <LinearLayout
+                    android:id="@+id/speed0120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Acceleration Time:"
+                        android:textSize="@dimen/textSize19" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0-120KM/H" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/reset0120"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/reset" />
 
                 <TextView
+                    android:id="@+id/time0120"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0-100KM/H" />
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/reset0120"
+                    android:layout_toEndOf="@id/speed0120"
+                    android:padding="7dp"
+                    android:text="000.000.000"
+                    android:textSize="@dimen/textSize17" />
 
-            <ImageView
-                android:id="@+id/reset0100"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/reset" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/time0100"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reset0100"
-                android:layout_toEndOf="@id/speed0100"
-                android:padding="7dp"
-                android:text="000.000.000"
-                android:textSize="@dimen/textSize17" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
 
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark" />
-
-        <!-- Forth block, for 0-80 KM/H -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/mp_10">
-
-            <LinearLayout
-                android:id="@+id/speed0120"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Acceleration Time:"
-                    android:textSize="@dimen/textSize19" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0-120KM/H" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/reset0120"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/reset" />
-
-            <TextView
-                android:id="@+id/time0120"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/reset0120"
-                android:layout_toEndOf="@id/speed0120"
-                android:padding="7dp"
-                android:text="000.000.000"
-                android:textSize="@dimen/textSize17" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark" />
-
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>
