@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +27,7 @@ import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -51,19 +51,17 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
     private BluetoothSocket socket = null;
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
-    private String rpm, speed;
     private MenuItem item;
     private int count = 0;
     private ProgressDialog progressDialog;
     private TripRecord tripRecord;
     private Session session;
+    private int engineTemperature, airIntakeTemperature;
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.e("MY-OBD", "Receiver Starts");
             String action = intent.getAction();
-            Log.e("MY-OBD", "Action:" + action);
             if (action == null) {
                 return;
             }
@@ -109,6 +107,49 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                     }
                 }, 5000);
                 tripRecord = TripRecord.getTripRecode(Dashboard.this);
+                Date d = new Date();
+                String engineResult = "\nDashboard, Engine Temperature, Time: " + d.toString() + " ";
+                try {
+                    String str = tripRecord.getmEngineCoolantTemp();
+                    if (str != null && !str.equals("null")) {
+                        String[] temp = str.split("C");
+                        if (temp.length > 0 && engineTemperature < 1) {
+                            engineTemperature = Integer.parseInt(temp[0]);
+                            engineResult = engineResult + "Value is: " + engineTemperature;
+                            session.setRPM(engineResult);
+                        } else {
+                            engineResult = engineResult + "Parsing return array less than 1 or value is already assigned.";
+                            session.setRPM(engineResult);
+                        }
+                    } else {
+                        engineResult = engineResult + "Value is null";
+                        session.setRPM(engineResult);
+                    }
+                } catch (Exception e) {
+                    engineResult = engineResult + "Exception Occur: " + e.getMessage();
+                    session.setRPM(engineResult);
+                }
+
+                String airResult = "\nDashboard, Air InTake Temperature, Time: " + d.toString() + " ";
+                try {
+                    String str1 = tripRecord.getmAmbientAirTemp();
+                    if (str1 != null && !str1.equals("null")) {
+                        String[] temp = str1.split("%");
+                        if (temp.length > 0 && airIntakeTemperature < 1) {
+                            double value = Double.parseDouble(temp[0]);
+                            airIntakeTemperature = (int) value;
+                        } else {
+                            airResult = airResult + "Parsing return array less than 1 or value is already assigned.";
+                            session.setRPM(airResult);
+                        }
+                    } else {
+                        airResult = airResult + "Value is null";
+                        session.setRPM(airResult);
+                    }
+                } catch (Exception e) {
+                    airResult = airResult + "Exception Occur: " + e.getMessage();
+                    session.setRPM(airResult);
+                }
             }
 
         }
@@ -153,6 +194,9 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         progressDialog = new ProgressDialog(this);
 
         session = new Session(getApplicationContext());
+
+        engineTemperature = -1;
+        airIntakeTemperature = -1;
     }
 
     @Override
@@ -238,7 +282,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                             rpmDialogue.show();
                         }
                     } catch (Exception e) {
-                        session.setSpeed("\nEngine RPM Exception: " + e.getMessage() + "\n");
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
                 }
@@ -264,17 +307,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     try {
-                        String str = tripRecord.getmEngineCoolantTemp();
-                        if (str != null && !str.equals("null")) {
-                            String[] temp = str.split("C");
-                            if (temp.length > 0) {
-                                // Show Engine Temperature
-                                InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", Integer.parseInt(temp[0]));
-                                engineTempDialogue.show();
-                            }
+                        if (engineTemperature > 0) {
+                            // Show Engine Temperature
+                            InfoDialogue engineTempDialogue = new InfoDialogue(Dashboard.this, "CAR ENGINE TEMPERATURE", engineTemperature);
+                            engineTempDialogue.show();
                         }
                     } catch (Exception e) {
-                        session.setSpeed("\nEngine Temperature Exception: " + e.getMessage() + "\n");
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
                 }
@@ -300,18 +338,12 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }
                 if (tripRecord != null) {
                     try {
-                        String str = tripRecord.getmAmbientAirTemp();
-                        if (str != null && !str.equals("null")) {
-                            String[] temp = str.split("%");
-                            if (temp.length > 0) {
-                                double value = Double.parseDouble(temp[0]);
-                                // Show Air in take Temperature
-                                InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", (int) value);
-                                airInTakeTempDialouge.show();
-                            }
+                        if (airIntakeTemperature > 1) {
+                            // Show Air in take Temperature
+                            InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", airIntakeTemperature);
+                            airInTakeTempDialouge.show();
                         }
                     } catch (Exception e) {
-                        session.setSpeed("\nAir Intake Temperature Exception: " + e.getMessage() + "\n");
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
                 }
@@ -451,76 +483,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         item.setTitle("NOT CONNECTED");
         count = 0;
     }
-
-//    private void readCarData(){
-//        Session session = new Session(Dashboard.this);
-////        try {
-////            socket.connect();
-////            if(socket.isConnected()){
-////                isConnected = true;
-////                helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
-////            }
-////            else{
-////                helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
-////            }
-////
-////        } catch (IOException e) {
-////            helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
-////            e.printStackTrace();
-////        }
-//        if(isConnected){
-//            try {
-//                rpm = helper.getRPMData(socket);
-//                session.setRPM("readCarData: " + rpm);
-//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-//            } catch (Exception e) {
-//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-//                session.setRPM("readCarData RPM ERROR: " + e.getMessage());
-//            }
-//            try {
-//                speed = helper.getSpeedData(socket);
-//                session.setSpeed("readCarData: " + speed);
-//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-//            } catch (Exception e) {
-//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-//                session.setSpeed("readCarData SPEED ERROR: " + e.getMessage());
-//            }
-//        }
-//        else{
-//            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-//            session.setRPM("readCarData RPM ERROR: Device not connected");
-//            session.setSpeed("readCarData SPEED ERROR: Device not connected");
-//        }
-//        readCarData1();
-//    }
-
-//    private void readCarData1(){
-//        Session session = new Session(Dashboard.this);
-//        if(isConnected){
-//            try {
-//                rpm = helper.getRPMData(socket);
-//                session.setRPM("readCarData1: " + rpm);
-//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-//            } catch (Exception e) {
-//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-//                session.setRPM("readCarData1RPM ERROR: " + e.getMessage());
-//            }
-//            try {
-//                speed = helper.getSpeedData(socket);
-//                session.setSpeed("readCarData1: " +speed);
-//                helper.showSuccess(Dashboard.this, "Success", "RPM and Speed Data read success");
-//            } catch (Exception e) {
-//                helper.showError(Dashboard.this,"ERROR","Something went wrong.\nPlease try again.\n" + e.getMessage());
-//                session.setSpeed("readCarData1 SPEED ERROR: " + e.getMessage());
-//            }
-//        }
-//        else{
-//            helper.showError(Dashboard.this,"ERROR","YOU ARE NOT CONNECTED TO DEVICE");
-//            session.setRPM("readCarData1 RPM ERROR: Device not connected");
-//            session.setSpeed("readCarData1 SPEED ERROR: Device not connected");
-//
-//        }
-//    }
 
     @Override
     protected void onDestroy() {

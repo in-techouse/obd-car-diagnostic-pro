@@ -29,13 +29,14 @@ import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_OBD_CONNECT
 import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_REAL_TIME_DATA;
 
 public class AccelerationTest extends AppCompatActivity implements View.OnClickListener {
-    private LinearLayout speed040, speed060, speed080, speed0100, speed0120, connecting, main;
+    private LinearLayout connecting;
+    private LinearLayout main;
     private TextView time040, time060, time080, time0100, time0120;
-    private ImageView reset040, reset060, reset080, reset0100, reset0120;
     private AccelerationTestObject test040, test060, test080, test0100, test0120;
     private MenuItem item;
     private Helpers helpers;
     private Session session;
+    private boolean isTaken = false;
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -74,126 +75,130 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                         result = result + " Trip record is null";
                         session.setRPM(result);
                     } else {
-                        result = result + "\nSpeed: " + tripRecord.getSpeed();
-                        final int speed = tripRecord.getSpeed();
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // From here, we're getting speed from the OBD, we will do our custom logic here.
-                                // Acceleration Test 0-40KM/hr
-                                if (speed >= 0 && speed <= 40) {
-                                    int sec = test040.getSecond();
-                                    int min = test040.getMinute();
-                                    int hour = test040.getHour();
-                                    if (sec == 59) {
-                                        sec = 0;
-                                        min++;
-                                    } else {
-                                        sec++;
+                        if (!isTaken) {
+                            isTaken = true;
+                            result = result + "\nSpeed: " + tripRecord.getSpeed();
+                            final int speed = tripRecord.getSpeed();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // From here, we're getting speed from the OBD, we will do our custom logic here.
+                                    // Acceleration Test 0-40KM/hr
+                                    if (speed >= 0 && speed <= 40) {
+                                        int sec = test040.getSecond();
+                                        int min = test040.getMinute();
+                                        int hour = test040.getHour();
+                                        if (sec > 58) {
+                                            sec = 0;
+                                            min++;
+                                        } else {
+                                            sec++;
+                                        }
+                                        if (min > 58) {
+                                            min = 0;
+                                            hour++;
+                                        } else {
+                                            min++;
+                                        }
+                                        test040.setSecond(sec);
+                                        test040.setMinute(min);
+                                        test040.setHour(hour);
+                                        time040.setText(hour + ":" + min + ":" + sec);
                                     }
-                                    if (min == 59) {
-                                        min = 0;
-                                        hour++;
-                                    } else {
-                                        min++;
+                                    // Acceleration Test 0-60KM/hr
+                                    else if (speed >= 0 && speed <= 60) {
+                                        int sec = test060.getSecond();
+                                        int min = test060.getMinute();
+                                        int hour = test060.getHour();
+                                        if (sec > 58) {
+                                            sec = 0;
+                                            min++;
+                                        } else {
+                                            sec++;
+                                        }
+                                        if (min > 58) {
+                                            min = 0;
+                                            hour++;
+                                        } else {
+                                            min++;
+                                        }
+                                        test060.setSecond(sec);
+                                        test060.setMinute(min);
+                                        test060.setHour(hour);
+                                        time060.setText(hour + ":" + min + ":" + sec);
                                     }
-                                    test040.setSecond(sec);
-                                    test040.setMinute(min);
-                                    test040.setHour(hour);
-                                    time040.setText(hour + ":" + min + ":" + sec);
+                                    // Acceleration Test 0-80KM/hr
+                                    else if (speed >= 0 && speed <= 80) {
+                                        int sec = test080.getSecond();
+                                        int min = test080.getMinute();
+                                        int hour = test080.getHour();
+                                        if (sec > 58) {
+                                            sec = 0;
+                                            min++;
+                                        } else {
+                                            sec++;
+                                        }
+                                        if (min > 58) {
+                                            min = 0;
+                                            hour++;
+                                        } else {
+                                            min++;
+                                        }
+                                        test080.setSecond(sec);
+                                        test080.setMinute(min);
+                                        test080.setHour(hour);
+                                        time080.setText(hour + ":" + min + ":" + sec);
+                                    }
+                                    // Acceleration Test 0-100KM/hr
+                                    else if (speed >= 0 && speed <= 100) {
+                                        int sec = test0100.getSecond();
+                                        int min = test0100.getMinute();
+                                        int hour = test0100.getHour();
+                                        if (sec > 58) {
+                                            sec = 0;
+                                            min++;
+                                        } else {
+                                            sec++;
+                                        }
+                                        if (min > 58) {
+                                            min = 0;
+                                            hour++;
+                                        } else {
+                                            min++;
+                                        }
+                                        test0100.setSecond(sec);
+                                        test0100.setMinute(min);
+                                        test0100.setHour(hour);
+                                        time0100.setText(hour + ":" + min + ":" + sec);
+                                    }
+                                    // Acceleration Test 0-120KM/hr
+                                    else if (speed >= 0 && speed <= 120) {
+                                        int sec = test0120.getSecond();
+                                        int min = test0120.getMinute();
+                                        int hour = test0120.getHour();
+                                        if (sec > 58) {
+                                            sec = 0;
+                                            min++;
+                                        } else {
+                                            sec++;
+                                        }
+                                        if (min > 58) {
+                                            min = 0;
+                                            hour++;
+                                        } else {
+                                            min++;
+                                        }
+                                        test0120.setSecond(sec);
+                                        test0120.setMinute(min);
+                                        test0120.setHour(hour);
+                                        time0120.setText(hour + ":" + min + ":" + sec);
+                                    }
+                                    isTaken = false;
                                 }
-                                // Acceleration Test 0-60KM/hr
-                                if (speed >= 0 && speed <= 60) {
-                                    int sec = test060.getSecond();
-                                    int min = test060.getMinute();
-                                    int hour = test060.getHour();
-                                    if (sec == 59) {
-                                        sec = 0;
-                                        min++;
-                                    } else {
-                                        sec++;
-                                    }
-                                    if (min == 59) {
-                                        min = 0;
-                                        hour++;
-                                    } else {
-                                        min++;
-                                    }
-                                    test060.setSecond(sec);
-                                    test060.setMinute(min);
-                                    test060.setHour(hour);
-                                    time060.setText(hour + ":" + min + ":" + sec);
-                                }
-                                // Acceleration Test 0-80KM/hr
-                                if (speed >= 0 && speed <= 80) {
-                                    int sec = test080.getSecond();
-                                    int min = test080.getMinute();
-                                    int hour = test080.getHour();
-                                    if (sec == 59) {
-                                        sec = 0;
-                                        min++;
-                                    } else {
-                                        sec++;
-                                    }
-                                    if (min == 59) {
-                                        min = 0;
-                                        hour++;
-                                    } else {
-                                        min++;
-                                    }
-                                    test080.setSecond(sec);
-                                    test080.setMinute(min);
-                                    test080.setHour(hour);
-                                    time080.setText(hour + ":" + min + ":" + sec);
-                                }
-                                // Acceleration Test 0-100KM/hr
-                                if (speed >= 0 && speed <= 100) {
-                                    int sec = test0100.getSecond();
-                                    int min = test0100.getMinute();
-                                    int hour = test0100.getHour();
-                                    if (sec == 59) {
-                                        sec = 0;
-                                        min++;
-                                    } else {
-                                        sec++;
-                                    }
-                                    if (min == 59) {
-                                        min = 0;
-                                        hour++;
-                                    } else {
-                                        min++;
-                                    }
-                                    test0100.setSecond(sec);
-                                    test0100.setMinute(min);
-                                    test0100.setHour(hour);
-                                    time0100.setText(hour + ":" + min + ":" + sec);
-                                }
-                                // Acceleration Test 0-120KM/hr
-                                if (speed >= 0 && speed <= 120) {
-                                    int sec = test0120.getSecond();
-                                    int min = test0120.getMinute();
-                                    int hour = test0120.getHour();
-                                    if (sec == 59) {
-                                        sec = 0;
-                                        min++;
-                                    } else {
-                                        sec++;
-                                    }
-                                    if (min == 59) {
-                                        min = 0;
-                                        hour++;
-                                    } else {
-                                        min++;
-                                    }
-                                    test0120.setSecond(sec);
-                                    test0120.setMinute(min);
-                                    test0120.setHour(hour);
-                                    time0120.setText(hour + ":" + min + ":" + sec);
-                                }
-                            }
-                        }, 1000);
-                        session.setRPM(result);
+                            }, 950);
+                            session.setRPM(result);
+                        }
                     }
                 } catch (Exception e) {
                     result = result + "\nException Occur: " + e.getMessage();
@@ -216,16 +221,11 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
 
         connecting = findViewById(R.id.connecting);
         main = findViewById(R.id.main);
-        speed040 = findViewById(R.id.speed040);
-        speed060 = findViewById(R.id.speed060);
-        speed080 = findViewById(R.id.speed080);
-        speed0100 = findViewById(R.id.speed0100);
-        speed0120 = findViewById(R.id.speed0120);
-        reset040 = findViewById(R.id.reset040);
-        reset060 = findViewById(R.id.reset060);
-        reset080 = findViewById(R.id.reset080);
-        reset0100 = findViewById(R.id.reset0100);
-        reset0120 = findViewById(R.id.reset0120);
+        ImageView reset040 = findViewById(R.id.reset040);
+        ImageView reset060 = findViewById(R.id.reset060);
+        ImageView reset080 = findViewById(R.id.reset080);
+        ImageView reset0100 = findViewById(R.id.reset0100);
+        ImageView reset0120 = findViewById(R.id.reset0120);
 
         time040 = findViewById(R.id.time040);
         time060 = findViewById(R.id.time060);
@@ -244,6 +244,9 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
         test080 = new AccelerationTestObject();
         test0100 = new AccelerationTestObject();
         test0120 = new AccelerationTestObject();
+
+        connecting.setVisibility(View.VISIBLE);
+        main.setVisibility(View.GONE);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);

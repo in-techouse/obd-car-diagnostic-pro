@@ -76,33 +76,55 @@ public class LiveData extends AppCompatActivity {
                     String strEngineLoad = tripRecord.getmEngineLoad();
                     String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                     String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                    result = result + "\nSpeed: " + speed + "\nRPM: " + strRPM + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    session.setRPM(result);
                     speedView.speedTo(speed, 3000);
 
                     if (strRPM != null && !strRPM.equals("null")) {
                         rpmReading.updateSpeed(Integer.parseInt(strRPM));
                     }
+
                     if (strEngineLoad != null && !strEngineLoad.equals("null")) {
                         String[] temp = strEngineLoad.split("%");
                         if (temp.length > 0) {
                             double value = Double.parseDouble(temp[0]);
                             engineLoad.updateSpeed((int) value);
+                        } else {
+                            result = "\nLive Data " + d.toString() + " Engine Load, Split Array length is less than 1";
+                            session.setRPM(result);
                         }
+                    } else {
+                        result = "\nLive Data " + d.toString() + " Engine Load value is null";
+                        session.setRPM(result);
                     }
+
                     if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
                         String[] temp = strInTakeTemp.split("%");
                         if (temp.length > 0) {
                             double value = Double.parseDouble(temp[0]);
                             intakeTemp.updateSpeed((int) value);
+                        } else {
+                            result = "\nLive Data " + d.toString() + " Air Intake Temp, Split Array length is less than 1";
+                            session.setRPM(result);
                         }
+                    } else {
+                        result = "\nLive Data " + d.toString() + " Air Intake Temp value is null";
+                        session.setRPM(result);
                     }
+
                     if (strEngineCoolantTemp != null && strEngineCoolantTemp.equals("null")) {
                         String[] temp = strEngineCoolantTemp.split("C");
                         if (temp.length > 0) {
                             engineTemp.updateSpeed(Integer.parseInt(temp[0]));
+                        } else {
+                            result = "\nLive Data " + d.toString() + " Engine Coolant Temp, Split Array length is less than 1";
+                            session.setRPM(result);
                         }
+                    } else {
+                        result = "\nLive Data " + d.toString() + " Engine Coolant Temp value is null";
+                        session.setRPM(result);
                     }
-                    session.setRPM(result);
+
                 } catch (Exception e) {
                     Log.e("LiveData", "String to int parsing error");
                     result = result + " Exception: " + e.getMessage();
@@ -136,9 +158,6 @@ public class LiveData extends AppCompatActivity {
 
         helpers = new Helpers();
 
-//        ObdConfiguration.setmObdCommands(LiveData.this, null);
-//        float gasPrice = 7;
-//        ObdPreferences.get(LiveData.this).setGasPrice(gasPrice);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);

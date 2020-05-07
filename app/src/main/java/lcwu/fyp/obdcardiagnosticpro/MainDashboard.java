@@ -36,6 +36,8 @@ public class MainDashboard extends AppCompatActivity {
     private MenuItem item;
     private Helpers helpers;
     private TextView drivingDuration, drivingDistance, drivingIdleDuration, drivingFuelConsumption;
+    private String strDrivingDuration, strDrivingDistance, strDrivingIdleDuration, strDrivingFuelConsumption;
+    private int intSpeed, intRpm, intEngineLoad, intIntakeTemp, intEngineTemp;
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
@@ -70,51 +72,98 @@ public class MainDashboard extends AppCompatActivity {
                     helpers.showError(MainDashboard.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                     return;
                 }
-                int speed = tripRecord.getSpeed();
-                String strRPM = tripRecord.getEngineRpm();
+                if (strDrivingDuration.length() < 1) {
+                    strDrivingDuration = tripRecord.getDrivingDuration() + " Minutes";
+                    drivingDuration.setText(strDrivingDuration);
+                }
+                if (strDrivingDistance.length() < 1) {
+                    strDrivingDistance = tripRecord.getmDistanceTravel() + " KM";
+                    drivingDistance.setText(strDrivingDuration);
+                }
+                if (strDrivingIdleDuration.length() < 1) {
+                    strDrivingIdleDuration = tripRecord.getIdlingDuration() + " Minutes";
+                    drivingIdleDuration.setText(strDrivingIdleDuration);
+                }
+                if (strDrivingFuelConsumption.length() < 1) {
+                    strDrivingFuelConsumption = tripRecord.getmDrivingFuelConsumption() + "";
+                    drivingFuelConsumption.setText(strDrivingFuelConsumption);
+                }
+                if (intSpeed < 1) {
+                    intSpeed = tripRecord.getSpeed();
+                    speedView.speedTo(intSpeed, 3000);
+                }
+                if (intRpm < 1) {
+                    String strRPM = tripRecord.getEngineRpm();
+                    if (strRPM != null && !strRPM.equals("null")) {
+                        intRpm = Integer.parseInt(strRPM);
+                        rpmReading.updateSpeed(intRpm);
+                    }
+                }
+
                 String strEngineLoad = tripRecord.getmEngineLoad();
                 String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                 String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
                 Date d = new Date();
+
                 try {
                     String result = "\nMain Dashboard " + d.toString() + "";
-                    result = result + "\nSpeed: " + speed + "\nRPM: " + strRPM + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nDistance Travel: " + tripRecord.getmDistanceTravel() + "\nIdle Duration: " + tripRecord.getIdlingDuration() + "\nFuel Consumption: " + tripRecord.getmDrivingFuelConsumption();
+                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
                     session.setRPM(result);
 
-                    // Setting values to views
-                    speedView.speedTo(speed, 3000);
-                    if (strRPM != null && !strRPM.equals("null")) {
-                        rpmReading.updateSpeed(Integer.parseInt(strRPM));
-                    }
-                    if (strEngineLoad != null && !strEngineLoad.equals("null")) {
-                        String[] temp = strEngineLoad.split("%");
-                        if (temp.length > 0) {
-                            double value = Double.parseDouble(temp[0]);
-                            engineLoad.updateSpeed((int) value);
+                    if (intEngineLoad < 1) {
+                        if (strEngineLoad != null && !strEngineLoad.equals("null")) {
+                            String[] temp = strEngineLoad.split("%");
+                            if (temp.length > 0) {
+                                double value = Double.parseDouble(temp[0]);
+                                intEngineLoad = (int) value;
+                                engineLoad.updateSpeed(intEngineLoad);
+                            } else {
+                                result = "\nMain Dashboard " + d.toString() + " Engine Load, Split Array length is less than 1";
+                                session.setRPM(result);
+                            }
+                        } else {
+                            result = "\nMain Dashboard " + d.toString() + " Engine Load value is null";
+                            session.setRPM(result);
                         }
                     }
-                    if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
-                        String[] temp = strInTakeTemp.split("%");
-                        if (temp.length > 0) {
-                            double value = Double.parseDouble(temp[0]);
-                            intakeTemp.updateSpeed((int) value);
+
+                    if (intIntakeTemp < 1) {
+                        if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
+                            String[] temp = strInTakeTemp.split("%");
+                            if (temp.length > 0) {
+                                double value = Double.parseDouble(temp[0]);
+                                intIntakeTemp = (int) value;
+                                intakeTemp.updateSpeed(intIntakeTemp);
+                            } else {
+                                result = "\nMain Dashboard " + d.toString() + " Air Intake Temp, Split Array length is less than 1";
+                                session.setRPM(result);
+                            }
+                        } else {
+                            result = "\nMain Dashboard " + d.toString() + " Air Intake Temp value is null";
+                            session.setRPM(result);
                         }
                     }
-                    if (strEngineCoolantTemp != null && !strEngineCoolantTemp.equals("null")) {
-                        String[] temp = strEngineCoolantTemp.split("C");
-                        if (temp.length > 0) {
-                            engineTemp.updateSpeed(Integer.parseInt(temp[0]));
+
+                    if (intEngineTemp < 1) {
+                        if (strEngineCoolantTemp != null && !strEngineCoolantTemp.equals("null")) {
+                            String[] temp = strEngineCoolantTemp.split("C");
+                            if (temp.length > 0) {
+                                intEngineTemp = Integer.parseInt(temp[0]);
+                                engineTemp.updateSpeed(intEngineTemp);
+                            } else {
+                                result = "\nMain Dashboard " + d.toString() + " Engine Coolant Temp, Split Array length is less than 1";
+                                session.setRPM(result);
+                            }
+                        } else {
+                            result = "\nMain Dashboard " + d.toString() + " Engine Coolant Temp value is null";
+                            session.setRPM(result);
                         }
                     }
-                    drivingDuration.setText(tripRecord.getDrivingDuration() + " Minutes");
-                    drivingDistance.setText(tripRecord.getmDistanceTravel() + " KM");
-                    drivingIdleDuration.setText(tripRecord.getIdlingDuration() + " Minutes");
-                    drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
+
                 } catch (Exception e) {
                     String result = "Main Dashboard " + d.toString();
                     result = result + "\nException: " + e.getMessage();
                     session.setRPM(result);
-                    Log.e("MainDashboard", "String to int parsing error");
                 }
             }
         }
@@ -150,9 +199,8 @@ public class MainDashboard extends AppCompatActivity {
         intakeTemp.updateSpeed(0);
         engineTemp.updateSpeed(0);
 
-//        ObdConfiguration.setmObdCommands(MainDashboard.this, null);
-//        float gasPrice = 7;
-//        ObdPreferences.get(MainDashboard.this).setGasPrice(gasPrice);
+        strDrivingDistance = strDrivingDuration = strDrivingFuelConsumption = strDrivingIdleDuration = "";
+        intSpeed = intRpm = intEngineLoad = intIntakeTemp = intEngineTemp = -1;
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
