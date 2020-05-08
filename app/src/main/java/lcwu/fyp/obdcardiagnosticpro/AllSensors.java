@@ -27,7 +27,10 @@ import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_RE
 
 public class AllSensors extends AppCompatActivity {
     // OBD is disconnecting,
-    private TextView airTemperature, engineCoolantTemperature, engineRpm, engineRpmMax, drivingDuration, engineRuntime;
+    private TextView airTemperature, engineCoolantTemperature, engineRpm, engineRpmMax, drivingDuration, engineRuntime,
+            idlingDuration, vehicleIdentificationNumber, absLoad, airFuelRation, barometricPressure, controlModuleVoltage,
+            describeProtocol, describeProtocolNumber, distanceTravel, distanceTravelMilOn, drivingFuelConsumption, engineFuelRate,
+            dtcNumber;
     private LinearLayout main, connecting;
     private MenuItem item;
     private Helpers helpers;
@@ -71,13 +74,81 @@ public class AllSensors extends AppCompatActivity {
                         result = result + " Trip record is null";
                         session.setRPM(result);
                     } else {
-                        result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration() + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp() + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp() + "\nEngine RPM: " + tripRecord.getEngineRpm() + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax() + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
+
+                        result = result + "\nVehicle Identification Number: " + tripRecord.getmVehicleIdentificationNumber();
+                        vehicleIdentificationNumber.setText(tripRecord.getmVehicleIdentificationNumber());
+
+                        result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration();
                         drivingDuration.setText(tripRecord.getDrivingDuration() + " minutes");
-                        airTemperature.setText(tripRecord.getmAmbientAirTemp());
+
+                        result = result + "\nIdling Duration: " + tripRecord.getIdlingDuration();
+                        idlingDuration.setText(tripRecord.getIdlingDuration() + "");
+
+                        result = result + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp();
                         engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
+
+                        result = result + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp();
+                        airTemperature.setText(tripRecord.getmAmbientAirTemp());
+
+                        result = result + "\nEngine RPM: " + tripRecord.getEngineRpm();
                         engineRpm.setText(tripRecord.getEngineRpm());
+
+                        result = result + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax();
                         engineRpmMax.setText(tripRecord.getEngineRpmMax() + "");
+
+                        result = result + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
                         engineRuntime.setText(tripRecord.getEngineRuntime());
+
+                        result = result + "\nAbs Load: " + tripRecord.getmAbsLoad();
+                        absLoad.setText(tripRecord.getmAbsLoad());
+
+                        result = result + "\nAir Fuel Ratio: " + tripRecord.getmAirFuelRatio();
+                        airFuelRation.setText(tripRecord.getmAmbientAirTemp());
+
+                        result = result + "\nBarometric Pressure: " + tripRecord.getmBarometricPressure();
+                        barometricPressure.setText(tripRecord.getmBarometricPressure());
+
+                        result = result + "\nControlc Module Voltage" + tripRecord.getmControlModuleVoltage();
+                        controlModuleVoltage.setText(tripRecord.getmControlModuleVoltage());
+
+                        result = result + "\nDescribe Protocol" + tripRecord.getmDescribeProtocol();
+                        describeProtocol.setText(tripRecord.getmDescribeProtocol());
+
+                        result = result + "\nDescribe Protocol Number: " + tripRecord.getmDescribeProtocolNumber();
+                        describeProtocolNumber.setText(tripRecord.getmDescribeProtocolNumber());
+
+                        result = result + "\nDistance Travel" + tripRecord.getmDistanceTravel();
+                        distanceTravel.setText(tripRecord.getmDistanceTravel() + "");
+
+                        result = result + "\nDistance Travel Mil On" + tripRecord.getmDistanceTraveledMilOn();
+                        distanceTravelMilOn.setText(tripRecord.getmDistanceTraveledMilOn());
+
+                        result = result + "\nDriving Fuel Consumption" + tripRecord.getmDrivingFuelConsumption();
+                        drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
+
+                        result = result + "\nEngine Fuel Rate: " + tripRecord.getmEngineFuelRate();
+                        engineFuelRate.setText(tripRecord.getmEngineFuelRate());
+
+                        result = result + "\nDTC number: " + tripRecord.getmDtcNumber();
+                        dtcNumber.setText(tripRecord.getmDtcNumber());
+
+                        tripRecord.getmEngineOilTemp();
+                        tripRecord.getmEquivRatio();
+                        tripRecord.getmFuelConsumptionRate();
+                        tripRecord.getmFuelPressure();
+                        tripRecord.getmFuelRailPressure();
+                        tripRecord.getmIdlingFuelConsumption();
+                        tripRecord.getmIgnitionMonitor();
+                        tripRecord.getmInsFuelConsumption();
+                        tripRecord.getmRapidAccTimes();
+                        tripRecord.getmRapidDeclTimes();
+                        tripRecord.getmThrottlePos();
+                        tripRecord.getmRelThottlePos();
+                        tripRecord.getmTripIdentifier();
+                        tripRecord.getmTimingAdvance();
+                        tripRecord.getmWideBandAirFuelRatio();
+
+
                         session.setRPM(result);
                     }
                 } catch (Exception e) {
@@ -106,13 +177,24 @@ public class AllSensors extends AppCompatActivity {
         engineRpmMax = findViewById(R.id.engineRpmMax);
         drivingDuration = findViewById(R.id.drivingDuration);
         engineRuntime = findViewById(R.id.engineRuntime);
+        idlingDuration = findViewById(R.id.idlingDuration);
+        absLoad = findViewById(R.id.absLoad);
+        vehicleIdentificationNumber = findViewById(R.id.vehicleIdentificationNumber);
+        airFuelRation = findViewById(R.id.airFuelRation);
+        barometricPressure = findViewById(R.id.barometricPressure);
+        controlModuleVoltage = findViewById(R.id.controlModuleVoltage);
+        describeProtocol = findViewById(R.id.describeProtocol);
+        describeProtocolNumber = findViewById(R.id.describeProtocolNumber);
+        distanceTravel = findViewById(R.id.distanceTravel);
+        distanceTravelMilOn = findViewById(R.id.distanceTravelMilOn);
+        drivingFuelConsumption = findViewById(R.id.drivingFuelConsumption);
+        engineFuelRate = findViewById(R.id.engineFuelRate);
+        dtcNumber = findViewById(R.id.dtcNumber);
+
 
         helpers = new Helpers();
         session = new Session(AllSensors.this);
 
-//        ObdConfiguration.setmObdCommands(AllSensors.this, null);
-//        float gasPrice = 7;
-//        ObdPreferences.get(AllSensors.this).setGasPrice(gasPrice);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);

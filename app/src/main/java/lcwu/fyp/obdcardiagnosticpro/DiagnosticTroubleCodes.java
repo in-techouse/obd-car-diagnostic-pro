@@ -11,14 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sohrab.obd.reader.application.ObdPreferences;
-import com.sohrab.obd.reader.obdCommand.ObdConfiguration;
 import com.sohrab.obd.reader.service.ObdReaderService;
 import com.sohrab.obd.reader.trip.TripRecord;
+
+import java.util.Date;
 
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 
@@ -31,6 +31,7 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
     private TextView faultCodes, pendingCodes, permanentCodes;
     private MenuItem item;
     private Helpers helpers;
+    private Session session;
 
     private final BroadcastReceiver mObdReaderReceiver = new BroadcastReceiver() {
         @Override
@@ -43,7 +44,6 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
             }
             if (action.equals(ACTION_OBD_CONNECTION_STATUS)) {
                 String connectionStatusMsg = intent.getStringExtra(ObdReaderService.INTENT_OBD_EXTRA_DATA);
-                Toast.makeText(DiagnosticTroubleCodes.this, connectionStatusMsg, Toast.LENGTH_SHORT).show();
                 if (connectionStatusMsg == null) {
                     item.setTitle("NOT CONNECTED");
                     connecting.setVisibility(View.VISIBLE);
@@ -63,12 +63,23 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
                 connecting.setVisibility(View.GONE);
                 main.setVisibility(View.VISIBLE);
 
-                if (tripRecord != null) {
-                    faultCodes.setText(tripRecord.getmFaultCodes());
-                    pendingCodes.setText(tripRecord.getmPendingTroubleCode());
-                    permanentCodes.setText(tripRecord.getmPermanentTroubleCode());
-                } else {
-                    helpers.showError(DiagnosticTroubleCodes.this, "ERROR!", "Something went wrong.\nPlease try again later.");
+                Date d = new Date();
+                String result = "\nTrouble Codes: " + d.toString();
+                try {
+                    if (tripRecord != null) {
+                        result = result + "\nFault Codes: " + tripRecord.getmFaultCodes() + "\nPending Trouble Codes: " + tripRecord.getmPendingTroubleCode() + "\nPermanent Trouble Code: " + tripRecord.getmPermanentTroubleCode();
+                        session.setRPM(result);
+                        faultCodes.setText(tripRecord.getmFaultCodes());
+                        pendingCodes.setText(tripRecord.getmPendingTroubleCode());
+                        permanentCodes.setText(tripRecord.getmPermanentTroubleCode());
+                    } else {
+                        result = result + " Trip Record is null";
+                        session.setRPM(result);
+                        helpers.showError(DiagnosticTroubleCodes.this, "ERROR!", "Something went wrong.\nPlease try again later.");
+                    }
+                } catch (Exception e) {
+                    result = result + " Exception: " + e.getMessage();
+                    session.setRPM(result);
                 }
             }
         }
@@ -91,16 +102,13 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
         permanentCodes = findViewById(R.id.permamentCodes);
 
         helpers = new Helpers();
+        session = new Session(getApplicationContext());
 
-//        ObdConfiguration.setmObdCommands(DiagnosticTroubleCodes.this, null);
-//        float gasPrice = 7;
-//        ObdPreferences.get(DiagnosticTroubleCodes.this).setGasPrice(gasPrice);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
         intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
         registerReceiver(mObdReaderReceiver, intentFilter);
         startService(new Intent(DiagnosticTroubleCodes.this, ObdReaderService.class));
-
     }
 
     @Override
