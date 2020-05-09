@@ -30,8 +30,8 @@ public class AllSensors extends AppCompatActivity {
     private TextView airTemperature, engineCoolantTemperature, engineRpm, engineRpmMax, drivingDuration, engineRuntime,
             idlingDuration, vehicleIdentificationNumber, absLoad, airFuelRation, barometricPressure, controlModuleVoltage,
             describeProtocol, describeProtocolNumber, distanceTravel, distanceTravelMilOn, drivingFuelConsumption, engineFuelRate,
-            dtcNumber,engineOilTemp,equivRatio,fuelConsumptionRate,fuelPressure,fuelRailPressure,idlingFuelConsumption,ignitionMonitor,
-            insFuelConsumption,rapidAccTimes,rapidDeclTimes,throttlePos,relThottlePos,tripIdentifier,timingAdvance,wideBandAirFuelRatio;
+            dtcNumber, engineOilTemp, equivRatio, fuelConsumptionRate, fuelPressure, fuelRailPressure, idlingFuelConsumption, ignitionMonitor,
+            insFuelConsumption, rapidAccTimes, rapidDeclTimes, throttlePos, relThottlePos, tripIdentifier, timingAdvance, wideBandAirFuelRatio;
     private LinearLayout main, connecting;
     private MenuItem item;
     private Helpers helpers;
@@ -133,49 +133,49 @@ public class AllSensors extends AppCompatActivity {
                         result = result + "\nDTC number: " + tripRecord.getmDtcNumber();
                         dtcNumber.setText(tripRecord.getmDtcNumber());
 
-                        result = result + "\nEngine Oil Temp:"+tripRecord.getmEngineOilTemp();
+                        result = result + "\nEngine Oil Temp:" + tripRecord.getmEngineOilTemp();
                         engineOilTemp.setText(tripRecord.getmEngineOilTemp());
 
-                        result = result  + "\nEquiv Ratio:" +tripRecord.getmEquivRatio();
+                        result = result + "\nEquiv Ratio:" + tripRecord.getmEquivRatio();
                         equivRatio.setText(tripRecord.getmEquivRatio());
 
-                        result = result  + "\nFuel Consumption Rate:"+tripRecord.getmFuelConsumptionRate();
+                        result = result + "\nFuel Consumption Rate:" + tripRecord.getmFuelConsumptionRate();
                         fuelConsumptionRate.setText(tripRecord.getmFuelConsumptionRate());
 
-                        result = result + "\nFuel Pressure:"+tripRecord.getmFuelPressure();
+                        result = result + "\nFuel Pressure:" + tripRecord.getmFuelPressure();
                         fuelPressure.setText(tripRecord.getmFuelPressure());
 
-                        result = result +"\nFuel Rail Pressure:"+tripRecord.getmFuelRailPressure();
+                        result = result + "\nFuel Rail Pressure:" + tripRecord.getmFuelRailPressure();
                         fuelRailPressure.setText(tripRecord.getmFuelRailPressure());
 
-                        result = result +"\nIdling Fuel Consumption:"+tripRecord.getmIdlingFuelConsumption();
-                        idlingFuelConsumption.setText(tripRecord.getmIdlingFuelConsumption());
+                        result = result + "\nIdling Fuel Consumption:" + tripRecord.getmIdlingFuelConsumption();
+                        idlingFuelConsumption.setText(tripRecord.getmIdlingFuelConsumption() + "");
 
-                        result = result +"\nIgnition Monitor:"+tripRecord.getmIgnitionMonitor();
+                        result = result + "\nIgnition Monitor:" + tripRecord.getmIgnitionMonitor();
                         ignitionMonitor.setText(tripRecord.getmIgnitionMonitor());
 
-                        result = result +"\nIns Fuel Consumption:"+tripRecord.getmInsFuelConsumption();
-                        insFuelConsumption.setText(tripRecord.getmInsFuelConsumption());
+                        result = result + "\nIns Fuel Consumption:" + tripRecord.getmInsFuelConsumption();
+                        insFuelConsumption.setText(tripRecord.getmInsFuelConsumption() + "");
 
-                        result = result +"\nRapid Acc Times:"+tripRecord.getmRapidAccTimes();
-                        rapidAccTimes.setText(tripRecord.getmRapidAccTimes());
+                        result = result + "\nRapid Acc Times:" + tripRecord.getmRapidAccTimes();
+                        rapidAccTimes.setText(tripRecord.getmRapidAccTimes() + "");
 
-                        result = result +"\nRapid Decl Times:"+tripRecord.getmRapidDeclTimes();
-                        rapidDeclTimes.setText(tripRecord.getmRapidDeclTimes());
+                        result = result + "\nRapid Decl Times:" + tripRecord.getmRapidDeclTimes();
+                        rapidDeclTimes.setText(tripRecord.getmRapidDeclTimes() + "");
 
-                        result= result+"\nThrottle Post:"+tripRecord.getmThrottlePos();
+                        result = result + "\nThrottle Post:" + tripRecord.getmThrottlePos();
                         throttlePos.setText(tripRecord.getmThrottlePos());
 
-                        result = result+"\nRel ThottlePos:"+tripRecord.getmRelThottlePos();
+                        result = result + "\nRel ThottlePos:" + tripRecord.getmRelThottlePos();
                         relThottlePos.setText(tripRecord.getmRelThottlePos());
 
-                        result = result+"\nTrip Identifier:"+tripRecord.getmTripIdentifier();
+                        result = result + "\nTrip Identifier:" + tripRecord.getmTripIdentifier();
                         tripIdentifier.setText(tripRecord.getmTripIdentifier());
 
-                        result = result+"\nTiming Advance:"+tripRecord.getmTimingAdvance();
+                        result = result + "\nTiming Advance:" + tripRecord.getmTimingAdvance();
                         timingAdvance.setText(tripRecord.getmTimingAdvance());
 
-                        result =result+"\nWide Band Air Fuel Ratio:"+tripRecord.getmWideBandAirFuelRatio();
+                        result = result + "\nWide Band Air Fuel Ratio:" + tripRecord.getmWideBandAirFuelRatio();
                         wideBandAirFuelRatio.setText(tripRecord.getmWideBandAirFuelRatio());
 
 
@@ -223,18 +223,18 @@ public class AllSensors extends AppCompatActivity {
         engineOilTemp = findViewById(R.id.engineOilTemp);
         equivRatio = findViewById(R.id.equivRatio);
         fuelConsumptionRate = findViewById(R.id.fuelConsumptionRate);
-        fuelPressure= findViewById(R.id.fuelPressure);
+        fuelPressure = findViewById(R.id.fuelPressure);
         fuelRailPressure = findViewById(R.id.fuelRailPressure);
         idlingFuelConsumption = findViewById(R.id.idlingFuelConsumption);
         ignitionMonitor = findViewById(R.id.ignitionMonitor);
         insFuelConsumption = findViewById(R.id.insFuelConsumption);
         rapidAccTimes = findViewById(R.id.rapidAccTimes);
-        rapidDeclTimes = findViewById(R.id.rapidDec1Iimes);
+        rapidDeclTimes = findViewById(R.id.rapidDeclTimes);
         throttlePos = findViewById(R.id.throttlePos);
-        relThottlePos = findViewById(R.id.relThottlePos);
+        relThottlePos = findViewById(R.id.relthottlePos);
         timingAdvance = findViewById(R.id.timingAdvance);
         wideBandAirFuelRatio = findViewById(R.id.wideBandAirRatio);
-//
+
         helpers = new Helpers();
         session = new Session(AllSensors.this);
 
