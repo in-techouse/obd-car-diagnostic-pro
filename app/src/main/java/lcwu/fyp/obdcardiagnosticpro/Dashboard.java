@@ -138,6 +138,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                         if (temp.length > 0 && airIntakeTemperature < 1) {
                             double value = Double.parseDouble(temp[0]);
                             airIntakeTemperature = (int) value;
+                            airResult = airResult + "Value is: " + airIntakeTemperature;
+                            session.setRPM(airResult);
                         } else {
                             airResult = airResult + "Parsing return array less than 1 or value is already assigned.";
                             session.setRPM(airResult);

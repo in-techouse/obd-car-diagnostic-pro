@@ -107,7 +107,7 @@ public class MainDashboard extends AppCompatActivity {
 
                 try {
                     String result = "\nMain Dashboard " + d.toString() + "";
-                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strInTakeTemp + "\nCoolant Temp: " + strEngineCoolantTemp;
                     session.setRPM(result);
 
                     if (intEngineLoad < 1) {
@@ -133,6 +133,8 @@ public class MainDashboard extends AppCompatActivity {
                             if (temp.length > 0) {
                                 double value = Double.parseDouble(temp[0]);
                                 intIntakeTemp = (int) value;
+                                result = "\nMain Dashboard " + d.toString() + " Air Intake Temp, Parsed successfully, Value is: " + intIntakeTemp;
+                                session.setRPM(result);
                                 intakeTemp.updateSpeed(intIntakeTemp);
                             } else {
                                 result = "\nMain Dashboard " + d.toString() + " Air Intake Temp, Split Array length is less than 1";

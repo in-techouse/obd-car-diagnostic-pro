@@ -669,6 +669,28 @@
                 android:layout_marginBottom="5dp"
                 android:background="@color/colorPrimary" />
             <!--   End Displaying Single Value       -->
+
+            <!--   Start Displaying Single Value       -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trip Identifier"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tripIdentifier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorPrimary" />
+            <!--   End Displaying Single Value       -->
+
         </LinearLayout>
 
         <LinearLayout

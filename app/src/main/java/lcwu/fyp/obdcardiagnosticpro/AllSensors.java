@@ -178,7 +178,6 @@ public class AllSensors extends AppCompatActivity {
                         result = result + "\nWide Band Air Fuel Ratio:" + tripRecord.getmWideBandAirFuelRatio();
                         wideBandAirFuelRatio.setText(tripRecord.getmWideBandAirFuelRatio());
 
-
                         session.setRPM(result);
                     }
                 } catch (Exception e) {
@@ -232,6 +231,7 @@ public class AllSensors extends AppCompatActivity {
         rapidDeclTimes = findViewById(R.id.rapidDeclTimes);
         throttlePos = findViewById(R.id.throttlePos);
         relThottlePos = findViewById(R.id.relthottlePos);
+        tripIdentifier = findViewById(R.id.tripIdentifier);
         timingAdvance = findViewById(R.id.timingAdvance);
         wideBandAirFuelRatio = findViewById(R.id.wideBandAirRatio);
 

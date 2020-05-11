@@ -76,7 +76,7 @@ public class LiveData extends AppCompatActivity {
                     String strEngineLoad = tripRecord.getmEngineLoad();
                     String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                     String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strEngineLoad + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strInTakeTemp + "\nCoolant Temp: " + strEngineCoolantTemp;
                     session.setRPM(result);
                     speedView.speedTo(speed, 3000);
 
