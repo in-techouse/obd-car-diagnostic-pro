@@ -88,17 +88,14 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                         int sec = test040.getSecond();
                                         int min = test040.getMinute();
                                         int hour = test040.getHour();
-                                        if (sec > 58) {
+                                        if (sec < 59) {
+                                            sec++;
+                                        } else {
                                             sec = 0;
                                             min++;
-                                        } else {
-                                            sec++;
                                         }
                                         if (min > 58) {
-                                            min = 0;
                                             hour++;
-                                        } else {
-                                            min++;
                                         }
                                         test040.setSecond(sec);
                                         test040.setMinute(min);
@@ -110,17 +107,14 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                         int sec = test060.getSecond();
                                         int min = test060.getMinute();
                                         int hour = test060.getHour();
-                                        if (sec > 58) {
+                                        if (sec < 59) {
+                                            sec++;
+                                        } else {
                                             sec = 0;
                                             min++;
-                                        } else {
-                                            sec++;
                                         }
                                         if (min > 58) {
-                                            min = 0;
                                             hour++;
-                                        } else {
-                                            min++;
                                         }
                                         test060.setSecond(sec);
                                         test060.setMinute(min);
@@ -132,17 +126,14 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                         int sec = test080.getSecond();
                                         int min = test080.getMinute();
                                         int hour = test080.getHour();
-                                        if (sec > 58) {
+                                        if (sec < 59) {
+                                            sec++;
+                                        } else {
                                             sec = 0;
                                             min++;
-                                        } else {
-                                            sec++;
                                         }
                                         if (min > 58) {
-                                            min = 0;
                                             hour++;
-                                        } else {
-                                            min++;
                                         }
                                         test080.setSecond(sec);
                                         test080.setMinute(min);
@@ -154,17 +145,14 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                         int sec = test0100.getSecond();
                                         int min = test0100.getMinute();
                                         int hour = test0100.getHour();
-                                        if (sec > 58) {
+                                        if (sec < 59) {
+                                            sec++;
+                                        } else {
                                             sec = 0;
                                             min++;
-                                        } else {
-                                            sec++;
                                         }
                                         if (min > 58) {
-                                            min = 0;
                                             hour++;
-                                        } else {
-                                            min++;
                                         }
                                         test0100.setSecond(sec);
                                         test0100.setMinute(min);
@@ -176,17 +164,14 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                                         int sec = test0120.getSecond();
                                         int min = test0120.getMinute();
                                         int hour = test0120.getHour();
-                                        if (sec > 58) {
+                                        if (sec < 59) {
+                                            sec++;
+                                        } else {
                                             sec = 0;
                                             min++;
-                                        } else {
-                                            sec++;
                                         }
                                         if (min > 58) {
-                                            min = 0;
                                             hour++;
-                                        } else {
-                                            min++;
                                         }
                                         test0120.setSecond(sec);
                                         test0120.setMinute(min);
@@ -236,18 +221,6 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                         hour++;
                     }
 
-//                if (sec > 58) {
-//                    sec = 0;
-//                    min++;
-//                } else {
-//                    sec++;
-//                }
-//                if (min > 58) {
-//                    min = 0;
-//                    hour++;
-//                } else {
-//                    min++;
-//                }
                     test040.setSecond(sec);
                     test040.setMinute(min);
                     test040.setHour(hour);
@@ -287,7 +260,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
         reset0100.setOnClickListener(this);
         reset0120.setOnClickListener(this);
 
-        test040 = new AccelerationTestObject();
+        test040 = session.getAcc040();
         test060 = new AccelerationTestObject();
         test080 = new AccelerationTestObject();
         test0100 = new AccelerationTestObject();
@@ -316,9 +289,10 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mObdReaderReceiver);
-        stopService(new Intent(this, ObdReaderService.class));
-        ObdPreferences.get(this).setServiceRunningStatus(false);
+//        unregisterReceiver(mObdReaderReceiver);
+//        stopService(new Intent(this, ObdReaderService.class));
+//        ObdPreferences.get(this).setServiceRunningStatus(false);
+        session.setAcc040(test040);
     }
 
     @Override
@@ -330,6 +304,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                 test040.setMinute(0);
                 test040.setSecond(0);
                 time040.setText("000.000.000");
+                session.setAcc040(test040);
                 break;
             }
             case R.id.reset060: {
