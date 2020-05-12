@@ -3,6 +3,7 @@ package lcwu.fyp.obdcardiagnosticpro;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -194,43 +195,6 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
         ;
     };
 
-
-    private void updateTimer(final int speed) {
-        Handler handler = new Handler();
-        Log.e("AccelerationTest", "Update Timer Called with speed: " + speed);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.e("AccelerationTest", "Handler Executed");
-                // From here, we're getting speed from the OBD, we will do our custom logic here.
-                // Acceleration Test 0-40KM/hr
-                if (speed >= 0 && speed <= 40) {
-                    int sec = test040.getSecond();
-                    int min = test040.getMinute();
-                    int hour = test040.getHour();
-                    Log.e("AccelerationTest", "Second: " + sec);
-                    Log.e("AccelerationTest", "Minute: " + min);
-                    Log.e("AccelerationTest", "Hour: " + hour);
-                    if (sec < 59) {
-                        sec++;
-                    } else {
-                        sec = 0;
-                        min++;
-                    }
-                    if (min > 58) {
-                        hour++;
-                    }
-
-                    test040.setSecond(sec);
-                    test040.setMinute(min);
-                    test040.setHour(hour);
-                    time040.setText(hour + ":" + min + ":" + sec);
-                    updateTimer(35);
-                }
-            }
-        }, 1000);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -260,23 +224,20 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
         reset0100.setOnClickListener(this);
         reset0120.setOnClickListener(this);
 
-        test040 = session.getAcc040();
-        test060 = new AccelerationTestObject();
-        test080 = new AccelerationTestObject();
-        test0100 = new AccelerationTestObject();
-        test0120 = new AccelerationTestObject();
-        updateTimer(39);
-        connecting.setVisibility(View.GONE);
-        main.setVisibility(View.VISIBLE);
+        test040 = session.getAcc("acc040");
+        test060 = session.getAcc("acc060");
+        test080 = session.getAcc("acc080");
+        test0100 = session.getAcc("acc0100");
+        test0120 = session.getAcc("acc0120");
 
-//        connecting.setVisibility(View.VISIBLE);
-//        main.setVisibility(View.GONE);
-//
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
-//        intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
-//        registerReceiver(mObdReaderReceiver, intentFilter);
-//        startService(new Intent(AccelerationTest.this, ObdReaderService.class));
+        connecting.setVisibility(View.VISIBLE);
+        main.setVisibility(View.GONE);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
+        intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
+        registerReceiver(mObdReaderReceiver, intentFilter);
+        startService(new Intent(AccelerationTest.this, ObdReaderService.class));
     }
 
     @Override
@@ -289,10 +250,14 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(mObdReaderReceiver);
-//        stopService(new Intent(this, ObdReaderService.class));
-//        ObdPreferences.get(this).setServiceRunningStatus(false);
-        session.setAcc040(test040);
+        unregisterReceiver(mObdReaderReceiver);
+        stopService(new Intent(this, ObdReaderService.class));
+        ObdPreferences.get(this).setServiceRunningStatus(false);
+        session.setAcc(test040, "040");
+        session.setAcc(test060, "060");
+        session.setAcc(test080, "080");
+        session.setAcc(test0100, "0100");
+        session.setAcc(test0120, "0120");
     }
 
     @Override
@@ -304,7 +269,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                 test040.setMinute(0);
                 test040.setSecond(0);
                 time040.setText("000.000.000");
-                session.setAcc040(test040);
+                session.setAcc(test040, "040");
                 break;
             }
             case R.id.reset060: {
@@ -312,6 +277,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                 test060.setMinute(0);
                 test060.setSecond(0);
                 time060.setText("000.000.000");
+                session.setAcc(test060, "060");
                 break;
             }
             case R.id.reset080: {
@@ -319,6 +285,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                 test080.setMinute(0);
                 test080.setSecond(0);
                 time080.setText("000.000.000");
+                session.setAcc(test080, "080");
                 break;
             }
             case R.id.reset0100: {
@@ -326,6 +293,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                 test0100.setMinute(0);
                 test0100.setSecond(0);
                 time0100.setText("000.000.000");
+                session.setAcc(test0100, "0100");
                 break;
             }
             case R.id.reset0120: {
@@ -333,6 +301,7 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
                 test0120.setMinute(0);
                 test0120.setSecond(0);
                 time0120.setText("000.000.000");
+                session.setAcc(test0120, "0120");
                 break;
             }
         }

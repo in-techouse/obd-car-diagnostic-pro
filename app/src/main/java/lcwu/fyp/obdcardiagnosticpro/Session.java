@@ -40,27 +40,24 @@ public class Session {
         return preferences.getString("speed", "*");
     }
 
-    public void setAcc040(AccelerationTestObject acc040){
-        String value = gson.toJson(acc040);
-        editor.putString("acc040", value);
+    public void setAcc(AccelerationTestObject acc, String key) {
+        String value = gson.toJson(acc);
+        editor.putString(key, value);
         editor.commit();
     }
 
-    public AccelerationTestObject getAcc040(){
-        AccelerationTestObject acc040;
-        try{
-
-            String value = preferences.getString("acc040", "*");
-            if(value == null || value.equals("*")){
-                acc040 = new AccelerationTestObject();
+    public AccelerationTestObject getAcc(String key) {
+        AccelerationTestObject acc;
+        try {
+            String value = preferences.getString(key, "*");
+            if (value == null || value.equals("*")) {
+                acc = new AccelerationTestObject();
+            } else {
+                acc = gson.fromJson(value, AccelerationTestObject.class);
             }
-            else{
-                acc040 = gson.fromJson(value, AccelerationTestObject.class);
-            }
+        } catch (Exception e) {
+            acc = new AccelerationTestObject();
         }
-        catch (Exception e){
-            acc040 = new AccelerationTestObject();
-        }
-        return acc040;
+        return acc;
     }
 }

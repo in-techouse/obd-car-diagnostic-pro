@@ -321,15 +321,15 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
             case R.id.AccelerationTests: {
-//                if (!isConnected) {
-//                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
-//                    return;
-//                }
-//                if (tripRecord != null) {
+                if (!isConnected) {
+                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+                    return;
+                }
+                if (tripRecord != null) {
                     // Show Acceleration Test
                     Intent it = new Intent(Dashboard.this, AccelerationTest.class);
                     startActivity(it);
-//                }
+                }
                 break;
             }
             case R.id.AirIntakeTemp: {
