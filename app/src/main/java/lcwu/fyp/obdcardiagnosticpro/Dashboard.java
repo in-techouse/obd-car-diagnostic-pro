@@ -321,15 +321,15 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 break;
             }
             case R.id.AccelerationTests: {
-                if (!isConnected) {
-                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
-                    return;
-                }
-                if (tripRecord != null) {
+//                if (!isConnected) {
+//                    helper.showError(Dashboard.this, "ERROR!", "No OBD is connected.\nPlease connect your OBD first.");
+//                    return;
+//                }
+//                if (tripRecord != null) {
                     // Show Acceleration Test
                     Intent it = new Intent(Dashboard.this, AccelerationTest.class);
                     startActivity(it);
-                }
+//                }
                 break;
             }
             case R.id.AirIntakeTemp: {
@@ -434,26 +434,6 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
                 registerReceiver(mObdReaderReceiver, intentFilter);
                 startService(new Intent(Dashboard.this, ObdReaderService.class));
-//                ObdConfiguration.setmObdCommands(Dashboard.this,null);
-//                IntentFilter intentFilter = new IntentFilter();
-//                intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
-//                intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
-//                registerReceiver(mObdReaderReceiver,intentFilter);
-//                try {
-//                    socket = device.createInsecureRfcommSocketToServiceRecord(uuid);
-//                    socket.connect();
-//                    if(socket.isConnected()){
-//                        isConnected = true;
-//                       helper.showSuccess(Dashboard.this,"SUCCESS", "Successfully Connected");
-//                    }
-//                    else{
-//                        helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device");
-//                    }
-//
-//                } catch (IOException e) {
-//                   helper.showError(Dashboard.this,"ERROR", "Error Occur while connecting to the device: " + e.getMessage());
-//                    e.printStackTrace();
-//                }
             }
         });
 

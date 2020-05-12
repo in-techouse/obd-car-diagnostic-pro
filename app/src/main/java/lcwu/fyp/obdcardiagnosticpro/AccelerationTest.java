@@ -3,7 +3,6 @@ package lcwu.fyp.obdcardiagnosticpro;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -210,6 +209,55 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
         ;
     };
 
+
+    private void updateTimer(final int speed) {
+        Handler handler = new Handler();
+        Log.e("AccelerationTest", "Update Timer Called with speed: " + speed);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("AccelerationTest", "Handler Executed");
+                // From here, we're getting speed from the OBD, we will do our custom logic here.
+                // Acceleration Test 0-40KM/hr
+                if (speed >= 0 && speed <= 40) {
+                    int sec = test040.getSecond();
+                    int min = test040.getMinute();
+                    int hour = test040.getHour();
+                    Log.e("AccelerationTest", "Second: " + sec);
+                    Log.e("AccelerationTest", "Minute: " + min);
+                    Log.e("AccelerationTest", "Hour: " + hour);
+                    if (sec < 59) {
+                        sec++;
+                    } else {
+                        sec = 0;
+                        min++;
+                    }
+                    if (min > 58) {
+                        hour++;
+                    }
+
+//                if (sec > 58) {
+//                    sec = 0;
+//                    min++;
+//                } else {
+//                    sec++;
+//                }
+//                if (min > 58) {
+//                    min = 0;
+//                    hour++;
+//                } else {
+//                    min++;
+//                }
+                    test040.setSecond(sec);
+                    test040.setMinute(min);
+                    test040.setHour(hour);
+                    time040.setText(hour + ":" + min + ":" + sec);
+                    updateTimer(35);
+                }
+            }
+        }, 1000);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,15 +292,18 @@ public class AccelerationTest extends AppCompatActivity implements View.OnClickL
         test080 = new AccelerationTestObject();
         test0100 = new AccelerationTestObject();
         test0120 = new AccelerationTestObject();
+        updateTimer(39);
+        connecting.setVisibility(View.GONE);
+        main.setVisibility(View.VISIBLE);
 
-        connecting.setVisibility(View.VISIBLE);
-        main.setVisibility(View.GONE);
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
-        intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
-        registerReceiver(mObdReaderReceiver, intentFilter);
-        startService(new Intent(AccelerationTest.this, ObdReaderService.class));
+//        connecting.setVisibility(View.VISIBLE);
+//        main.setVisibility(View.GONE);
+//
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(ACTION_READ_OBD_REAL_TIME_DATA);
+//        intentFilter.addAction(ACTION_OBD_CONNECTION_STATUS);
+//        registerReceiver(mObdReaderReceiver, intentFilter);
+//        startService(new Intent(AccelerationTest.this, ObdReaderService.class));
     }
 
     @Override
