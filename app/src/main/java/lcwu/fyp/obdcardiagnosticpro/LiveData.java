@@ -76,7 +76,7 @@ public class LiveData extends AppCompatActivity {
                     String strEngineLoad = tripRecord.getmEngineLoad();
                     String strInTakeTemp = tripRecord.getmAmbientAirTemp();
                     String strEngineCoolantTemp = tripRecord.getmEngineCoolantTemp();
-                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strInTakeTemp + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nIntake Temp: " + strInTakeTemp + "\nCoolant Temp: " + strEngineCoolantTemp;
                     session.setRPM(result);
                     speedView.speedTo(speed, 3000);
 
@@ -89,13 +89,7 @@ public class LiveData extends AppCompatActivity {
                         if (temp.length > 0) {
                             double value = Double.parseDouble(temp[0]);
                             engineLoad.updateSpeed((int) value);
-                        } else {
-                            result = "\nLive Data " + d.toString() + " Engine Load, Split Array length is less than 1";
-                            session.setRPM(result);
                         }
-                    } else {
-                        result = "\nLive Data " + d.toString() + " Engine Load value is null";
-                        session.setRPM(result);
                     }
 
                     if (strInTakeTemp != null && !strInTakeTemp.equals("null")) {
@@ -112,17 +106,11 @@ public class LiveData extends AppCompatActivity {
                         session.setRPM(result);
                     }
 
-                    if (strEngineCoolantTemp != null && strEngineCoolantTemp.equals("null")) {
+                    if (strEngineCoolantTemp != null && !strEngineCoolantTemp.equals("null")) {
                         String[] temp = strEngineCoolantTemp.split("C");
                         if (temp.length > 0) {
                             engineTemp.updateSpeed(Integer.parseInt(temp[0]));
-                        } else {
-                            result = "\nLive Data " + d.toString() + " Engine Coolant Temp, Split Array length is less than 1";
-                            session.setRPM(result);
                         }
-                    } else {
-                        result = "\nLive Data " + d.toString() + " Engine Coolant Temp value is null";
-                        session.setRPM(result);
                     }
 
                 } catch (Exception e) {

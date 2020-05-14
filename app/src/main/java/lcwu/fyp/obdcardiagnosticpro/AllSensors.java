@@ -76,28 +76,21 @@ public class AllSensors extends AppCompatActivity {
                         session.setRPM(result);
                     } else {
 
-                        result = result + "\nVehicle Identification Number: " + tripRecord.getmVehicleIdentificationNumber();
                         vehicleIdentificationNumber.setText(tripRecord.getmVehicleIdentificationNumber());
 
-                        result = result + "\nDriving Duration: " + tripRecord.getDrivingDuration();
                         drivingDuration.setText(tripRecord.getDrivingDuration() + " minutes");
 
-                        result = result + "\nIdling Duration: " + tripRecord.getIdlingDuration();
                         idlingDuration.setText(tripRecord.getIdlingDuration() + "");
 
                         result = result + "\nAir Temperature: " + tripRecord.getmAmbientAirTemp();
                         engineCoolantTemperature.setText(tripRecord.getmEngineCoolantTemp());
 
-                        result = result + "\nEngine Coolant Temperature: " + tripRecord.getmEngineCoolantTemp();
                         airTemperature.setText(tripRecord.getmAmbientAirTemp());
 
-                        result = result + "\nEngine RPM: " + tripRecord.getEngineRpm();
                         engineRpm.setText(tripRecord.getEngineRpm());
 
-                        result = result + "\n Engine RPM Max: " + tripRecord.getEngineRpmMax();
                         engineRpmMax.setText(tripRecord.getEngineRpmMax() + "");
 
-                        result = result + "\nEngine Run Time: " + tripRecord.getEngineRuntime();
                         engineRuntime.setText(tripRecord.getEngineRuntime());
 
                         result = result + "\nAbs Load: " + tripRecord.getmAbsLoad();
@@ -106,76 +99,60 @@ public class AllSensors extends AppCompatActivity {
                         result = result + "\nAir Fuel Ratio: " + tripRecord.getmAirFuelRatio();
                         airFuelRation.setText(tripRecord.getmAmbientAirTemp());
 
-                        result = result + "\nBarometric Pressure: " + tripRecord.getmBarometricPressure();
                         barometricPressure.setText(tripRecord.getmBarometricPressure());
 
-                        result = result + "\nControlc Module Voltage" + tripRecord.getmControlModuleVoltage();
                         controlModuleVoltage.setText(tripRecord.getmControlModuleVoltage());
 
-                        result = result + "\nDescribe Protocol" + tripRecord.getmDescribeProtocol();
                         describeProtocol.setText(tripRecord.getmDescribeProtocol());
 
-                        result = result + "\nDescribe Protocol Number: " + tripRecord.getmDescribeProtocolNumber();
                         describeProtocolNumber.setText(tripRecord.getmDescribeProtocolNumber());
 
-                        result = result + "\nDistance Travel" + tripRecord.getmDistanceTravel();
                         distanceTravel.setText(tripRecord.getmDistanceTravel() + "");
 
-                        result = result + "\nDistance Travel Mil On" + tripRecord.getmDistanceTraveledMilOn();
                         distanceTravelMilOn.setText(tripRecord.getmDistanceTraveledMilOn());
 
-                        result = result + "\nDriving Fuel Consumption" + tripRecord.getmDrivingFuelConsumption();
                         drivingFuelConsumption.setText(tripRecord.getmDrivingFuelConsumption() + "");
 
                         result = result + "\nEngine Fuel Rate: " + tripRecord.getmEngineFuelRate();
                         engineFuelRate.setText(tripRecord.getmEngineFuelRate());
 
-                        result = result + "\nDTC number: " + tripRecord.getmDtcNumber();
                         dtcNumber.setText(tripRecord.getmDtcNumber());
 
-                        result = result + "\nEngine Oil Temp:" + tripRecord.getmEngineOilTemp();
+                        result = result + "\nEngine Oil Temp: " + tripRecord.getmEngineOilTemp();
                         engineOilTemp.setText(tripRecord.getmEngineOilTemp());
 
-                        result = result + "\nEquiv Ratio:" + tripRecord.getmEquivRatio();
+                        result = result + "\nEquiv Ratio: " + tripRecord.getmEquivRatio();
                         equivRatio.setText(tripRecord.getmEquivRatio());
 
                         result = result + "\nFuel Consumption Rate:" + tripRecord.getmFuelConsumptionRate();
                         fuelConsumptionRate.setText(tripRecord.getmFuelConsumptionRate());
 
-                        result = result + "\nFuel Pressure:" + tripRecord.getmFuelPressure();
+                        result = result + "\nFuel Pressure: " + tripRecord.getmFuelPressure();
                         fuelPressure.setText(tripRecord.getmFuelPressure());
 
-                        result = result + "\nFuel Rail Pressure:" + tripRecord.getmFuelRailPressure();
+                        result = result + "\nFuel Rail Pressure: " + tripRecord.getmFuelRailPressure();
                         fuelRailPressure.setText(tripRecord.getmFuelRailPressure());
 
-                        result = result + "\nIdling Fuel Consumption:" + tripRecord.getmIdlingFuelConsumption();
                         idlingFuelConsumption.setText(tripRecord.getmIdlingFuelConsumption() + "");
 
-                        result = result + "\nIgnition Monitor:" + tripRecord.getmIgnitionMonitor();
                         ignitionMonitor.setText(tripRecord.getmIgnitionMonitor());
 
-                        result = result + "\nIns Fuel Consumption:" + tripRecord.getmInsFuelConsumption();
                         insFuelConsumption.setText(tripRecord.getmInsFuelConsumption() + "");
 
-                        result = result + "\nRapid Acc Times:" + tripRecord.getmRapidAccTimes();
                         rapidAccTimes.setText(tripRecord.getmRapidAccTimes() + "");
 
-                        result = result + "\nRapid Decl Times:" + tripRecord.getmRapidDeclTimes();
                         rapidDeclTimes.setText(tripRecord.getmRapidDeclTimes() + "");
 
-                        result = result + "\nThrottle Post:" + tripRecord.getmThrottlePos();
                         throttlePos.setText(tripRecord.getmThrottlePos());
 
-                        result = result + "\nRel ThottlePos:" + tripRecord.getmRelThottlePos();
+                        result = result + "\nRel Thottle Pos: " + tripRecord.getmRelThottlePos();
                         relThottlePos.setText(tripRecord.getmRelThottlePos());
 
-                        result = result + "\nTrip Identifier:" + tripRecord.getmTripIdentifier();
                         tripIdentifier.setText(tripRecord.getmTripIdentifier());
 
-                        result = result + "\nTiming Advance:" + tripRecord.getmTimingAdvance();
                         timingAdvance.setText(tripRecord.getmTimingAdvance());
 
-                        result = result + "\nWide Band Air Fuel Ratio:" + tripRecord.getmWideBandAirFuelRatio();
+                        result = result + "\nWide Band Air Fuel Ratio: " + tripRecord.getmWideBandAirFuelRatio();
                         wideBandAirFuelRatio.setText(tripRecord.getmWideBandAirFuelRatio());
 
                         session.setRPM(result);

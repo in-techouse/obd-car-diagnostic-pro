@@ -3,7 +3,6 @@ package lcwu.fyp.obdcardiagnosticpro;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import lcwu.fyp.obdcardiagnosticpro.adapters.ODBBluetoothAdapter;
 import lcwu.fyp.obdcardiagnosticpro.dialogue_box.InfoDialogue;
@@ -43,12 +42,10 @@ import static com.sohrab.obd.reader.constants.DefineObdReader.ACTION_READ_OBD_RE
 
 public class Dashboard extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_ENABLE_BT = 1; // Unique request code
-    private static final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private List<BluetoothObject> data;
     private ODBBluetoothAdapter adapter;
     private boolean isConnected;
     private Helpers helper;
-    private BluetoothSocket socket = null;
     private ArrayList<String> deviceStrs = new ArrayList();
     private ArrayList<String> devices = new ArrayList();
     private MenuItem item;
@@ -108,26 +105,17 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 }, 5000);
                 tripRecord = TripRecord.getTripRecode(Dashboard.this);
                 Date d = new Date();
-                String engineResult = "\nDashboard, Engine Temperature, Time: " + d.toString() + " ";
                 try {
                     String str = tripRecord.getmEngineCoolantTemp();
                     if (str != null && !str.equals("null")) {
                         String[] temp = str.split("C");
                         if (temp.length > 0 && engineTemperature < 1) {
                             engineTemperature = Integer.parseInt(temp[0]);
-                            engineResult = engineResult + "Value is: " + engineTemperature;
-                            session.setRPM(engineResult);
-                        } else {
-                            engineResult = engineResult + "Parsing return array less than 1 or value is already assigned.";
-                            session.setRPM(engineResult);
                         }
-                    } else {
-                        engineResult = engineResult + "Value is null";
-                        session.setRPM(engineResult);
                     }
                 } catch (Exception e) {
-                    engineResult = engineResult + "Exception Occur: " + e.getMessage();
-                    session.setRPM(engineResult);
+                    Log.e("Dashboard", "Exception Occur: " + e.getMessage());
+                    helper.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                 }
 
                 String airResult = "\nDashboard, Air InTake Temperature, Time: " + d.toString() + " ";
@@ -284,7 +272,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                             rpmDialogue.show();
                         }
                     } catch (Exception e) {
-                        helper.showError(Dashboard.this, "ERROR", e.getMessage());
+                        helper.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                     }
                 }
                 break;
@@ -315,7 +303,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                             engineTempDialogue.show();
                         }
                     } catch (Exception e) {
-                        helper.showError(Dashboard.this, "ERROR", e.getMessage());
+                        helper.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                     }
                 }
                 break;
@@ -344,10 +332,14 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                             // Show Air in take Temperature
                             InfoDialogue airInTakeTempDialouge = new InfoDialogue(Dashboard.this, "CAR AIR INTAKE TEMPERATURE", airIntakeTemperature);
                             airInTakeTempDialouge.show();
+                        } else {
+                            helper.showError(Dashboard.this, "ERROR", "Air Intake Temp is less than 1");
                         }
                     } catch (Exception e) {
                         helper.showError(Dashboard.this, "ERROR", e.getMessage());
                     }
+                } else {
+                    helper.showError(Dashboard.this, "ERROR", "Trip Record is NULL");
                 }
                 break;
             }

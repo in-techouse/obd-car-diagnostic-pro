@@ -107,7 +107,7 @@ public class MainDashboard extends AppCompatActivity {
 
                 try {
                     String result = "\nMain Dashboard " + d.toString() + "";
-                    result = result + "\nEngine Load: " + strEngineLoad + "\nIntake Temp: " + strInTakeTemp + "\nCoolant Temp: " + strEngineCoolantTemp;
+                    result = result + "\nIntake Temp: " + strInTakeTemp;
                     session.setRPM(result);
 
                     if (intEngineLoad < 1) {
@@ -117,13 +117,7 @@ public class MainDashboard extends AppCompatActivity {
                                 double value = Double.parseDouble(temp[0]);
                                 intEngineLoad = (int) value;
                                 engineLoad.updateSpeed(intEngineLoad);
-                            } else {
-                                result = "\nMain Dashboard " + d.toString() + " Engine Load, Split Array length is less than 1";
-                                session.setRPM(result);
                             }
-                        } else {
-                            result = "\nMain Dashboard " + d.toString() + " Engine Load value is null";
-                            session.setRPM(result);
                         }
                     }
 
@@ -152,13 +146,7 @@ public class MainDashboard extends AppCompatActivity {
                             if (temp.length > 0) {
                                 intEngineTemp = Integer.parseInt(temp[0]);
                                 engineTemp.updateSpeed(intEngineTemp);
-                            } else {
-                                result = "\nMain Dashboard " + d.toString() + " Engine Coolant Temp, Split Array length is less than 1";
-                                session.setRPM(result);
                             }
-                        } else {
-                            result = "\nMain Dashboard " + d.toString() + " Engine Coolant Temp value is null";
-                            session.setRPM(result);
                         }
                     }
 
