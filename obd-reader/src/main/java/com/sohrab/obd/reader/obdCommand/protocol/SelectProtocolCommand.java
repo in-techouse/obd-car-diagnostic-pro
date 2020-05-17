@@ -2,7 +2,6 @@ package com.sohrab.obd.reader.obdCommand.protocol;
 
 
 import com.sohrab.obd.reader.enums.ObdProtocols;
-import com.sohrab.obd.reader.obdCommand.protocol.ObdProtocolCommand;
 
 /**
  * Select the protocol to use.
@@ -16,21 +15,23 @@ public class SelectProtocolCommand extends ObdProtocolCommand {
 
     /**
      * <p>Constructor for SelectProtocolCommand.</p>
-     *
-     *
      */
     public SelectProtocolCommand(final ObdProtocols protocol) {
         super("AT SP " + protocol.getValue());
         this.protocol = protocol;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return getResult();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return "Select Protocol " + protocol.name();

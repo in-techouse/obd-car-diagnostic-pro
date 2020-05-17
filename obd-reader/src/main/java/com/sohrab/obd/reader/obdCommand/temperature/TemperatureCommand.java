@@ -26,13 +26,14 @@ public abstract class TemperatureCommand extends ObdCommand implements
 
     /**
      * Copy ctor.
-     *
      */
     public TemperatureCommand(TemperatureCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [hh hh] of the response
@@ -52,13 +53,17 @@ public abstract class TemperatureCommand extends ObdCommand implements
                 : String.format("%.0f%s", temperature, getResultUnit());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return useImperialUnits ? String.valueOf(getImperialUnit()) : String.valueOf(temperature);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getResultUnit() {
         return useImperialUnits ? "F" : "C";

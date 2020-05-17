@@ -19,13 +19,15 @@ public class AirIntakeTemperatureCommand extends TemperatureCommand {
 
     /**
      * <p>Constructor for AirIntakeTemperatureCommand.</p>
-     *     *
+     * *
      */
     public AirIntakeTemperatureCommand(AirIntakeTemperatureCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.AIR_INTAKE_TEMP.getValue();

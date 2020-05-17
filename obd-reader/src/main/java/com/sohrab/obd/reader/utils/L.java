@@ -3,7 +3,6 @@ package com.sohrab.obd.reader.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 /**
  * Log unified management
  *
@@ -39,7 +38,7 @@ public class L {
     public static void i(Class<?> _class, String msg) {
         if (isDebug)
             Log.i(_class.getName(), msg);
-      //  SuperLog.i(TAG, msg);
+        //  SuperLog.i(TAG, msg);
     }
 
     public static void d(Class<?> _class, String msg) {
@@ -61,7 +60,7 @@ public class L {
     public static void i(String tag, String msg) {
         if (isDebug) {
             Log.i(tag, msg);
-         //   SuperLog.i(tag, msg);
+            //   SuperLog.i(tag, msg);
         }
     }
 

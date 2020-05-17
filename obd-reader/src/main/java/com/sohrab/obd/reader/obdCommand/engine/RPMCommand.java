@@ -24,8 +24,6 @@ public class RPMCommand extends ObdCommand {
 
     /**
      * Copy ctor.
-     *
-     *
      */
     public RPMCommand(RPMCommand other) {
         super(other);

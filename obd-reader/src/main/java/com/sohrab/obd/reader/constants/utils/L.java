@@ -3,7 +3,6 @@ package app.com.reader.constants.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 /**
  * Log unified management
  *

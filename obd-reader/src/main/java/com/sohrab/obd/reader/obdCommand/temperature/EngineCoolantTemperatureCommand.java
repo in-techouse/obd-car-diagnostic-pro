@@ -4,7 +4,6 @@ import com.sohrab.obd.reader.enums.AvailableCommandNames;
 
 /**
  * Engine Coolant Temperature.
- *
  */
 public class EngineCoolantTemperatureCommand extends TemperatureCommand {
 
@@ -17,13 +16,14 @@ public class EngineCoolantTemperatureCommand extends TemperatureCommand {
 
     /**
      * <p>Constructor for EngineCoolantTemperatureCommand.</p>
-     *
      */
     public EngineCoolantTemperatureCommand(TemperatureCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.ENGINE_COOLANT_TEMP.getValue();

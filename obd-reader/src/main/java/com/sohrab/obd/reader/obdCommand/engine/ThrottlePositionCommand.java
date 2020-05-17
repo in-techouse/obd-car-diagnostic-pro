@@ -5,7 +5,6 @@ import com.sohrab.obd.reader.obdCommand.fuel.PercentageObdCommand;
 
 /**
  * Read the throttle position in percentage.
- *
  */
 public class ThrottlePositionCommand extends PercentageObdCommand {
 
@@ -18,13 +17,14 @@ public class ThrottlePositionCommand extends PercentageObdCommand {
 
     /**
      * Copy ctor.
-     *
      */
     public ThrottlePositionCommand(ThrottlePositionCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.THROTTLE_POS.getValue();

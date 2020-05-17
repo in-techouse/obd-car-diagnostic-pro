@@ -21,25 +21,31 @@ public abstract class AvailablePidsCommand extends PersistentCommand {
 
     /**
      * Copy ctor.
-     *     *
+     * *
      */
     public AvailablePidsCommand(AvailablePidsCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
 
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return getCalculatedResult();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         //First 4 characters are a copy of the command code, don't return those

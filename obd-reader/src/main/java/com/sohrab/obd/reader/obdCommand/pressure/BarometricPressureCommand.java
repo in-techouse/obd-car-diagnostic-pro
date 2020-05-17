@@ -4,7 +4,6 @@ import com.sohrab.obd.reader.enums.AvailableCommandNames;
 
 /**
  * Barometric pressure.
- *
  */
 public class BarometricPressureCommand extends PressureCommand {
 
@@ -17,13 +16,14 @@ public class BarometricPressureCommand extends PressureCommand {
 
     /**
      * <p>Constructor for BarometricPressureCommand.</p>
-     *
      */
     public BarometricPressureCommand(PressureCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.BAROMETRIC_PRESSURE.getValue();

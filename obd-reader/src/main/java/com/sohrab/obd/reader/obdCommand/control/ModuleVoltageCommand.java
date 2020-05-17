@@ -5,7 +5,6 @@ import com.sohrab.obd.reader.obdCommand.ObdCommand;
 
 /**
  * <p>ModuleVoltageCommand class.</p>
- *
  */
 public class ModuleVoltageCommand extends ObdCommand {
 
@@ -21,13 +20,14 @@ public class ModuleVoltageCommand extends ObdCommand {
 
     /**
      * Copy ctor.
-     *
      */
     public ModuleVoltageCommand(ModuleVoltageCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [hh hh] of the response
@@ -36,19 +36,25 @@ public class ModuleVoltageCommand extends ObdCommand {
         voltage = (a * 256 + b) / 1000;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return String.format("%.1f%s", voltage, getResultUnit());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getResultUnit() {
         return "V";
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return String.valueOf(voltage);
@@ -63,7 +69,9 @@ public class ModuleVoltageCommand extends ObdCommand {
         return voltage;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.CONTROL_MODULE_VOLTAGE.getValue();

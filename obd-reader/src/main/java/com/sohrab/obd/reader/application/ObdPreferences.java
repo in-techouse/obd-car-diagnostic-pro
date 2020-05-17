@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.sohrab.obd.reader.constants.PreferencesConstants;
 
-
 /**
  * Created by Sohrab on 30/11/2017.
  * This is singleton class to save data as key values paires.
@@ -30,19 +29,19 @@ public class ObdPreferences implements PreferencesConstants {
     }
 
     /**
-     *
      * @return: instance of ObdPreferences
      */
     public static ObdPreferences get(Context context) {
         if (mInstance == null) {
             init(context);
-          //  ObdReaderApplication.getInstance().initPreferences();
+            //  ObdReaderApplication.getInstance().initPreferences();
         }
         return mInstance;
     }
 
     /**
      * static method to create instance of ObdPreferences
+     *
      * @param context
      * @return instance of ObdPreferences
      */
@@ -70,8 +69,6 @@ public class ObdPreferences implements PreferencesConstants {
     public void setFaultCode(String faultCode) {
         mEditor.putString(FAULT_CODE, faultCode).commit();
     }
-
-
 
 
     public boolean getIsOBDconnected() {

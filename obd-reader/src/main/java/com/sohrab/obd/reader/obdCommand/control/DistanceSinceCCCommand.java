@@ -6,7 +6,6 @@ import com.sohrab.obd.reader.obdCommand.SystemOfUnits;
 
 /**
  * Distance traveled since codes cleared-up.
- *
  */
 public class DistanceSinceCCCommand extends ObdCommand
         implements SystemOfUnits {
@@ -22,14 +21,15 @@ public class DistanceSinceCCCommand extends ObdCommand
 
     /**
      * Copy ctor.
-     *
      */
     public DistanceSinceCCCommand(
             DistanceSinceCCCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [01 31] of the response
@@ -46,19 +46,25 @@ public class DistanceSinceCCCommand extends ObdCommand
                 : String.format("%d%s", km, getResultUnit());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return useImperialUnits ? String.valueOf(getImperialUnit()) : String.valueOf(km);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getResultUnit() {
         return useImperialUnits ? "m" : "km";
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public float getImperialUnit() {
         return km * 0.621371192F;
@@ -82,7 +88,9 @@ public class DistanceSinceCCCommand extends ObdCommand
         this.km = km;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.DISTANCE_TRAVELED_AFTER_CODES_CLEARED

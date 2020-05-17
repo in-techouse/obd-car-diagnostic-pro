@@ -5,7 +5,6 @@ import com.sohrab.obd.reader.obdCommand.fuel.PercentageObdCommand;
 
 /**
  * <p>AbsoluteLoadCommand class.</p>
- *
  */
 public class AbsoluteLoadCommand extends PercentageObdCommand {
 
@@ -18,13 +17,14 @@ public class AbsoluteLoadCommand extends PercentageObdCommand {
 
     /**
      * Copy ctor.
-     *
      */
     public AbsoluteLoadCommand(AbsoluteLoadCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [hh hh] of the response
@@ -42,7 +42,9 @@ public class AbsoluteLoadCommand extends PercentageObdCommand {
         return percentage;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.ABS_LOAD.getValue();

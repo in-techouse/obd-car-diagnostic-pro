@@ -17,19 +17,22 @@ public class ObdResetCommand extends ObdProtocolCommand {
 
     /**
      * <p>Constructor for ObdResetCommand.</p>
-     *
      */
     public ObdResetCommand(ObdResetCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return getResult();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return "Reset OBD";

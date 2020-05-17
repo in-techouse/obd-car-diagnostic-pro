@@ -40,7 +40,9 @@ public abstract class ObdProtocolCommand extends ObdCommand {
         // buffer, so do nothing
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return String.valueOf(getResult());

@@ -6,7 +6,6 @@ import java.util.Map;
 
 /**
  * Select one of the Fuel Trim percentage banks to access.
- *
  */
 public enum FuelTrim {
 
@@ -15,7 +14,9 @@ public enum FuelTrim {
     SHORT_TERM_BANK_2(0x08, "Short Term Fuel Trim Bank 2"),
     LONG_TERM_BANK_2(0x09, "Long Term Fuel Trim Bank 2");
 
-    /** Constant <code>map</code> */
+    /**
+     * Constant <code>map</code>
+     */
     private static Map<Integer, FuelTrim> map = new HashMap<>();
 
     static {

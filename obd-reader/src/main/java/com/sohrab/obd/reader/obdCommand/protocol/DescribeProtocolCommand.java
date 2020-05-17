@@ -21,13 +21,17 @@ public class DescribeProtocolCommand extends ObdProtocolCommand {
         super("AT DP");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return getResult();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.DESCRIBE_PROTOCOL.getValue();

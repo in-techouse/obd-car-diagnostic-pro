@@ -4,7 +4,6 @@ import com.sohrab.obd.reader.enums.AvailableCommandNames;
 
 /**
  * <p>FuelRailPressureCommand class.</p>
- *
  */
 public class FuelRailPressureCommand extends PressureCommand {
 
@@ -17,7 +16,6 @@ public class FuelRailPressureCommand extends PressureCommand {
 
     /**
      * <p>Constructor for FuelRailPressureCommand.</p>
-     *
      */
     public FuelRailPressureCommand(FuelRailPressureCommand other) {
         super(other);
@@ -35,7 +33,9 @@ public class FuelRailPressureCommand extends PressureCommand {
         return ((a * 256) + b) * 10;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.FUEL_RAIL_PRESSURE.getValue();

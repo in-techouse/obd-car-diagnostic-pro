@@ -7,7 +7,6 @@ package com.sohrab.obd.reader.enums;
  * @version $Id: $Id
  */
 public enum AvailableCommandNames {
-
     AIR_INTAKE_TEMP("Air Intake Temperature"),
     AMBIENT_AIR_TEMP("Ambient Air Temperature"),
     ENGINE_COOLANT_TEMP("Engine Coolant Temperature"),
@@ -47,8 +46,7 @@ public enum AvailableCommandNames {
     WIDEBAND_AIR_FUEL_RATIO("Wideband Air/Fuel Ratio"),
     DESCRIBE_PROTOCOL("Describe protocol"),
     DESCRIBE_PROTOCOL_NUMBER("Describe protocol number"),
-    IGNITION_MONITOR("Ignition monitor")
-    ;
+    IGNITION_MONITOR("Ignition monitor");
 
     private final String value;
 

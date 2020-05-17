@@ -27,7 +27,7 @@ public class DescribeProtocolNumberCommand extends ObdCommand {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * This method exists so that for each command, there must be a method that is
      * called only once to perform calculations.
      */
@@ -47,19 +47,25 @@ public class DescribeProtocolNumberCommand extends ObdCommand {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return getResult();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return obdProtocol.name();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.DESCRIBE_PROTOCOL_NUMBER.getValue();
@@ -67,7 +73,6 @@ public class DescribeProtocolNumberCommand extends ObdCommand {
 
     /**
      * <p>Getter for the field <code>obdProtocol</code>.</p>
-     *
      */
     public ObdProtocols getObdProtocol() {
         return obdProtocol;

@@ -23,20 +23,23 @@ public class FindFuelTypeCommand extends ObdCommand {
 
     /**
      * Copy ctor
-          *
      */
     public FindFuelTypeCommand(FindFuelTypeCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [hh hh] of the response
         fuelType = buffer.get(2);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         try {
@@ -46,13 +49,17 @@ public class FindFuelTypeCommand extends ObdCommand {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return String.valueOf(fuelType);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.FUEL_TYPE.getValue();

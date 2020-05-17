@@ -9,7 +9,6 @@ import com.sohrab.obd.reader.obdCommand.ObdCommand;
 
 public class AirFuelRatioCommand extends ObdCommand {
 
-
     private float afr = 0;
 
     /**
@@ -62,6 +61,4 @@ public class AirFuelRatioCommand extends ObdCommand {
     public String getName() {
         return AvailableCommandNames.AIR_FUEL_RATIO.getValue();
     }
-
-
 }

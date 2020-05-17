@@ -5,7 +5,6 @@ import com.sohrab.obd.reader.obdCommand.ObdCommand;
 
 /**
  * Wideband AFR
- *
  */
 public class WidebandAirFuelRatioCommand extends ObdCommand {
 
@@ -18,7 +17,9 @@ public class WidebandAirFuelRatioCommand extends ObdCommand {
         super("01 34");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [01 44] of the response
@@ -27,13 +28,17 @@ public class WidebandAirFuelRatioCommand extends ObdCommand {
         wafr = (((A * 256) + B) / 32768) * 14.7f;//((A*256)+B)/32768
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return String.format("%.2f", getWidebandAirFuelRatio()) + ":1 AFR";
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return String.valueOf(getWidebandAirFuelRatio());
@@ -48,7 +53,9 @@ public class WidebandAirFuelRatioCommand extends ObdCommand {
         return wafr;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.WIDEBAND_AIR_FUEL_RATIO.getValue();

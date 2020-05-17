@@ -26,7 +26,6 @@ public abstract class PressureCommand extends ObdCommand implements
 
     /**
      * Copy ctor.
-     *
      */
     public PressureCommand(PressureCommand other) {
         super(other);
@@ -52,7 +51,9 @@ public abstract class PressureCommand extends ObdCommand implements
         pressure = preparePressureValue();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return useImperialUnits ? String.format("%.1f%s", getImperialUnit(), getResultUnit())
@@ -77,13 +78,17 @@ public abstract class PressureCommand extends ObdCommand implements
         return pressure * 0.145037738F;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return useImperialUnits ? String.valueOf(getImperialUnit()) : String.valueOf(pressure);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getResultUnit() {
         return useImperialUnits ? "psi" : "kPa";

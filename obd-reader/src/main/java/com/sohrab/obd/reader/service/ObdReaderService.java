@@ -13,8 +13,10 @@ import android.os.Build;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+
 import com.sohrab.obd.reader.application.ObdPreferences;
 import com.sohrab.obd.reader.constants.DefineObdReader;
 import com.sohrab.obd.reader.enums.ObdProtocols;
@@ -29,9 +31,11 @@ import com.sohrab.obd.reader.obdCommand.protocol.SpacesOffCommand;
 import com.sohrab.obd.reader.obdCommand.protocol.TimeoutCommand;
 import com.sohrab.obd.reader.trip.TripRecord;
 import com.sohrab.obd.reader.utils.L;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+
 import app.com.android_obd_reader.R;
 
 
@@ -433,7 +437,7 @@ public class ObdReaderService extends IntentService implements DefineObdReader {
     }
 */
 
-   /* *//**
+    /* *//**
      * Updates the notification.
      *//*
     private void updateNotification(String text) {
@@ -529,7 +533,7 @@ public class ObdReaderService extends IntentService implements DefineObdReader {
         isConnected = false;
         closeSocket();
         L.i("socket disconnected :: ");
-      //  broadcastUpdate(ACTION_OBD_DISCONNECTED);
+        //  broadcastUpdate(ACTION_OBD_DISCONNECTED);
         sendBroadcast(ACTION_OBD_CONNECTION_STATUS, getString(R.string.connect_lost));
     }
 
@@ -538,7 +542,7 @@ public class ObdReaderService extends IntentService implements DefineObdReader {
 
         ObdPreferences.get(getApplicationContext()).setIsOBDconnected(true);
         isConnected = true;
-       // sendBroadcast(ACTION_OBD_CONNECTED, String.valueOf(isFromBle));
+        // sendBroadcast(ACTION_OBD_CONNECTED, String.valueOf(isFromBle));
         sendBroadcast(ACTION_OBD_CONNECTION_STATUS, getString(R.string.obd_connected));
     }
 

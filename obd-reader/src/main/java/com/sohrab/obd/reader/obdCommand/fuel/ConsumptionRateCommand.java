@@ -5,7 +5,6 @@ import com.sohrab.obd.reader.obdCommand.ObdCommand;
 
 /**
  * Fuel Consumption Rate per hour.
- *
  */
 public class ConsumptionRateCommand extends ObdCommand {
 
@@ -20,32 +19,39 @@ public class ConsumptionRateCommand extends ObdCommand {
 
     /**
      * <p>Constructor for ConsumptionRateCommand.</p>
-     *
      */
     public ConsumptionRateCommand(ConsumptionRateCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [hh hh] of the response
         fuelRate = (buffer.get(2) * 256 + buffer.get(3)) * 0.05f;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getFormattedResult() {
         return String.format("%.1f%s", fuelRate, getResultUnit());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCalculatedResult() {
         return String.valueOf(fuelRate);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getResultUnit() {
         return "L/h";
@@ -60,7 +66,9 @@ public class ConsumptionRateCommand extends ObdCommand {
         return fuelRate;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.FUEL_CONSUMPTION_RATE.getValue();

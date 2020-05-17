@@ -5,7 +5,6 @@ import com.sohrab.obd.reader.obdCommand.fuel.PercentageObdCommand;
 
 /**
  * Calculated Engine Load value.
- *
  */
 public class LoadCommand extends PercentageObdCommand {
 
@@ -18,7 +17,6 @@ public class LoadCommand extends PercentageObdCommand {
 
     /**
      * <p>Constructor for LoadCommand.</p>
-     *
      */
     public LoadCommand(LoadCommand other) {
         super(other);
@@ -29,7 +27,10 @@ public class LoadCommand extends PercentageObdCommand {
      *
      * @see pt.lighthouselabs.obd.commands.ObdCommand#getName()
      */
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.ENGINE_LOAD.getValue();

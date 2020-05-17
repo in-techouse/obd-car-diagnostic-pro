@@ -20,13 +20,14 @@ public class AvailablePidsCommand_41_60 extends AvailablePidsCommand {
 
     /**
      * Copy ctor.
-     *
      */
     public AvailablePidsCommand_41_60(AvailablePidsCommand_41_60 other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.PIDS_41_60.getValue();

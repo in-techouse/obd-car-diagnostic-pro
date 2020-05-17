@@ -14,6 +14,6 @@ public interface DefineObdReader {
      */
     String ACTION_READ_OBD_REAL_TIME_DATA = "com.sohrab.obd.reader.ACTION_READ_OBD_REAL_TIME_DATA";
     // intent key used to send data
-     String INTENT_OBD_EXTRA_DATA = "com.sohrab.obd.reader.INTENT_OBD_EXTRA_DATA";
+    String INTENT_OBD_EXTRA_DATA = "com.sohrab.obd.reader.INTENT_OBD_EXTRA_DATA";
 
 }

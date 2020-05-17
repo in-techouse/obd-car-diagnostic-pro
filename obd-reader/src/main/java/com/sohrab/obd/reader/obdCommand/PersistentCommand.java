@@ -26,7 +26,6 @@ public abstract class PersistentCommand extends ObdCommand {
 
     /**
      * <p>Constructor for PersistentCommand.</p>
-     *
      */
     public PersistentCommand(ObdCommand other) {
         this(other.cmd);

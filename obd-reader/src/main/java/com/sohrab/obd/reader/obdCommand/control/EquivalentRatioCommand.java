@@ -13,7 +13,6 @@ import com.sohrab.obd.reader.obdCommand.fuel.PercentageObdCommand;
  * stoichiometric is 14.64:1 ratio. If the fuel control system was commanded an
  * equivalence ratio of 0.95, the commanded A/F ratio to the engine would be
  * 14.64 * 0.95 = 13.9 A/F.
- *
  */
 public class EquivalentRatioCommand extends PercentageObdCommand {
 
@@ -27,13 +26,14 @@ public class EquivalentRatioCommand extends PercentageObdCommand {
 
     /**
      * Copy ctor.
-     *
      */
     public EquivalentRatioCommand(EquivalentRatioCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void performCalculations() {
         // ignore first two bytes [hh hh] of the response
@@ -52,7 +52,9 @@ public class EquivalentRatioCommand extends PercentageObdCommand {
         return (double) percentage;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.EQUIV_RATIO.getValue();

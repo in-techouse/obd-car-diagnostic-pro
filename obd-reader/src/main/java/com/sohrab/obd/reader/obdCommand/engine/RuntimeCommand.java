@@ -51,7 +51,7 @@ public class RuntimeCommand extends ObdCommand {
         final String hh = String.format(Locale.ENGLISH, "%02d", value / 3600);
         final String mm = String.format(Locale.ENGLISH, "%02d", (value % 3600) / 60);
         final String ss = String.format(Locale.ENGLISH, "%02d", value % 60);
-        return String.format(Locale.ENGLISH , "%s:%s:%s", hh, mm, ss);
+        return String.format(Locale.ENGLISH, "%s:%s:%s", hh, mm, ss);
     }
 
     /**

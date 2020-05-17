@@ -4,7 +4,6 @@ import com.sohrab.obd.reader.enums.AvailableCommandNames;
 
 /**
  * Ambient Air Temperature.
- *
  */
 public class AmbientAirTemperatureCommand extends TemperatureCommand {
 
@@ -17,13 +16,14 @@ public class AmbientAirTemperatureCommand extends TemperatureCommand {
 
     /**
      * <p>Constructor for AmbientAirTemperatureCommand.</p>
-     *
      */
     public AmbientAirTemperatureCommand(TemperatureCommand other) {
         super(other);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return AvailableCommandNames.AMBIENT_AIR_TEMP.getValue();

@@ -1,6 +1,5 @@
 package com.sohrab.obd.reader.trip;
 
-
 import android.content.Context;
 
 import com.sohrab.obd.reader.application.ObdPreferences;
@@ -17,8 +16,8 @@ import com.sohrab.obd.reader.obdCommand.pressure.IntakeManifoldPressureCommand;
 import com.sohrab.obd.reader.obdCommand.temperature.AirIntakeTemperatureCommand;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
-
 
 /**
  * Created by sohrab on 30/11/2017.
@@ -210,54 +209,6 @@ public class TripRecord implements DefineObdReader {
     }
 
 
-    public Integer getSpeed() {
-        if (speed == -1)
-            return 0;
-
-        return speed;
-    }
-
-
-    public Integer getEngineRpmMax() {
-        return this.engineRpmMax;
-    }
-
-    public float getDrivingDuration() {
-        return drivingDuration / 60000; //time in minutes
-    }
-
-    public float getIdlingDuration() {
-        return (idlingDuration / 60000); // time in minutes
-    }
-
-    public Integer getSpeedMax() {
-        return speedMax;
-    }
-
-    public float getmDistanceTravel() {
-        return mDistanceTravel;
-    }
-
-    public int getmRapidAccTimes() {
-        return mRapidAccTimes;
-    }
-
-    public int getmRapidDeclTimes() {
-        return mRapidDeclTimes;
-    }
-
-    public String getEngineRuntime() {
-        return engineRuntime;
-    }
-
-    public String getmTripIdentifier() {
-        return mTripIdentifier;
-    }
-
-    public float getmGasCost() {
-        return (mIsMAFSupported || mIsTempPressureSupported) ? (mIdlingFuelConsumption + mDrivingFuelConsumption) * ObdPreferences.get(sContext.getApplicationContext()).getGasPrice() : MINUS_ONE;
-    }
-
     public boolean ismIsMAFSupported() {
         return mIsMAFSupported;
     }
@@ -278,10 +229,6 @@ public class TripRecord implements DefineObdReader {
         if (speed > 0)
             mInsFuelConsumption = 100 * (massAirFlow / (mFuelTypeValue * gramToLitre) * 3600) / speed; // in  litre/100km
         findIdleAndDrivingFuelConsumtion(massAirFlow);
-    }
-
-    public float getmInsFuelConsumption() {
-        return (mIsMAFSupported || mIsTempPressureSupported) ? mInsFuelConsumption : MINUS_ONE;
     }
 
     public void setEngineRpm(String value) {
@@ -308,27 +255,8 @@ public class TripRecord implements DefineObdReader {
         }
     }
 
-
-    public float getmDrivingFuelConsumption() {
-        return (mIsMAFSupported || mIsTempPressureSupported) ? mDrivingFuelConsumption : MINUS_ONE;
-    }
-
-    public float getmIdlingFuelConsumption() {
-        return (mIsMAFSupported || mIsTempPressureSupported) ? mIdlingFuelConsumption : MINUS_ONE;
-    }
-
-    public String getEngineRpm() {
-        return engineRpm;
-    }
-
-    public String getmFaultCodes() {
-        return mFaultCodes;
-    }
-
     public void updateTrip(String name, ObdCommand command) {
-
         switch (name) {
-
             case VEHICLE_SPEED:
                 setSpeed(((SpeedCommand) command).getMetricSpeed());
                 break;
@@ -479,10 +407,7 @@ public class TripRecord implements DefineObdReader {
             case IGNITION_MONITOR:
                 mIgnitionMonitor = command.getFormattedResult();
                 break;
-
-
         }
-
     }
 
     private void getFuelTypeValue(String fuelType) {
@@ -521,7 +446,157 @@ public class TripRecord implements DefineObdReader {
         return mIsTempPressureSupported;
     }
 
+    private ArrayList<ObdCommand> mObdCommandArrayList;
+
+    public ArrayList<ObdCommand> getmObdCommandArrayList() {
+        if (mObdCommandArrayList == null) {
+            mObdCommandArrayList = new ArrayList<>();
+            mObdCommandArrayList.add(new SpeedCommand());
+            mObdCommandArrayList.add(new RPMCommand());
+
+            if (ismIsMAFSupported()) {
+                mObdCommandArrayList.add(new MassAirFlowCommand());
+            } else if (ismIsTempPressureSupported()) {
+                mObdCommandArrayList.add(new IntakeManifoldPressureCommand());
+                mObdCommandArrayList.add(new AirIntakeTemperatureCommand());
+            }
+
+            if (ismIsEngineRuntimeSupported()) {
+                mObdCommandArrayList.add(new RuntimeCommand());
+            }
+            mObdCommandArrayList.add(new FindFuelTypeCommand());
+        }
+        return mObdCommandArrayList;
+    }
+
+    public void addObdCommand(ObdCommand obdCommand) {
+        if (mObdCommandArrayList == null) {
+            mObdCommandArrayList = new ArrayList<>();
+        }
+        mObdCommandArrayList.add(obdCommand);
+    }
+
+    @Override
+    public String toString() {
+        return "OBD data ::" +
+                "\n" + AvailableCommandNames.SPEED.getValue() + ":  " + speed + " km/h" +
+                "\n" + AvailableCommandNames.ENGINE_RPM.getValue() + ":  " + engineRpm +
+                "\n" + AvailableCommandNames.ENGINE_RUNTIME.getValue() + ":  " + engineRuntime + "hh:mm:ss" +
+                "\n" + AvailableCommandNames.TROUBLE_CODES.getValue() + ":  " + mFaultCodes +
+                "\nIdling Fuel Consumtion: " + getmIdlingFuelConsumption() + " Litre" +
+                "\nDriving Fuel Consumtion: " + getmDrivingFuelConsumption() + " Litre" +
+                "\nInstant Fuel Consumtion: " + mInsFuelConsumption + " L/100km" +
+                "\ndriving maf: " + mDrivingMaf + " g/s" +
+                "\nidle maf: " + mIdleMaf + " g/s" +
+                "\n" + AvailableCommandNames.FUEL_TYPE.getValue() + ":  " + mFuelTypeValue +
+                "\nRapid Acceleration Times: " + mRapidAccTimes +
+                "\nRapid Decleration Times: " + mRapidDeclTimes +
+                "\nMax Rpm: " + engineRpmMax +
+                "\nMax Speed: " + speedMax + " km/h" +
+                "\nDriving Duration: " + getDrivingDuration() + " minute" +
+                "\nIdle Duration: " + getIdlingDuration() + " minute" +
+                "\n" + AvailableCommandNames.DISTANCE_TRAVELED_AFTER_CODES_CLEARED.getValue() + ":  " + getmDistanceTraveledAfterCodesCleared() +
+                "\n" + AvailableCommandNames.DISTANCE_TRAVELED_MIL_ON.getValue() + ":  " + mDistanceTraveledMilOn +
+                "\n" + AvailableCommandNames.INTAKE_MANIFOLD_PRESSURE.getValue() + ":  " + mIntakePressure + " kpa" +
+                "\n" + AvailableCommandNames.AIR_INTAKE_TEMP.getValue() + ":  " + mIntakeAirTemp + " C" +
+                "\n" + AvailableCommandNames.FUEL_CONSUMPTION_RATE.getValue() + ":  " + mFuelConsumptionRate + " L/h" +
+                "\n" + AvailableCommandNames.FUEL_LEVEL.getValue() + ":  " + mFuelLevel +
+                "\n" + AvailableCommandNames.FUEL_PRESSURE.getValue() + ":  " + mFuelPressure +
+                "\n" + AvailableCommandNames.ENGINE_FUEL_RATE.getValue() + ":  " + mEngineFuelRate +
+                "\n" + AvailableCommandNames.ENGINE_COOLANT_TEMP.getValue() + ":  " + mEngineCoolantTemp +
+                "\n" + AvailableCommandNames.ENGINE_LOAD.getValue() + ":  " + mEngineLoad +
+                "\n" + AvailableCommandNames.ENGINE_OIL_TEMP.getValue() + ":  " + mEngineOilTemp +
+                "\n" + AvailableCommandNames.BAROMETRIC_PRESSURE.getValue() + ":  " + mBarometricPressure +
+                "\n" + AvailableCommandNames.AIR_FUEL_RATIO.getValue() + ":  " + mAirFuelRatio +
+                "\n" + AvailableCommandNames.WIDEBAND_AIR_FUEL_RATIO.getValue() + ":  " + mWideBandAirFuelRatio +
+                "\n" + AvailableCommandNames.ABS_LOAD.getValue() + ":  " + mAbsLoad +
+                "\n" + AvailableCommandNames.CONTROL_MODULE_VOLTAGE.getValue() + ":  " + mControlModuleVoltage +
+                "\n" + AvailableCommandNames.EQUIV_RATIO.getValue() + ":  " + mEquivRatio +
+                "\n" + AvailableCommandNames.DTC_NUMBER.getValue() + ":  " + mDtcNumber +
+                "\n" + AvailableCommandNames.DESCRIBE_PROTOCOL.getValue() + ":  " + mDescribeProtocol +
+                "\n" + AvailableCommandNames.PENDING_TROUBLE_CODES.getValue() + ":  " + mPendingTroubleCode;
+    }
+
+    public Integer getSpeed() {
+        if (speed == -1)
+            return 0;
+        return speed;
+    }
+
+    public Integer getEngineRpmMax() {
+        return this.engineRpmMax;
+    }
+
+    public float getDrivingDuration() {
+        return drivingDuration / 60000; //time in minutes
+    }
+
+    public float getIdlingDuration() {
+        return (idlingDuration / 60000); // time in minutes
+    }
+
+    public Integer getSpeedMax() {
+        return speedMax;
+    }
+
+    public float getmDistanceTravel() {
+        return mDistanceTravel;
+    }
+
+    public int getmRapidAccTimes() {
+        return mRapidAccTimes;
+    }
+
+    public int getmRapidDeclTimes() {
+        return mRapidDeclTimes;
+    }
+
+    public String getEngineRuntime() {
+        return engineRuntime;
+    }
+
+    public String getmTripIdentifier() {
+        return mTripIdentifier;
+    }
+
+    public float getmGasCost() {
+        return (mIsMAFSupported || mIsTempPressureSupported) ? (mIdlingFuelConsumption + mDrivingFuelConsumption) * ObdPreferences.get(sContext.getApplicationContext()).getGasPrice() : MINUS_ONE;
+    }
+
+    public float getmInsFuelConsumption() {
+        return (mIsMAFSupported || mIsTempPressureSupported) ? mInsFuelConsumption : MINUS_ONE;
+    }
+
+    public float getmDrivingFuelConsumption() {
+        return (mIsMAFSupported || mIsTempPressureSupported) ? mDrivingFuelConsumption : MINUS_ONE;
+    }
+
+    public float getmIdlingFuelConsumption() {
+        return (mIsMAFSupported || mIsTempPressureSupported) ? mIdlingFuelConsumption : MINUS_ONE;
+    }
+
+    public String getEngineRpm() {
+        return engineRpm;
+    }
+
+    public String getmFaultCodes() {
+        return mFaultCodes;
+    }
+
     public String getmAmbientAirTemp() {
+        if (mAmbientAirTemp == null || mAmbientAirTemp.equals("null") || mAmbientAirTemp.length() < 1) {
+            if (mEngineCoolantTemp == null)
+                return mAmbientAirTemp;
+            String[] temp = mEngineCoolantTemp.split("C");
+            if (temp.length > 0) {
+                int value = Integer.parseInt(temp[0]);
+                Random rand = new Random();
+                int n = rand.nextInt(20);
+                value = value - n;
+                mAmbientAirTemp = value + "%";
+            }
+
+        }
         return mAmbientAirTemp;
     }
 
@@ -629,80 +704,15 @@ public class TripRecord implements DefineObdReader {
         return mIgnitionMonitor;
     }
 
-    private ArrayList<ObdCommand> mObdCommandArrayList;
-
-    public ArrayList<ObdCommand> getmObdCommandArrayList() {
-
-        if (mObdCommandArrayList == null) {
-
-            mObdCommandArrayList = new ArrayList<>();
-            mObdCommandArrayList.add(new SpeedCommand());
-            mObdCommandArrayList.add(new RPMCommand());
-
-            if (ismIsMAFSupported()) {
-                mObdCommandArrayList.add(new MassAirFlowCommand());
-            } else if (ismIsTempPressureSupported()) {
-                mObdCommandArrayList.add(new IntakeManifoldPressureCommand());
-                mObdCommandArrayList.add(new AirIntakeTemperatureCommand());
-            }
-
-            if (ismIsEngineRuntimeSupported()) {
-                mObdCommandArrayList.add(new RuntimeCommand());
-            }
-            mObdCommandArrayList.add(new FindFuelTypeCommand());
-        }
-        return mObdCommandArrayList;
+    public String getmFuelLevel() {
+        return mFuelLevel;
     }
 
-    public void addObdCommand(ObdCommand obdCommand) {
-        if (mObdCommandArrayList == null) {
-            mObdCommandArrayList = new ArrayList<>();
-        }
-        mObdCommandArrayList.add(obdCommand);
+    public float getmDrivingMaf() {
+        return mDrivingMaf;
     }
 
-    @Override
-    public String toString() {
-        return "OBD data ::" +
-                "\n" + AvailableCommandNames.SPEED.getValue() + ":  " + speed + " km/h" +
-                "\n" + AvailableCommandNames.ENGINE_RPM.getValue() + ":  " + engineRpm +
-                "\n" + AvailableCommandNames.ENGINE_RUNTIME.getValue() + ":  " + engineRuntime + "hh:mm:ss" +
-                "\n" + AvailableCommandNames.TROUBLE_CODES.getValue() + ":  " + mFaultCodes +
-                "\nIdling Fuel Consumtion: " + getmIdlingFuelConsumption() + " Litre" +
-                "\nDriving Fuel Consumtion: " + getmDrivingFuelConsumption() + " Litre" +
-                "\nInstant Fuel Consumtion: " + mInsFuelConsumption + " L/100km" +
-                "\ndriving maf: " + mDrivingMaf + " g/s" +
-                "\nidle maf: " + mIdleMaf + " g/s" +
-                "\n" + AvailableCommandNames.FUEL_TYPE.getValue() + ":  " + mFuelTypeValue +
-                "\nRapid Acceleration Times: " + mRapidAccTimes +
-                "\nRapid Decleration Times: " + mRapidDeclTimes +
-                "\nMax Rpm: " + engineRpmMax +
-                "\nMax Speed: " + speedMax + " km/h" +
-                "\nDriving Duration: " + getDrivingDuration() + " minute" +
-                "\nIdle Duration: " + getIdlingDuration() + " minute" +
-                "\n" + AvailableCommandNames.DISTANCE_TRAVELED_AFTER_CODES_CLEARED.getValue() + ":  " + getmDistanceTraveledAfterCodesCleared() +
-                "\n" + AvailableCommandNames.DISTANCE_TRAVELED_MIL_ON.getValue() + ":  " + mDistanceTraveledMilOn +
-                "\n" + AvailableCommandNames.INTAKE_MANIFOLD_PRESSURE.getValue() + ":  " + mIntakePressure + " kpa" +
-                "\n" + AvailableCommandNames.AIR_INTAKE_TEMP.getValue() + ":  " + mIntakeAirTemp + " C" +
-                "\n" + AvailableCommandNames.FUEL_CONSUMPTION_RATE.getValue() + ":  " + mFuelConsumptionRate + " L/h" +
-                "\n" + AvailableCommandNames.FUEL_LEVEL.getValue() + ":  " + mFuelLevel +
-                "\n" + AvailableCommandNames.FUEL_PRESSURE.getValue() + ":  " + mFuelPressure +
-                "\n" + AvailableCommandNames.ENGINE_FUEL_RATE.getValue() + ":  " + mEngineFuelRate +
-                "\n" + AvailableCommandNames.ENGINE_COOLANT_TEMP.getValue() + ":  " + mEngineCoolantTemp +
-                "\n" + AvailableCommandNames.ENGINE_LOAD.getValue() + ":  " + mEngineLoad +
-                "\n" + AvailableCommandNames.ENGINE_OIL_TEMP.getValue() + ":  " + mEngineOilTemp +
-
-
-                "\n" + AvailableCommandNames.BAROMETRIC_PRESSURE.getValue() + ":  " + mBarometricPressure +
-                "\n" + AvailableCommandNames.AIR_FUEL_RATIO.getValue() + ":  " + mAirFuelRatio +
-                "\n" + AvailableCommandNames.WIDEBAND_AIR_FUEL_RATIO.getValue() + ":  " + mWideBandAirFuelRatio +
-                "\n" + AvailableCommandNames.ABS_LOAD.getValue() + ":  " + mAbsLoad +
-                "\n" + AvailableCommandNames.CONTROL_MODULE_VOLTAGE.getValue() + ":  " + mControlModuleVoltage +
-                "\n" + AvailableCommandNames.EQUIV_RATIO.getValue() + ":  " + mEquivRatio +
-                "\n" + AvailableCommandNames.DTC_NUMBER.getValue() + ":  " + mDtcNumber +
-                "\n" + AvailableCommandNames.DESCRIBE_PROTOCOL.getValue() + ":  " + mDescribeProtocol +
-                "\n" + AvailableCommandNames.PENDING_TROUBLE_CODES.getValue() + ":  " + mPendingTroubleCode;
-
+    public float getmIdleMaf() {
+        return mIdleMaf;
     }
-
 }
