@@ -78,7 +78,7 @@ public class MainDashboard extends AppCompatActivity {
                 }
                 if (strDrivingDistance.length() < 1) {
                     strDrivingDistance = tripRecord.getmDistanceTravel() + " KM";
-                    drivingDistance.setText(strDrivingDuration);
+                    drivingDistance.setText(strDrivingDistance);
                 }
                 if (strDrivingIdleDuration.length() < 1) {
                     strDrivingIdleDuration = tripRecord.getIdlingDuration() + " Minutes";
