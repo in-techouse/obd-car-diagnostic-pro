@@ -30,7 +30,7 @@ public class TestActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home: {
                 finish();
-                break;
+                break;f
             }
         }
         return true;
