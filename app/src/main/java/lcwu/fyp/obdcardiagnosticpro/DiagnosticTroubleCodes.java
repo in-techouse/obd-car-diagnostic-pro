@@ -20,6 +20,7 @@ import com.sohrab.obd.reader.trip.TripRecord;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import lcwu.fyp.obdcardiagnosticpro.director.Helpers;
 
@@ -71,9 +72,25 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
                     if (tripRecord != null) {
                         result = result + "\nFault Codes: " + tripRecord.getmFaultCodes() + "\nPending Trouble Codes: " + tripRecord.getmPendingTroubleCode() + "\nPermanent Trouble Code: " + tripRecord.getmPermanentTroubleCode();
                         session.setRPM(result);
-                        faultCodes.setText(tripRecord.getmFaultCodes());
-                        pendingCodes.setText(tripRecord.getmPendingTroubleCode());
-                        permanentCodes.setText(tripRecord.getmPermanentTroubleCode());
+                        String fCodes = "";
+                        String pCodes = "";
+                        String perCodes = "";
+                        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+                            String key = entry.getKey().toLowerCase();
+                            String value = entry.getValue();
+                            if (tripRecord.getmFaultCodes().toLowerCase().contains(key)) {
+                                fCodes = fCodes + "" + key.toUpperCase() + "\n" + value + "\n";
+                            }
+                            if (tripRecord.getmPendingTroubleCode().toLowerCase().contains(key)) {
+                                pCodes = pCodes + "" + key.toUpperCase() + "\n" + value + "\n";
+                            }
+                            if (tripRecord.getmPermanentTroubleCode().toLowerCase().contains(key)) {
+                                perCodes = perCodes + "" + key.toUpperCase() + "\n" + value + "\n";
+                            }
+                        }
+                        faultCodes.setText(fCodes);
+                        pendingCodes.setText(pCodes);
+                        permanentCodes.setText(perCodes);
                     } else {
                         result = result + " Trip Record is null";
                         session.setRPM(result);
