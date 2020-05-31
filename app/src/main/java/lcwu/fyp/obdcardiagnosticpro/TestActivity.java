@@ -2,6 +2,7 @@ package lcwu.fyp.obdcardiagnosticpro;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -39,10 +40,18 @@ public class TestActivity extends AppCompatActivity {
     class FetchData extends AsyncTask<Void, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("TestActivity", "onPreExecute");
+        }
+
+        @Override
         protected String doInBackground(Void... voids) {
             String str = session.getRPM();
             String str1 = session.getSpeed();
             str = "Final RPM: " + str + "\n\nFinal SPEED: " + str1;
+            Log.e("TestActivity", "doInBackground");
+            Log.e("TestActivity", "doInBackground, Str is: " + str);
             return str;
         }
 
@@ -50,8 +59,7 @@ public class TestActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             text.setText(s);
-
+            Log.e("TestActivity", "onPostExecute");
         }
-
     }
 }
