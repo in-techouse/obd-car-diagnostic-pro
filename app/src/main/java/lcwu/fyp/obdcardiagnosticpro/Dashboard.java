@@ -161,7 +161,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         CardView card_rpm = findViewById(R.id.rpm);
         CardView card_speed = findViewById(R.id.speed);
         CardView enginetemprature = findViewById(R.id.engine_temperature);
-        Button testActivity = findViewById(R.id.testActivity);
+//        Button testActivity = findViewById(R.id.testActivity);
 
         isConnected = false;
         helper = new Helpers();
@@ -180,7 +180,7 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
         accelerationTests.setOnClickListener(this);
         airIntakeTemp.setOnClickListener(this);
         diagnosticTrouble.setOnClickListener(this);
-        testActivity.setOnClickListener(this);
+//        testActivity.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
 
         session = new Session(getApplicationContext());
