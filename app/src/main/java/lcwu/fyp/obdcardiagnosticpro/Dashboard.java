@@ -352,11 +352,11 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
                 startActivity(it);
                 break;
             }
-            case R.id.testActivity: {
-                Intent it = new Intent(Dashboard.this, TestActivity.class);
-                startActivity(it);
-                break;
-            }
+//            case R.id.testActivity: {
+//                Intent it = new Intent(Dashboard.this, TestActivity.class);
+//                startActivity(it);
+//                break;
+//            }
         }
     }
 

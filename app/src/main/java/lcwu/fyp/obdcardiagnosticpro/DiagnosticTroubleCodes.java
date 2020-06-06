@@ -72,19 +72,22 @@ public class DiagnosticTroubleCodes extends AppCompatActivity {
                     if (tripRecord != null) {
                         result = result + "\nFault Codes: " + tripRecord.getmFaultCodes() + "\nPending Trouble Codes: " + tripRecord.getmPendingTroubleCode() + "\nPermanent Trouble Code: " + tripRecord.getmPermanentTroubleCode();
                         session.setRPM(result);
+                        String tripFaultCodes = tripRecord.getmFaultCodes();
+                        String tripPendingCodes = tripRecord.getmPendingTroubleCode();
+                        String tripPermanentCodes = tripRecord.getmPermanentTroubleCode();
                         String fCodes = "";
                         String pCodes = "";
                         String perCodes = "";
                         for (Map.Entry<String, String> entry : hashMap.entrySet()) {
                             String key = entry.getKey().toLowerCase();
                             String value = entry.getValue();
-                            if (tripRecord.getmFaultCodes().toLowerCase().contains(key)) {
+                            if (tripFaultCodes != null && tripFaultCodes.toLowerCase().contains(key)) {
                                 fCodes = fCodes + "" + key.toUpperCase() + "\n" + value + "\n";
                             }
-                            if (tripRecord.getmPendingTroubleCode().toLowerCase().contains(key)) {
+                            if (tripPendingCodes != null && tripPendingCodes.toLowerCase().contains(key)) {
                                 pCodes = pCodes + "" + key.toUpperCase() + "\n" + value + "\n";
                             }
-                            if (tripRecord.getmPermanentTroubleCode().toLowerCase().contains(key)) {
+                            if (tripPermanentCodes != null && tripPermanentCodes.toLowerCase().contains(key)) {
                                 perCodes = perCodes + "" + key.toUpperCase() + "\n" + value + "\n";
                             }
                         }
